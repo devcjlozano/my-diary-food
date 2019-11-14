@@ -79,6 +79,9 @@ export default {
 }
 </script>
 <style scoped>
+.v-content {
+  background-color: white;
+}
  .footer {
   display: flex;
   justify-content: center;
