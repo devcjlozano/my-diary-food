@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavNotIsLoggedDesktop />
+    <!--<NavNotIsLoggedDesktop /> -->
     <v-content>
       <router-view/>
     </v-content>
@@ -31,12 +31,10 @@
 </template>
 
 <script>
-import NavNotIsLoggedDesktop from '@/components/NavNotIsLoggedDesktop'
 
 export default {
   name: 'App',
   components: {
-    NavNotIsLoggedDesktop
   },
 
   data: () => ({

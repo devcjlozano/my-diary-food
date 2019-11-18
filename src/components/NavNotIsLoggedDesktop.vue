@@ -3,6 +3,7 @@
     <v-toolbar
       dark
       fixed
+      class="my-toolbar"
       height="75px"
       color="primary">
       <div class="toolbar-content">
@@ -11,13 +12,13 @@
         </div>
         <div class="toolbar-content__items">
           <div class="toolbar-content__items__input">
-            Correo electrónico:
+            <span class="toolbar-content__items__input--label"> Correo electrónico </span>
             <input
               class="input-text"
               type="text"/>
           </div>
           <div class="toolbar-content__items__input">
-            Contraseña
+            <span class="toolbar-content__items__input--label"> Contraseña </span>
             <input
               class="input-text"
               type="text"/>
@@ -28,7 +29,7 @@
               mt4
               color="#02a4a0"
               solo>
-              Entrar
+                Entrar
             </v-btn>
           </div>
         </div>
@@ -56,16 +57,32 @@ export default {
   width: 800px;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+}
+.toolbar-content__titulo {
+  margin-bottom: 10px;
 }
 .toolbar-content__items__input {
   margin-left: 20px;
   flex-direction: column;
+}
+.toolbar-content__items__input:first-child {
+  margin-left: 0;
+}
+.toolbar-content__items__input--label {
+  font-size: 0.9em;
 }
 .input-text {
   background: white;
   height: 30px;
 }
 .btn-in {
-   margin-top: 21px;
+   margin-top: 18px;
+}
+
+@media (min-width: 605px) {
+  .toolbar-content__titulo {
+  margin-bottom: 0;
+}
 }
 </style>

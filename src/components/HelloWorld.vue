@@ -4,7 +4,9 @@
       text-center
       wrap
     >
-      <v-flex mb-4><h1> Nuevo Menú semanal </h1> </v-flex>
+      <v-flex
+        sm12
+        mb-4><h1> Nuevo Menú semanal </h1> </v-flex>
       <v-flex>
       <v-simple-table dense>
       <template v-slot:default>
