@@ -2,12 +2,26 @@
   <div class="login">
     <h1 class="login__title"> My diary food </h1>
     <div class="login__form">
+      <div
+        v-if="errorLogin"
+        class="login__error">
+        <v-alert
+          dark
+          color="error">
+          <div class="login__error__texto">
+            <span>
+             El correo y la contraseña no coinciden con ningún registro.
+             Por favor, revísalo y vuelve a intentarlo </span>
+          </div>
+        </v-alert>
+      </div>
       <div class="login__form--mail">
         <span> Correo electrónico </span>
         <v-text-field
           v-model="email"
           outlined
-          placeholder="Correo electrónico">
+          placeholder="Correo electrónico"
+          @keydown="keypress">
         </v-text-field>
       </div>
       <div class="login__form--key">
@@ -16,7 +30,8 @@
           type="password"
           v-model="password"
           outlined
-          placeholder="Contraseña">
+          placeholder="Contraseña"
+          @keydown="keypress">
         </v-text-field>
       </div>
       <div class="login__form__button">
@@ -54,7 +69,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorLogin: false
     }
   },
   methods: {
@@ -63,14 +79,16 @@ export default {
         email: this.email,
         password: this.password
       }).then(() => {
+        this.errorLogin = false
         this.$router.push({ name: 'home' })
-      }).catch(err => {
-        if (err.data) {
-          alert(err.data.message)
-        } else {
-          alert(err)
-        }
+      }).catch(() => {
+        this.errorLogin = true
       })
+    },
+    keypress (e) {
+      if (e.keyCode === 13) {
+        this.signIn()
+      }
     }
   }
 }
@@ -82,6 +100,9 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 20px;
+ }
+ .login__error__texto {
+   font-size: 0.9em;
  }
  .login__title {
    margin-bottom: 20px;
@@ -146,7 +167,11 @@ export default {
   div /deep/ .btn-own {
     font-size: 1.0em;
   }
+  .login__form{
+    width: 350px;
+  }
   .login__info {
+    width: 290px;
     margin-right: 160px;
   }
 }
