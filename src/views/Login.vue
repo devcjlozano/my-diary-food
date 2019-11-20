@@ -18,6 +18,7 @@
       </div>
       <div class="login__form__button">
         <v-btn
+           to='/home'
           height="56px"
           class=" custom-transform-class text-none btn-own"
           color="primary">
@@ -26,7 +27,7 @@
       </div>
       <div class="login__form__new-account">
         <v-btn
-          class="custom-transform-class text-none"
+          class="custom-transform-class text-none btn-own"
           color="primary"
           text>
           Crear cuenta nueva
@@ -119,7 +120,6 @@ export default {
 @media (min-width: 900px) {
   div /deep/ .btn-own {
     font-size: 1.0em;
-    color: red;
   }
   .login__info {
     margin-right: 160px;
