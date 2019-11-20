@@ -5,6 +5,7 @@
       <div class="login__form--mail">
         <span> Correo electrónico </span>
         <v-text-field
+          v-model="email"
           outlined
           placeholder="Correo electrónico">
         </v-text-field>
@@ -12,13 +13,15 @@
       <div class="login__form--key">
         <span> Contraseña </span>
         <v-text-field
+          type="password"
+          v-model="password"
           outlined
           placeholder="Contraseña">
         </v-text-field>
       </div>
       <div class="login__form__button">
         <v-btn
-           to='/home'
+          @click="signIn"
           height="56px"
           class=" custom-transform-class text-none btn-own"
           color="primary">
@@ -47,7 +50,29 @@
 </template>
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    signIn () {
+      this.$store.dispatch('auth/signIn', {
+        email: this.email,
+        password: this.password
+      }).then(() => {
+        this.$router.push({ name: 'home' })
+      }).catch(err => {
+        if (err.data) {
+          alert(err.data.message)
+        } else {
+          alert(err)
+        }
+      })
+    }
+  }
 }
 </script>
 <style scoped>
