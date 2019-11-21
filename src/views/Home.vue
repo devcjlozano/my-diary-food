@@ -1,5 +1,11 @@
 <template>
   <div class="home">
+    <v-btn
+     color='primary'
+     @click="logout"
+     >
+     Logout
+    </v-btn>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <span> Autenticacion usuario: {{ autenticado }}</span>
   </div>
@@ -17,6 +23,12 @@ export default {
   },
   computed: {
     ...mapGetters('auth', { autenticado: 'isLoggedIn' })
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('auth/logout')
+      this.$router.push({ name: 'login' })
+    }
   }
 }
 </script>

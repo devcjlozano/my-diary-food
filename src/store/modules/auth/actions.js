@@ -4,8 +4,8 @@ const actions = {
   async signIn ({ commit }, payload) {
     try {
       const { data } = await api.signIn(payload.email, payload.password)
-      console.log(data)
-      commit('LOGGIN_SUCCESS', data)
+      commit('LOGGIN_SUCCESS')
+      commit('SET_USER', data)
     } catch (err) {
       if (err.response) {
         throw (err.response)
@@ -13,6 +13,9 @@ const actions = {
         throw (err)
       }
     }
+  },
+  logout ({ commit }) {
+    commit('LOGOUT')
   }
 }
 
