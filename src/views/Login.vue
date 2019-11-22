@@ -47,6 +47,7 @@
         <v-btn
           class="custom-transform-class text-none btn-own"
           color="primary"
+          to='/signup'
           text>
           Crear cuenta nueva
         </v-btn>
