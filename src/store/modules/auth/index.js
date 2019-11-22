@@ -3,7 +3,7 @@ import getters from './getters'
 import mutations from './mutations'
 
 const state = {
-  isLoggedIn: false,
+  isLoggedIn: !!window.localStorage.getItem('_token'),
   user: {}
 }
 

@@ -5,7 +5,8 @@ const actions = {
     try {
       const { data } = await api.signIn(payload.email, payload.password)
       commit('LOGGIN_SUCCESS')
-      commit('SET_USER', data)
+      window.localStorage.setItem('_token', data.token)
+      commit('SET_USER')
     } catch (err) {
       if (err.response) {
         throw (err.response)
@@ -15,6 +16,7 @@ const actions = {
     }
   },
   logout ({ commit }) {
+    window.localStorage.removeItem('_token')
     commit('LOGOUT')
   }
 }
