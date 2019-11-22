@@ -1,14 +1,34 @@
 <template>
   <div class="signup">
-    <FormSignUp/>
+    <FormSignUp @register="register"/>
   </div>
 </template>
 <script>
 import FormSignUp from '@/components/FormSignUp.vue'
+import api from '@/api/auth'
+
 export default {
   name: 'Signup',
   components: {
     FormSignUp
+  },
+  methods: {
+    async register (dataForm) {
+      try {
+        const { data } = await api.signUp(dataForm)
+        if (data.code && data.code === 409) {
+          alert(data.message)
+        } else {
+          alert('Te has registrado correctamente')
+        }
+      } catch (err) {
+        if (err.response) {
+          throw (err.response)
+        } else {
+          throw (err)
+        }
+      }
+    }
   }
 }
 </script>

@@ -31,7 +31,7 @@
       <span> Nombre </span>
       <v-text-field
         color="#110133"
-        v-model="name"
+        v-model="form.name"
         outlined
         placeholder="Nombre">
       </v-text-field>
@@ -42,7 +42,7 @@
       <span> Apellidos </span>
       <v-text-field
         color="#110133"
-        v-model="surnames"
+        v-model="form.surNames"
         outlined
         placeholder="Apellidos">
       </v-text-field>
@@ -53,7 +53,7 @@
       <span> Correo electrónico </span>
       <v-text-field
         color="#110133"
-        v-model="email"
+        v-model="form.email"
         outlined
         placeholder="Correo electrónico">
       </v-text-field>
@@ -65,7 +65,7 @@
       <v-text-field
         color="#110133"
         type="password"
-        v-model="password"
+        v-model="form.password"
         outlined
         placeholder="Contraseña">
         </v-text-field>
@@ -74,6 +74,7 @@
        v-if="step === 2"
        class="form-signup__register">
         <v-btn
+           @click="register"
            class="form-signup__register--button"
            height="56px"
            dark
@@ -90,15 +91,18 @@ export default {
   data () {
     return {
       step: 1,
-      email: '',
-      name: '',
-      surnames: '',
-      password: ''
+      form:
+        {
+          email: '',
+          name: '',
+          surNames: '',
+          password: ''
+        }
     }
   },
   computed: {
     disabledButtonNext () {
-      if (this.name.length === 0 || this.surnames.length === 0 || this.step === 2) {
+      if (this.form.name.length === 0 || this.form.surNames.length === 0 || this.step === 2) {
         return true
       }
       return false
@@ -110,6 +114,9 @@ export default {
     },
     previousStep () {
       this.step = 1
+    },
+    register () {
+      this.$emit('register', this.form)
     }
   }
 }
