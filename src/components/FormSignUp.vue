@@ -1,7 +1,9 @@
 <template>
   <div
     class="form-signup">
-    <div class="form-signup__title">
+    <div
+      v-if="!accountCreatedSuccess"
+      class="form-signup__title">
        <div>
          <v-btn
            @click="previousStep"
@@ -19,75 +21,131 @@
          dark
          color="#110133"> Siguiente </v-btn>
     </div>
-    <div class="form-signup__subtitle">
+    <div
+      v-if="!accountCreatedSuccess"
+      class="form-signup__subtitle">
        <div>
          <span> Crea tu cuenta</span>
          <span class="form-signup__subtitle--step"> (paso {{step}} / 2) </span>
        </div>
     </div>
     <div
-        v-if="step === 1"
-        class="form-signup__name">
-      <span> Nombre </span>
-      <v-text-field
-        color="#110133"
-        v-model="form.name"
-        outlined
-        placeholder="Nombre">
-      </v-text-field>
-    </div>
-    <div
-      v-if="step === 1"
-      class="form-signup__surnames">
-      <span> Apellidos </span>
-      <v-text-field
-        color="#110133"
-        v-model="form.surNames"
-        outlined
-        placeholder="Apellidos">
-      </v-text-field>
-    </div>
-    <div
-      v-if="step === 2"
-      class="form-signup__mail">
-      <span> Correo electrónico </span>
-      <v-text-field
-        color="#110133"
-        v-model="form.email"
-        outlined
-        placeholder="Correo electrónico">
-      </v-text-field>
-    </div>
-    <div
-      v-if="step === 2"
-      class="form-signup__password">
-      <span> Contraseña </span>
-      <v-text-field
-        color="#110133"
-        type="password"
-        v-model="form.password"
-        outlined
-        placeholder="Contraseña">
+      v-if="!accountCreatedSuccess">
+      <div
+          v-if="step === 1"
+          class="form-signup__name">
+        <span> Nombre </span>
+        <v-text-field
+          color="#110133"
+          v-model="form.name"
+          outlined
+          placeholder="Nombre">
         </v-text-field>
-     </div>
-     <div
-       v-if="step === 2"
-       class="form-signup__register">
+      </div>
+      <div
+        v-if="step === 1"
+        class="form-signup__surnames">
+        <span> Apellidos </span>
+        <v-text-field
+          color="#110133"
+          v-model="form.surNames"
+          outlined
+          placeholder="Apellidos">
+        </v-text-field>
+      </div>
+      <div
+        v-if="step === 2"
+        class="form-signup__mail">
+        <span> Correo electrónico </span>
+        <v-text-field
+          color="#110133"
+          v-model="form.email"
+          outlined
+          placeholder="Correo electrónico">
+        </v-text-field>
+      </div>
+      <div
+        v-if="step === 2"
+        class="form-signup__password">
+        <span> Contraseña </span>
+        <v-text-field
+          color="#110133"
+          type="password"
+          v-model="form.password"
+          outlined
+          placeholder="Contraseña">
+          </v-text-field>
+      </div>
+      <div
+        v-if="step === 2"
+        class="form-signup__register">
+          <v-btn
+            @click="register"
+            class="form-signup__register--button"
+            height="56px"
+            dark
+            color="#110133"
+          >
+          Registrarse
+          </v-btn>
+      </div>
+      <div
+          v-if="step === 2 && mailExist"
+          class="login__warning">
+          <v-alert
+            color="#fbae00">
+            <div class="login__warning__texto">
+              <span>
+              El correo ya está registrado en la aplicación.
+              Por favor, revísalo y vuelve a intentarlo </span>
+            </div>
+          </v-alert>
+       </div>
+    </div>
+    <div
+      class="form-signup__success"
+      v-if="accountCreatedSuccess">
+      <div class="form-signup__success__title">
+        <h1> My diary Food</h1>
+      </div>
+      <div class="form-signup__success__subtitle">
+        <p class="form-signup__success__subtitle--parrafo">
+          ¡Tu cuenta ha sido creada correctamente!
+        </p>
+        <p class="form-signup__success__subtitle--parrafo">
+          Muchas gracias por registrarte
+        </p>
+        <p class="form-signup__success__subtitle--parrafo">
+          Puedes acceder a la página principal para acceder
+          con los datos de la cuenta que acabas de crear haciendo click
+          en el botón de abajo.
+        </p>
+      </div>
+      <div>
         <v-btn
-           @click="register"
-           class="form-signup__register--button"
-           height="56px"
-           dark
-           color="#110133"
-         >
-         Registrarse
+         height="56px"
+         @click="nextStep"
+         dark
+         to="/"
+         color="#110133"> Ir a página principal
         </v-btn>
-     </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: 'FormSignUp',
+  props: {
+    mailExist: {
+      type: Boolean,
+      default: false
+    },
+    accountCreatedSuccess: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       step: 1,
@@ -110,10 +168,10 @@ export default {
   },
   methods: {
     nextStep () {
-      this.step = 2
+      this.step += 1
     },
     previousStep () {
-      this.step = 1
+      this.step -= 1
     },
     register () {
       this.$emit('register', this.form)
@@ -158,8 +216,28 @@ export default {
     width: 100%;
     display: flex;
  }
+ .login__warning {
+    margin-top: 15px;
+ }
+ .form-signup__success {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ .form-signup__success__title {
+   margin-bottom: 20px;
+ }
+ .form-signup__success__subtitle {
+   margin-bottom: 35px;
+ }
+ .form-signup__success__subtitle--parrafo {
+   text-align: center;
+ }
+ div /deep/ .theme--light.v-text-field--outlined fieldset {
+   border-color: #110133;
+ }
  div /deep/ .v-text-field--outlined > .v-input__control > .v-input__slot {
-    background: #02bfba
+    background: white;
  }
 
  div /deep/ .v-input input {
@@ -191,6 +269,9 @@ export default {
    .form-signup__subtitle {
       margin-bottom: 30px;
       font-size: 1.5em;
+   }
+   .form-signup__success__subtitle--parrafo {
+     font-size: 1.2em;
    }
  }
 </style>

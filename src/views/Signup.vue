@@ -1,6 +1,9 @@
 <template>
   <div class="signup">
-    <FormSignUp @register="register"/>
+    <FormSignUp
+      :mail-exist="mailExist"
+      :account-created-success="accountCreatedSuccess"
+     @register="register"/>
   </div>
 </template>
 <script>
@@ -12,14 +15,21 @@ export default {
   components: {
     FormSignUp
   },
+  data () {
+    return {
+      mailExist: false,
+      accountCreatedSuccess: false
+    }
+  },
   methods: {
     async register (dataForm) {
       try {
         const { data } = await api.signUp(dataForm)
         if (data.code && data.code === 409) {
-          alert(data.message)
+          this.mailExist = true
         } else {
-          alert('Te has registrado correctamente')
+          this.mailExist = false
+          this.accountCreatedSuccess = true
         }
       } catch (err) {
         if (err.response) {
