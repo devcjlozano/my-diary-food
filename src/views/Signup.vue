@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import FormSignUp from '@/components/FormSignUp.vue'
+import FormSignUp from '@/components/form-sign-up/FormSignUp.vue'
 import api from '@/api/auth'
 
 export default {
