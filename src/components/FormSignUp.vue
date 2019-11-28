@@ -4,7 +4,7 @@
     <div
       v-if="!accountCreatedSuccess"
       class="form-signup__title">
-       <div>
+       <div class="form-signup__icon-back">
          <v-btn
            @click="previousStep"
            icon
@@ -15,11 +15,6 @@
         </v-btn>
        </div>
        <span class="logo"> My diary food</span>
-       <v-btn
-         :disabled="disabledButtonNext"
-         @click="nextStep"
-         dark
-         color="#110133"> Siguiente </v-btn>
     </div>
     <div
       v-if="!accountCreatedSuccess"
@@ -75,6 +70,15 @@
           outlined
           placeholder="Contraseña">
           </v-text-field>
+      </div>
+      <div
+        class="form-signup__button-next"
+        v-if="step === 1">
+        <v-btn
+          :disabled="disabledButtonNext"
+          @click="nextStep"
+          dark
+          color="#110133"> Siguiente </v-btn>
       </div>
       <div
         v-if="step === 2"
@@ -191,10 +195,15 @@ export default {
   font-size: 1.1em;
 }
 .form-signup__title {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 15px;
+}
+.form-signup__icon-back {
+  position: absolute;
+  left: 0;
 }
 .form-signup__subtitle {
   color: white;
@@ -211,6 +220,10 @@ export default {
    display: flex;
    flex-direction: column;
    color: #110133
+ }
+ .form-signup__button-next {
+   display: flex;
+   justify-content: flex-end;
  }
  .form-signup__register--button {
     width: 100%;
