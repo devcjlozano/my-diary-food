@@ -57,10 +57,11 @@
             v-if="step === 2 && mailExist"
             class="login__warning">
             <v-alert
-              color="#fbae00">
+              color="#ffe6ad">
               <div class="login__warning__texto">
                 <span>
-                El correo ya está registrado en la aplicación.
+                El correo <span class="login__warning__texto--mail">
+                {{ emailTry }} </span> ya está registrado en la aplicación.
                 Por favor, revísalo y vuelve a intentarlo </span>
               </div>
             </v-alert>
@@ -113,6 +114,10 @@ export default {
     mailExist: {
       type: Boolean,
       default: false
+    },
+    emailTry: {
+      type: String,
+      default: ''
     },
     accountCreatedSuccess: {
       type: Boolean,
@@ -209,6 +214,10 @@ export default {
  }
  .login__warning {
     margin-top: 15px;
+ }
+ .login__warning__texto--mail {
+   font-weight: bold;
+   font-style: italic;
  }
  .form-signup__success {
    display: flex;

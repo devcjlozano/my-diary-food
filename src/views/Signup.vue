@@ -2,6 +2,7 @@
   <div class="signup">
     <FormSignUp
       :mail-exist="mailExist"
+      :email-try="emailTry"
       :account-created-success="accountCreatedSuccess"
      @register="register"/>
   </div>
@@ -18,6 +19,7 @@ export default {
   data () {
     return {
       mailExist: false,
+      emailTry: '',
       accountCreatedSuccess: false
     }
   },
@@ -27,6 +29,7 @@ export default {
         const { data } = await api.signUp(dataForm)
         if (data.code && data.code === 409) {
           this.mailExist = true
+          this.emailTry = dataForm.email
         } else {
           this.mailExist = false
           this.accountCreatedSuccess = true
