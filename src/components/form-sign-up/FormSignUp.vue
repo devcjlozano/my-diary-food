@@ -25,10 +25,10 @@
       </div>
       <div>
         <div v-if="step === 1">
-          <Step1 :form-data="form"/>
+          <Step1 :validation="$v"/>
         </div>
         <div v-if="step === 2">
-          <Step2 :form-data="form"/>
+          <Step2 :validation="$v"/>
         </div>
         <div
           class="form-signup__button-next"
@@ -101,6 +101,7 @@
 <script>
 import Step1 from './step1/Step1.vue'
 import Step2 from './step2/Step2.vue'
+import { email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'FormSignUp',
@@ -116,6 +117,14 @@ export default {
     accountCreatedSuccess: {
       type: Boolean,
       default: false
+    }
+  },
+  validations: {
+    form: {
+      email: { email },
+      name: {},
+      surNames: {},
+      password: {}
     }
   },
   data () {
@@ -152,7 +161,10 @@ export default {
       this.step -= 1
     },
     register () {
-      this.$emit('register', this.form)
+      this.$v.form.$touch()
+      if (!this.$v.form.$error && !this.$v.form.$invalid) {
+        this.$emit('register', this.form)
+      }
     }
   }
 }
@@ -218,9 +230,14 @@ export default {
  div /deep/ .v-text-field--outlined > .v-input__control > .v-input__slot {
     background: white;
  }
-
  div /deep/ .v-input input {
    color: red;
+ }
+ div /deep/ .v-messages__message {
+   color: black;
+   background-color: #FFCEC6;
+   padding: 10px;
+   font-size: 1.1em;
  }
  @media (min-width: 480px) {
    .form-signup {

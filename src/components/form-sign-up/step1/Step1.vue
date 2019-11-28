@@ -3,9 +3,9 @@
     <div class="form-signup__name">
       <span> Nombre </span>
       <v-text-field
+        v-model="validation.form.name.$model"
         maxlength="60"
         color="#110133"
-        v-model="formData.name"
         outlined
         placeholder="Nombre">
       </v-text-field>
@@ -13,9 +13,9 @@
     <div class="form-signup__surnames">
       <span> Apellidos </span>
         <v-text-field
+          v-model="validation.form.surNames.$model"
           maxlength="60"
           color="#110133"
-          v-model="formData.surNames"
           outlined
           placeholder="Apellidos">
         </v-text-field>
@@ -29,6 +29,10 @@ export default {
     formData: {
       type: Object,
       default: () => {}
+    },
+    validation: {
+      type: Object,
+      required: true
     }
   }
 }
