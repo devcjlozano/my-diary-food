@@ -1,115 +1,71 @@
 <template>
   <div
     class="form-signup">
-    <div
-      v-if="!accountCreatedSuccess"
-      class="form-signup__title">
-       <div class="form-signup__icon-back">
-         <v-btn
-           @click="previousStep"
-           icon
-           color="white"
-           v-if="step === 2"
-           >
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-       </div>
-       <span class="logo"> My diary food</span>
-    </div>
-    <div
-      v-if="!accountCreatedSuccess"
-      class="form-signup__subtitle">
-       <div>
-         <span> Crea tu cuenta</span>
-         <span class="form-signup__subtitle--step"> (paso {{step}} / 2) </span>
-       </div>
-    </div>
-    <div
-      v-if="!accountCreatedSuccess">
+    <div v-if="!accountCreatedSuccess">
       <div
-          v-if="step === 1"
-          class="form-signup__name">
-        <span> Nombre </span>
-        <v-text-field
-          maxlength="60"
-          color="#110133"
-          v-model="form.name"
-          outlined
-          placeholder="Nombre">
-        </v-text-field>
-      </div>
-      <div
-        v-if="step === 1"
-        class="form-signup__surnames">
-        <span> Apellidos </span>
-        <v-text-field
-          maxlength="60"
-          color="#110133"
-          v-model="form.surNames"
-          outlined
-          placeholder="Apellidos">
-        </v-text-field>
-      </div>
-      <div
-        v-if="step === 2"
-        class="form-signup__mail">
-        <span> Correo electrónico </span>
-        <v-text-field
-          maxlength="100"
-          color="#110133"
-          v-model="form.email"
-          outlined
-          placeholder="Correo electrónico">
-        </v-text-field>
-      </div>
-      <div
-        v-if="step === 2"
-        class="form-signup__password">
-        <span> Contraseña </span>
-        <v-text-field
-          maxlength="100"
-          color="#110133"
-          type="password"
-          v-model="form.password"
-          outlined
-          placeholder="Contraseña">
-          </v-text-field>
-      </div>
-      <div
-        class="form-signup__button-next"
-        v-if="step === 1">
-        <v-btn
-          :disabled="disabledButtonNext"
-          @click="nextStep"
-          dark
-          color="#110133"> Siguiente </v-btn>
-      </div>
-      <div
-        v-if="step === 2"
-        class="form-signup__register">
+        class="form-signup__title">
+        <div class="form-signup__icon-back">
           <v-btn
-            @click="register"
-            :disabled="disabledButtonRegister"
-            class="form-signup__register--button"
-            height="56px"
-            dark
-            color="#110133"
-          >
-          Registrarse
+            @click="previousStep"
+            icon
+            color="white"
+            v-if="step === 2"
+            >
+            <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
+        </div>
+        <span class="logo"> My diary food</span>
       </div>
       <div
-          v-if="step === 2 && mailExist"
-          class="login__warning">
-          <v-alert
-            color="#fbae00">
-            <div class="login__warning__texto">
-              <span>
-              El correo ya está registrado en la aplicación.
-              Por favor, revísalo y vuelve a intentarlo </span>
-            </div>
-          </v-alert>
-       </div>
+        class="form-signup__subtitle">
+        <div>
+          <span> Crea tu cuenta</span>
+          <span class="form-signup__subtitle--step"> (paso {{step}} / 2) </span>
+        </div>
+      </div>
+      <div>
+        <div v-if="step === 1">
+          <Step1 :form-data="form"/>
+        </div>
+        <div v-if="step === 2">
+          <Step2 :form-data="form"/>
+        </div>
+        <div
+          class="form-signup__button-next"
+          v-if="step === 1">
+          <v-btn
+            :disabled="disabledButtonNext"
+            @click="nextStep"
+            dark
+            color="#110133"> Siguiente </v-btn>
+        </div>
+        <div
+          v-if="step === 2"
+          class="form-signup__register">
+            <v-btn
+              @click="register"
+              :disabled="disabledButtonRegister"
+              class="form-signup__register--button"
+              height="56px"
+              dark
+              color="#110133"
+            >
+            Registrarse
+            </v-btn>
+        </div>
+        <div
+            v-if="step === 2 && mailExist"
+            class="login__warning">
+            <v-alert
+              color="#fbae00">
+              <div class="login__warning__texto">
+                <span>
+                El correo ya está registrado en la aplicación.
+                Por favor, revísalo y vuelve a intentarlo </span>
+              </div>
+            </v-alert>
+        </div>
+      </div>
     </div>
     <div
       class="form-signup__success"
@@ -143,8 +99,15 @@
   </div>
 </template>
 <script>
+import Step1 from './step1/Step1.vue'
+import Step2 from './step2/Step2.vue'
+
 export default {
   name: 'FormSignUp',
+  components: {
+    Step1,
+    Step2
+  },
   props: {
     mailExist: {
       type: Boolean,
@@ -224,14 +187,6 @@ export default {
 .form-signup__subtitle--step {
   font-size: 0.8em;
 }
- .form-signup__mail,
- .form-signup__name,
- .form-signup__surnames,
- .form-signup__password {
-   display: flex;
-   flex-direction: column;
-   color: #110133
- }
  .form-signup__button-next {
    display: flex;
    justify-content: flex-end;
