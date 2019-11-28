@@ -31,6 +31,7 @@
           class="form-signup__name">
         <span> Nombre </span>
         <v-text-field
+          maxlength="60"
           color="#110133"
           v-model="form.name"
           outlined
@@ -42,6 +43,7 @@
         class="form-signup__surnames">
         <span> Apellidos </span>
         <v-text-field
+          maxlength="60"
           color="#110133"
           v-model="form.surNames"
           outlined
@@ -53,6 +55,7 @@
         class="form-signup__mail">
         <span> Correo electrónico </span>
         <v-text-field
+          maxlength="100"
           color="#110133"
           v-model="form.email"
           outlined
@@ -64,6 +67,7 @@
         class="form-signup__password">
         <span> Contraseña </span>
         <v-text-field
+          maxlength="100"
           color="#110133"
           type="password"
           v-model="form.password"
@@ -85,6 +89,7 @@
         class="form-signup__register">
           <v-btn
             @click="register"
+            :disabled="disabledButtonRegister"
             class="form-signup__register--button"
             height="56px"
             dark
@@ -165,6 +170,12 @@ export default {
   computed: {
     disabledButtonNext () {
       if (this.form.name.length === 0 || this.form.surNames.length === 0 || this.step === 2) {
+        return true
+      }
+      return false
+    },
+    disabledButtonRegister () {
+      if (this.form.surNames.email === 0 || this.form.password.length === 0) {
         return true
       }
       return false
