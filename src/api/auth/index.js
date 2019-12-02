@@ -19,18 +19,8 @@ const signIn = (email, password) => axios({
     password: password
   }
 })
-const logOut = (email, passwword) => axios({
-  method: 'post',
-  url: 'http://localhost:3001/user/signIn',
-  email,
-  passwword,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
-})
 
 export default {
   signUp,
-  signIn,
-  logOut
+  signIn
 }
