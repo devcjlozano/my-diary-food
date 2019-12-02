@@ -69,46 +69,31 @@
       </div>
     </div>
     <div
-      class="form-signup__success"
       v-if="accountCreatedSuccess">
-      <div class="form-signup__success__title">
-        <h1> My diary Food</h1>
-      </div>
-      <div class="form-signup__success__subtitle">
-        <p class="form-signup__success__subtitle--parrafo">
-          ¡Tu cuenta ha sido creada correctamente!
-        </p>
-        <p class="form-signup__success__subtitle--parrafo">
-          Muchas gracias por registrarte
-        </p>
-        <p class="form-signup__success__subtitle--parrafo">
-          Puedes acceder a la página principal para acceder
-          con los datos de la cuenta que acabas de crear haciendo click
-          en el botón de abajo.
-        </p>
-      </div>
-      <div>
-        <v-btn
-         height="56px"
-         @click="nextStep"
-         dark
-         to="/"
-         color="#110133"> Ir a página principal
-        </v-btn>
+      <SuccessSignUp />
+      <div class="form-signup__button-main">
+      <v-btn
+        dark
+        color="#110133"
+        to='/'>
+        Ir a página principal
+      </v-btn>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Step1 from './step1/Step1.vue'
-import Step2 from './step2/Step2.vue'
+import Step1 from './components/Step1.vue'
+import Step2 from './components/Step2.vue'
+import SuccessSignUp from './components/SuccessSignUp'
 import { email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'FormSignUp',
   components: {
     Step1,
-    Step2
+    Step2,
+    SuccessSignUp
   },
   props: {
     mailExist: {
@@ -212,26 +197,16 @@ export default {
     width: 100%;
     display: flex;
  }
+ .form-signup__button-main {
+    display: flex;
+    justify-content: center;
+ }
  .login__warning {
     margin-top: 15px;
  }
  .login__warning__texto--mail {
    font-weight: bold;
    font-style: italic;
- }
- .form-signup__success {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
- }
- .form-signup__success__title {
-   margin-bottom: 20px;
- }
- .form-signup__success__subtitle {
-   margin-bottom: 35px;
- }
- .form-signup__success__subtitle--parrafo {
-   text-align: center;
  }
  div /deep/ .theme--light.v-text-field--outlined fieldset {
    border-color: #110133;
