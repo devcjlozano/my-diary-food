@@ -1,20 +1,28 @@
 <template>
-  <div>
-    <v-toolbar
+  <v-toolbar
       dark
-      fixed
-      class="my-toolbar hidden-sm-and-down"
+      flat
+      color="primary"
       height="75px"
-      color="primary">
-      <div class="toolbar-content">
-        <div class="toolbar-content__titulo">
-            <span> My diary Food </span>
+      class="toolbar hidden-md-and-up">
+      <v-btn
+        text
+        icon
+        @click="mostrarMenuDeslizante()">
+        <v-icon>mdi-view-headline</v-icon>
+      </v-btn>
+      <div class="toolbar__contenedor">
+        <div class="toolbar__contenedor__item">
+          <v-toolbar-title class="headline text-uppercase">
+            <router-link
+              to="/"
+              class="enlace-router">
+              <span> MyDiaryFood</span>
+            </router-link>
+          </v-toolbar-title>
         </div>
-        <v-toolbar-items>
-          <v-btn text> Mis menus </v-btn>
-          <v-btn text> Menus compartidos </v-btn>
-        </v-toolbar-items>
-        <div class="toolbar-content__user">
+        <div class="toolbar__contenedor__item">
+          <div class="toolbar-content__user">
           <span class="toolbar-content__user--name">{{ user.name }} </span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
@@ -34,20 +42,26 @@
             </v-list>
           </v-menu>
         </div>
+        </div>
       </div>
     </v-toolbar>
-  </div>
 </template>
-
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
-  name: 'NavLoggedDesktop',
+  name: 'NavLoggedMobile',
+  components: {
+  },
+  data () {
+    return {}
+  },
   computed: {
     ...mapGetters('auth', { user: 'user' })
   },
   methods: {
+    mostrarMenuDeslizante () {
+      this.$emit('mostrar-menu-deslizante')
+    },
     logout () {
       this.$store.dispatch('auth/logout')
       this.$router.push({ name: 'login' })
@@ -55,30 +69,23 @@ export default {
   }
 }
 </script>
+
 <style scoped>
-.v-toolbar {
-  height: 200px;
+.enlace-router {
+  text-decoration: none;
+  color: inherit
 }
-.toolbar-content {
-   display: flex;
-}
-.toolbar-content {
-  margin: 0 auto;
-  width: 800px;
+.toolbar__contenedor {
+  display: flex;
+  width: 100%;
   height: 100%;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 }
-.toolbar-content__titulo {
-  margin-bottom: 10px;
+.toolbar__contenedor__item {
+  display: flex;
+  align-items: center;
 }
 .toolbar-content__user--name {
   margin-right: 5px;
-}
-@media (min-width: 605px) {
-  .toolbar-content__titulo {
-    margin-bottom: 0;
-  }
 }
 </style>

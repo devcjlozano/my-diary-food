@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <NavLoggedDesktop v-if="isLoggedIn" />
+    <NavLoggedMobile v-if="isLoggedIn" />
     <v-content>
       <router-view/>
     </v-content>
@@ -32,12 +33,14 @@
 
 <script>
 import NavLoggedDesktop from '@/components/NavLoggedDesktop'
+import NavLoggedMobile from '@/components/NavLoggedMobile'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    NavLoggedDesktop
+    NavLoggedDesktop,
+    NavLoggedMobile
   },
   data: () => ({
     //
