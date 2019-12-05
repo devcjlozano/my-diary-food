@@ -1,7 +1,11 @@
 <template>
   <v-app>
-    <NavLoggedDesktop v-if="isLoggedIn" />
-    <NavLoggedMobile v-if="isLoggedIn" />
+    <NavLoggedDesktop
+      :user="user"
+      v-if="isLoggedIn" />
+    <NavLoggedMobile
+      :user="user"
+      v-if="isLoggedIn" />
     <v-content>
       <router-view/>
     </v-content>
@@ -46,7 +50,10 @@ export default {
     //
   }),
   computed: {
-    ...mapGetters('auth', { isLoggedIn: 'isLoggedIn' })
+    ...mapGetters('auth', {
+      isLoggedIn: 'isLoggedIn',
+      user: 'user'
+    })
   }
 }
 </script>

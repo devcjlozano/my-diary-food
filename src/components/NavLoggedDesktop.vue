@@ -40,12 +40,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'NavLoggedDesktop',
-  computed: {
-    ...mapGetters('auth', { user: 'user' })
+  props: {
+    user: {
+      type: Object,
+      default: () => {}
+    }
   },
   methods: {
     logout () {

@@ -47,16 +47,14 @@
     </v-toolbar>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+
 export default {
   name: 'NavLoggedMobile',
-  components: {
-  },
-  data () {
-    return {}
-  },
-  computed: {
-    ...mapGetters('auth', { user: 'user' })
+  props: {
+    user: {
+      type: Object,
+      default: () => {}
+    }
   },
   methods: {
     mostrarMenuDeslizante () {
