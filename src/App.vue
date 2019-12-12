@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <!--<NavNotIsLoggedDesktop /> -->
+    <NavLoggedDesktop
+      :user="user"
+      v-if="isLoggedIn" />
+    <NavLoggedMobile
+      :user="user"
+      v-if="isLoggedIn" />
     <v-content>
       <router-view/>
     </v-content>
@@ -31,15 +36,25 @@
 </template>
 
 <script>
+import NavLoggedDesktop from '@/components/NavLoggedDesktop'
+import NavLoggedMobile from '@/components/NavLoggedMobile'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
+    NavLoggedDesktop,
+    NavLoggedMobile
   },
-
   data: () => ({
     //
-  })
+  }),
+  computed: {
+    ...mapGetters('auth', {
+      isLoggedIn: 'isLoggedIn',
+      user: 'user'
+    })
+  }
 }
 </script>
 <style scoped>

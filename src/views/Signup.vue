@@ -50,6 +50,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #00aeaa75;
     height: 100%;
     padding: 20px;
   }
