@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app" :style="{background: $vuetify.theme.themes['light'].background}">
     <NavLoggedDesktop
       :user="user"
       v-if="isLoggedIn" />
@@ -58,12 +58,14 @@ export default {
 }
 </script>
 <style scoped>
+.app
 .v-content {
   background-color: white;
 }
  .footer {
   display: flex;
   justify-content: center;
+  margin-top: 100px;
   padding: 20px;
   background-color: #fafafa;
 }
