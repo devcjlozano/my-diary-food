@@ -95,6 +95,16 @@
         </template>
       </v-simple-table>
     </div>
+    <div class="menu_creator__footer">
+      <span class="menu_creator__footer__text-information">
+        *Recuerda rellenar todas las comidas de la semana
+      </span>
+      <v-btn
+        class="custom-transform-class text-none btn-own"
+        color="primary">
+          Guardar menú
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -300,6 +310,17 @@ export default {
    overflow-y: hidden;
    white-space: nowrap;
    font-size: 0.8em;
+ }
+ .menu_creator__footer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   margin-top: 10px;
+   padding-right: 4px;
+ }
+ .menu_creator__footer__text-information {
+   margin-right: 10px;
+   font-style: italic;
  }
  .td-food {
    width: 2%;
