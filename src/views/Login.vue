@@ -38,7 +38,7 @@
         <v-btn
           @click="signIn"
           height="56px"
-          class=" custom-transform-class text-none btn-own"
+          class="custom-transform-class text-none btn-own"
           color="primary">
           Entrar
         </v-btn>

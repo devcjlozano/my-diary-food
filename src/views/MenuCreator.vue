@@ -29,64 +29,64 @@
           </thead>
           <tbody class="">
             <tr
-              v-for="dayWeek in menu"
-              :key="dayWeek.nameFood">
+              v-for="foodDistribution in menu"
+              :key="foodDistribution.nameFoodDistribution">
               <td
                 class="td-food"
-                style="width:2%">{{ dayWeek.nameFood }}</td>
+                style="width:2%">{{ foodDistribution.nameFoodDistribution }}</td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.lunes.food"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.lunes.food"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
-                  :label="dayWeek.nameFood.toLowerCase()"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
                   no-resize></v-textarea>
               </td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.martes.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
-                  solo
-                  no-resize></v-textarea>
-              </td>
-              <td class="td-input">
-                <v-textarea
-                  v-model="dayWeek.daysFood.miercoles.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.martes.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
                   no-resize></v-textarea>
               </td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.jueves.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.miercoles.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
                   no-resize></v-textarea>
               </td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.viernes.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.jueves.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
                   no-resize></v-textarea>
               </td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.sabado.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.viernes.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
                   no-resize></v-textarea>
               </td>
               <td class="td-input">
                 <v-textarea
-                  v-model="dayWeek.daysFood.domingo.food"
-                  :label="dayWeek.nameFood.toLowerCase()"
-                  :rows="esSnack(dayWeek.nameFood) ? '3' : '5'"
+                  v-model="foodDistribution.daysFood.sabado.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  solo
+                  no-resize></v-textarea>
+              </td>
+              <td class="td-input">
+                <v-textarea
+                  v-model="foodDistribution.daysFood.domingo.food"
+                  :label="foodDistribution.nameFoodDistribution.toLowerCase()"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -95,17 +95,30 @@
         </template>
       </v-simple-table>
     </div>
+    <div class="menu_creator__footer">
+      <span class="menu_creator__footer__text-information">
+        *Recuerda rellenar todas las comidas de la semana
+      </span>
+      <v-btn
+        @click="saveMenu"
+        class="custom-transform-class text-none btn-own"
+        color="primary">
+          Guardar menú
+      </v-btn>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'MenuCreator',
 
   data: () => ({
     menu: [
       {
-        nameFood: 'Desayuno',
+        nameFoodDistribution: 'Desayuno',
         daysFood: {
           lunes: {
             nameDay: 'Lunes',
@@ -138,7 +151,7 @@ export default {
         }
       },
       {
-        nameFood: 'Snack',
+        nameFoodDistribution: 'Snack',
         daysFood: {
           lunes: {
             nameDay: 'Lunes',
@@ -171,7 +184,7 @@ export default {
         }
       },
       {
-        nameFood: 'Almuerzo',
+        nameFoodDistribution: 'Almuerzo',
         daysFood: {
           lunes: {
             nameDay: 'Lunes',
@@ -204,7 +217,7 @@ export default {
         }
       },
       {
-        nameFood: 'Merienda',
+        nameFoodDistribution: 'Merienda',
         daysFood: {
           lunes: {
             nameDay: 'Lunes',
@@ -237,7 +250,7 @@ export default {
         }
       },
       {
-        nameFood: 'Cena',
+        nameFoodDistribution: 'Cena',
         daysFood: {
           lunes: {
             nameDay: 'Lunes',
@@ -271,10 +284,31 @@ export default {
       }
     ]
   }),
+  computed: {
+    ...mapGetters('auth', {
+      user: 'user'
+    })
+  },
   methods: {
-    esSnack (nameFood) {
-      if (nameFood === 'Snack' || nameFood === 'Merienda') { return true }
+    esSnack (nameFoodDistribution) {
+      if (nameFoodDistribution === 'Snack' || nameFoodDistribution === 'Merienda') { return true }
       return false
+    },
+    saveMenu () {
+      const payload = {
+        menu: JSON.stringify(this.menu),
+        name: 'prueba',
+        isFav: false,
+        shared: false,
+        isCurrent: false,
+        idUser: this.user.sub
+      }
+      this.$store.dispatch('menu/saveMenu', payload)
+        .then(() => {
+          console.log('se ha guardado correctamente')
+        }).catch(() => {
+          console.log('error')
+        })
     }
   }
 }
@@ -300,6 +334,17 @@ export default {
    overflow-y: hidden;
    white-space: nowrap;
    font-size: 0.8em;
+ }
+ .menu_creator__footer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   margin-top: 10px;
+   padding-right: 4px;
+ }
+ .menu_creator__footer__text-information {
+   margin-right: 10px;
+   font-style: italic;
  }
  .td-food {
    width: 2%;
