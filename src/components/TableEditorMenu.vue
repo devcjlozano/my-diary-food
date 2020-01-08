@@ -84,15 +84,15 @@
       </v-simple-table>
     </div>
     <div class="table-editor__footer">
+      <span class="mtable-editor__footer__text-information">
+         *Recuerda rellenar todas las comidas de la semana
+      </span>
       <v-btn
         @click="saveMenu"
         class="custom-transform-class text-none btn-own"
         color="primary">
           Guardar menú
       </v-btn>
-      <span class="mtable-editor__footer__text-information">
-         *Recuerda rellenar todas las comidas de la semana
-      </span>
     </div>
   </div>
 </template>
@@ -164,7 +164,7 @@ export default {
  }
  .table-editor__footer {
    display: flex;
-   justify-content: flex-start;
+   justify-content: space-between;
    flex-wrap: wrap;
    align-items: center;
    max-width: 1600px;

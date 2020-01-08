@@ -12,22 +12,30 @@
       <p> Podrás crear menus semanales rápidamente, rellena tus comidas para cada momento
         del día y en la parte inferior dale a guardar, <strong> !así de fácil! </strong> </p>
     </div>
-    <div class="menu_creator__container-table">
+    <div
+      v-if="!menuIsCreated"
+      class="menu_creator__container-table">
       <TableEditorMenu
         :menu="menu"
         @save-menu="saveMenu"/>
+    </div>
+    <div class="menu_creator__menu-success" v-else>
+      <MenuCreatedSuccess
+        @go-to-menu-creator="goToMenuCreator"/>
     </div>
   </div>
 </template>
 
 <script>
 import TableEditorMenu from '@/components/TableEditorMenu'
+import MenuCreatedSuccess from '@/components/MenuCreatedSuccess'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'MenuCreator',
   components: {
-    TableEditorMenu
+    TableEditorMenu,
+    MenuCreatedSuccess
   },
   data: () => ({
     menu: [
@@ -196,7 +204,8 @@ export default {
           }
         }
       }
-    ]
+    ],
+    menuIsCreated: false
   }),
   computed: {
     ...mapGetters('auth', {
@@ -215,10 +224,16 @@ export default {
       }
       this.$store.dispatch('menu/saveMenu', payload)
         .then(() => {
-          console.log('se ha guardado correctamente')
+          this.menuIsCreated = true
         }).catch(() => {
           console.log('error')
         })
+    },
+    showMenuSuccess () {
+      this.menuIsCreated = true
+    },
+    goToMenuCreator () {
+      this.menuIsCreated = false
     }
   }
 }
@@ -237,6 +252,10 @@ export default {
  }
  .menu_creator__subtitle {
   margin-bottom: 40px;
+ }
+ .menu_creator__menu-success {
+   display: flex;
+   justify-content: center;
  }
  div /deep/ .v-icon {
    color: black;
