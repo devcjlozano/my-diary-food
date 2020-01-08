@@ -238,22 +238,6 @@ export default {
  .menu_creator__subtitle {
   margin-bottom: 40px;
  }
- .menu_creator__container-table {
-   overflow: visible;
-   overflow-x: visible;
-   overflow-y: hidden;
-   white-space: nowrap;
-   font-size: 0.8em;
- }
- .td-food {
-   width: 2%;
- }
- .td-input {
-   border-bottom: none !important;
- }
- .td-input {
-   padding: 0 5px;
- }
  div /deep/ .v-icon {
    color: black;
    font-size: 1.7em;
