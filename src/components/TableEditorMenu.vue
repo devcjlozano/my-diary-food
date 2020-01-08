@@ -1,5 +1,17 @@
 <template>
   <div class="table-editor">
+    <div class="table-editor__field-name">
+      <div class="table-editor__field-name__input">
+        <v-text-field
+          v-model="menu.name"
+          label="Escribe para editar el nombre del menú"
+          counter="35"
+          maxlength="35"
+          :placeholder="getNameMenu()"
+          append-icon="mdi-pencil">
+        </v-text-field>
+      </div>
+    </div>
     <div class="table-editor__table">
       <v-simple-table dense>
         <template v-slot:default>
@@ -17,7 +29,7 @@
           </thead>
           <tbody class="">
             <tr
-              v-for="foodDistribution in menu"
+              v-for="foodDistribution in menu.menuDistribution"
               :key="foodDistribution.nameFoodDistribution">
               <td
                 class="td-food"
@@ -98,12 +110,14 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'TableEditorMenu',
   props: {
     menu: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     }
   },
   methods: {
@@ -113,6 +127,12 @@ export default {
     esSnack (nameFoodDistribution) {
       if (nameFoodDistribution === 'Snack' || nameFoodDistribution === 'Merienda') { return true }
       return false
+    },
+    getCurrentDate () {
+      return moment(Date().now).format('DD/MM/YYYY')
+    },
+    getNameMenu () {
+      return this.menu.name === '' ? `Menu ${this.getCurrentDate()}` : this.menu.name
     }
   }
 }
@@ -125,6 +145,15 @@ export default {
   overflow-y: hidden;
   white-space: nowrap;
   font-size: 0.8em;
+}
+.table-editor__field-name {
+  display: flex;
+  margin: auto;
+  max-width: 1600px;
+}
+.table-editor__field-name__input {
+  width: 300px;
+  margin-bottom: 10px;
 }
  div /deep/ .v-data-table {
    margin: auto;
@@ -150,7 +179,7 @@ export default {
    top: 7px !important;
    font-size: 0.9em;
  }
- div /deep/ .v-text-field__details {
+ div /deep/ .v-data-table .v-text-field__details {
    display: none
  }
 .td-food {
@@ -174,5 +203,10 @@ export default {
  .table-editor__footer__text-information {
    margin-right: 10px;
    font-style: italic;
+ }
+ @media (min-width: 700px) {
+  .table-editor__field-name__input {
+     width: 500px;
+  }
  }
 </style>

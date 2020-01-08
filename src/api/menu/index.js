@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-const saveMenu = payload => axios({
+const saveMenu = menu => axios({
   method: 'post',
   url: 'http://localhost:3001/menus/saveMenu',
   data: {
-    name: payload.name,
-    isFav: payload.isFav,
-    shared: payload.shared,
-    isCurrent: payload.isCurrent,
-    menu: payload.menu,
-    idUser: payload.idUser
+    name: menu.name,
+    isFav: menu.isFav,
+    shared: menu.shared,
+    isCurrent: menu.isCurrent,
+    menuDistribution: JSON.stringify(menu.menuDistribution),
+    idUser: menu.idUser
   }
 })
 

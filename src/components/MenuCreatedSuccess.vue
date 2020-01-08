@@ -11,6 +11,9 @@
           text>
             Volver a crear un nuevo menú
         </v-btn>
+        <span class="menu-created-success__information__buttons__text">
+          o
+        </span>
         <v-btn
           dark
           color="#110133"
@@ -36,6 +39,7 @@ export default {
 <style scoped>
  .menu-created-success {
     width: 100%;
+    margin-top: 40px;
     max-width: 800px;
     background-color: #00aeaa;
     padding: 20px 30px 40px;
@@ -45,6 +49,13 @@ export default {
     color: #110133;
  }
  .menu-created-success__information__buttons {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
    margin-top: 40px;
+ }
+ .menu-created-success__information__buttons__text {
+   margin-right: 20px;
  }
 </style>

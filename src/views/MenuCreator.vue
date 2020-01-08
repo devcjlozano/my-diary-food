@@ -23,6 +23,13 @@
       <MenuCreatedSuccess
         @go-to-menu-creator="goToMenuCreator"/>
     </div>
+    <v-btn
+        v-if="!menuIsCreated"
+        @click="showMenuSuccess"
+        class="custom-transform-class text-none btn-own"
+        color="primary">
+          Mostrar success
+      </v-btn>
   </div>
 </template>
 
@@ -38,173 +45,180 @@ export default {
     MenuCreatedSuccess
   },
   data: () => ({
-    menu: [
-      {
-        nameFoodDistribution: 'Desayuno',
-        daysFood: {
-          lunes: {
-            nameDay: 'Lunes',
-            food: ''
-          },
-          martes: {
-            nameDay: 'Martes',
-            food: ''
-          },
-          miercoles: {
-            nameDay: 'Miércoles',
-            food: ''
-          },
-          jueves: {
-            nameDay: 'Jueves',
-            food: ''
-          },
-          viernes: {
-            nameDay: 'Viernes',
-            food: ''
-          },
-          sabado: {
-            nameDay: 'Sábado',
-            food: ''
-          },
-          domingo: {
-            nameDay: 'Domingo',
-            food: ''
+    menu: {
+      name: 'nombre de antes',
+      isFav: false,
+      shared: false,
+      isCurrent: false,
+      idUser: '',
+      menuDistribution: [
+        {
+          nameFoodDistribution: 'Desayuno',
+          daysFood: {
+            lunes: {
+              nameDay: 'Lunes',
+              food: ''
+            },
+            martes: {
+              nameDay: 'Martes',
+              food: ''
+            },
+            miercoles: {
+              nameDay: 'Miércoles',
+              food: ''
+            },
+            jueves: {
+              nameDay: 'Jueves',
+              food: ''
+            },
+            viernes: {
+              nameDay: 'Viernes',
+              food: ''
+            },
+            sabado: {
+              nameDay: 'Sábado',
+              food: ''
+            },
+            domingo: {
+              nameDay: 'Domingo',
+              food: ''
+            }
+          }
+        },
+        {
+          nameFoodDistribution: 'Snack',
+          daysFood: {
+            lunes: {
+              nameDay: 'Lunes',
+              food: ''
+            },
+            martes: {
+              nameDay: 'Martes',
+              food: ''
+            },
+            miercoles: {
+              nameDay: 'Miércoles',
+              food: ''
+            },
+            jueves: {
+              nameDay: 'Jueves',
+              food: ''
+            },
+            viernes: {
+              nameDay: 'Viernes',
+              food: ''
+            },
+            sabado: {
+              nameDay: 'Sábado',
+              food: ''
+            },
+            domingo: {
+              nameDay: 'Domingo',
+              food: ''
+            }
+          }
+        },
+        {
+          nameFoodDistribution: 'Almuerzo',
+          daysFood: {
+            lunes: {
+              nameDay: 'Lunes',
+              food: ''
+            },
+            martes: {
+              nameDay: 'Martes',
+              food: ''
+            },
+            miercoles: {
+              nameDay: 'Miércoles',
+              food: ''
+            },
+            jueves: {
+              nameDay: 'Jueves',
+              food: ''
+            },
+            viernes: {
+              nameDay: 'Viernes',
+              food: ''
+            },
+            sabado: {
+              nameDay: 'Sábado',
+              food: ''
+            },
+            domingo: {
+              nameDay: 'Domingo',
+              food: ''
+            }
+          }
+        },
+        {
+          nameFoodDistribution: 'Merienda',
+          daysFood: {
+            lunes: {
+              nameDay: 'Lunes',
+              food: ''
+            },
+            martes: {
+              nameDay: 'Martes',
+              food: ''
+            },
+            miercoles: {
+              nameDay: 'Miércoles',
+              food: ''
+            },
+            jueves: {
+              nameDay: 'Jueves',
+              food: ''
+            },
+            viernes: {
+              nameDay: 'Viernes',
+              food: ''
+            },
+            sabado: {
+              nameDay: 'Sábado',
+              food: ''
+            },
+            domingo: {
+              nameDay: 'Domingo',
+              food: ''
+            }
+          }
+        },
+        {
+          nameFoodDistribution: 'Cena',
+          daysFood: {
+            lunes: {
+              nameDay: 'Lunes',
+              food: ''
+            },
+            martes: {
+              nameDay: 'Martes',
+              food: ''
+            },
+            miercoles: {
+              nameDay: 'Miércoles',
+              food: ''
+            },
+            jueves: {
+              nameDay: 'Jueves',
+              food: ''
+            },
+            viernes: {
+              nameDay: 'Viernes',
+              food: ''
+            },
+            sabado: {
+              nameDay: 'Sábado',
+              food: ''
+            },
+            domingo: {
+              nameDay: 'Domingo',
+              food: ''
+            }
           }
         }
-      },
-      {
-        nameFoodDistribution: 'Snack',
-        daysFood: {
-          lunes: {
-            nameDay: 'Lunes',
-            food: ''
-          },
-          martes: {
-            nameDay: 'Martes',
-            food: ''
-          },
-          miercoles: {
-            nameDay: 'Miércoles',
-            food: ''
-          },
-          jueves: {
-            nameDay: 'Jueves',
-            food: ''
-          },
-          viernes: {
-            nameDay: 'Viernes',
-            food: ''
-          },
-          sabado: {
-            nameDay: 'Sábado',
-            food: ''
-          },
-          domingo: {
-            nameDay: 'Domingo',
-            food: ''
-          }
-        }
-      },
-      {
-        nameFoodDistribution: 'Almuerzo',
-        daysFood: {
-          lunes: {
-            nameDay: 'Lunes',
-            food: ''
-          },
-          martes: {
-            nameDay: 'Martes',
-            food: ''
-          },
-          miercoles: {
-            nameDay: 'Miércoles',
-            food: ''
-          },
-          jueves: {
-            nameDay: 'Jueves',
-            food: ''
-          },
-          viernes: {
-            nameDay: 'Viernes',
-            food: ''
-          },
-          sabado: {
-            nameDay: 'Sábado',
-            food: ''
-          },
-          domingo: {
-            nameDay: 'Domingo',
-            food: ''
-          }
-        }
-      },
-      {
-        nameFoodDistribution: 'Merienda',
-        daysFood: {
-          lunes: {
-            nameDay: 'Lunes',
-            food: ''
-          },
-          martes: {
-            nameDay: 'Martes',
-            food: ''
-          },
-          miercoles: {
-            nameDay: 'Miércoles',
-            food: ''
-          },
-          jueves: {
-            nameDay: 'Jueves',
-            food: ''
-          },
-          viernes: {
-            nameDay: 'Viernes',
-            food: ''
-          },
-          sabado: {
-            nameDay: 'Sábado',
-            food: ''
-          },
-          domingo: {
-            nameDay: 'Domingo',
-            food: ''
-          }
-        }
-      },
-      {
-        nameFoodDistribution: 'Cena',
-        daysFood: {
-          lunes: {
-            nameDay: 'Lunes',
-            food: ''
-          },
-          martes: {
-            nameDay: 'Martes',
-            food: ''
-          },
-          miercoles: {
-            nameDay: 'Miércoles',
-            food: ''
-          },
-          jueves: {
-            nameDay: 'Jueves',
-            food: ''
-          },
-          viernes: {
-            nameDay: 'Viernes',
-            food: ''
-          },
-          sabado: {
-            nameDay: 'Sábado',
-            food: ''
-          },
-          domingo: {
-            nameDay: 'Domingo',
-            food: ''
-          }
-        }
-      }
-    ],
+      ]
+    },
     menuIsCreated: false
   }),
   computed: {
@@ -214,15 +228,8 @@ export default {
   },
   methods: {
     saveMenu () {
-      const payload = {
-        menu: JSON.stringify(this.menu),
-        name: 'prueba',
-        isFav: false,
-        shared: false,
-        isCurrent: false,
-        idUser: this.user.sub
-      }
-      this.$store.dispatch('menu/saveMenu', payload)
+      this.menu.idUser = this.user.sub
+      this.$store.dispatch('menu/saveMenu', this.menu)
         .then(() => {
           this.menuIsCreated = true
         }).catch(() => {
@@ -250,9 +257,6 @@ export default {
    text-align: center;
    margin: 30px 0 0
  }
- .menu_creator__subtitle {
-  margin-bottom: 40px;
- }
  .menu_creator__menu-success {
    display: flex;
    justify-content: center;
@@ -263,8 +267,8 @@ export default {
    margin-left: 10px;
  }
  @media (min-width: 700px) {
-  .menu_creator {
-   padding: 0 90px;
+   .menu_creator {
+     padding: 0 90px;
  }
 }
 </style>
