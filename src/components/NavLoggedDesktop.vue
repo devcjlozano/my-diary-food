@@ -11,8 +11,11 @@
             <span> My diary Food </span>
         </div>
         <v-toolbar-items>
-          <v-btn text> Mis menus </v-btn>
-          <v-btn text> Menus compartidos </v-btn>
+          <v-btn
+            to='/home'
+            text> Menú actual </v-btn>
+          <v-btn text> Todos mis menús </v-btn>
+          <v-btn text> Menús compartidos </v-btn>
         </v-toolbar-items>
         <div class="toolbar-content__user">
           <span class="toolbar-content__user--name">{{ user.name }} </span>
@@ -58,15 +61,10 @@ export default {
 }
 </script>
 <style scoped>
-.v-toolbar {
-  height: 200px;
-}
 .toolbar-content {
-   display: flex;
-}
-.toolbar-content {
+  display: flex;
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   height: 100%;
   justify-content: space-between;
   align-items: center;

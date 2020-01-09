@@ -8,6 +8,14 @@ const actions = {
     } catch (err) {
       throw (err.response)
     }
+  },
+  async getMenus ({ commit }, mailUser) {
+    try {
+      const { data } = await api.getMenus(mailUser)
+      commit('RECEIVE_MENUS', data.menus)
+    } catch (err) {
+      throw (err.response)
+    }
   }
 }
 

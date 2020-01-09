@@ -13,6 +13,12 @@ const saveMenu = menu => axios({
   }
 })
 
+const getMenus = mailUser => axios({
+  method: 'get',
+  url: `http://localhost:3001/menus/getMenus/${mailUser}`
+})
+
 export default {
-  saveMenu
+  saveMenu,
+  getMenus
 }

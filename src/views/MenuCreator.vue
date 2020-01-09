@@ -46,7 +46,7 @@ export default {
   },
   data: () => ({
     menu: {
-      name: 'nombre de antes',
+      name: '',
       isFav: false,
       shared: false,
       isCurrent: false,
