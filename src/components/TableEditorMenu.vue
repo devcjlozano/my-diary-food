@@ -36,8 +36,9 @@
                 style="width:2%">{{ foodDistribution.nameFoodDistribution }}</td>
               <td class="td-input">
                 <v-textarea
+                  maxlength="125"
                   v-model="foodDistribution.daysFood.lunes.food"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
                   no-resize></v-textarea>
@@ -46,7 +47,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.martes.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -54,7 +55,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.miercoles.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -62,7 +63,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.jueves.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -70,7 +71,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.viernes.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -78,7 +79,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.sabado.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
@@ -86,7 +87,7 @@
                 <v-textarea
                   v-model="foodDistribution.daysFood.domingo.food"
                   :label="foodDistribution.nameFoodDistribution.toLowerCase()"
-                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '5'"
+                  :rows="esSnack(foodDistribution.nameFoodDistribution) ? '3' : '6'"
                   solo
                   no-resize></v-textarea>
               </td>
