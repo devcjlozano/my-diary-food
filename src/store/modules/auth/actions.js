@@ -8,11 +8,7 @@ const actions = {
       window.localStorage.setItem('_token', data.token)
       commit('SET_USER')
     } catch (err) {
-      if (err.response) {
-        throw (err.response)
-      } else {
-        throw (err)
-      }
+      throw (err.response ? err.response : err)
     }
   },
   logout ({ commit }) {
