@@ -22,9 +22,7 @@ export default {
     TableShowMenu
   },
   data () {
-    return {
-      errorMenus: false
-    }
+    return {}
   },
   computed: {
     ...mapGetters('auth', {
@@ -39,7 +37,8 @@ export default {
       .then(() => {
         console.log('Menus cargados correctamente')
       }).catch(() => {
-        this.errorMenus = true
+        this.$store.dispatch('auth/logout')
+        this.$router.push({ name: 'login' })
       })
   }
 }

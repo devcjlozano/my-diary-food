@@ -233,7 +233,8 @@ export default {
         .then(() => {
           this.menuIsCreated = true
         }).catch(() => {
-          console.log('error')
+          this.$store.dispatch('auth/logout')
+          this.$router.push({ name: 'login' })
         })
     },
     showMenuSuccess () {

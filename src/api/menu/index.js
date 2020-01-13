@@ -10,12 +10,18 @@ const saveMenu = menu => axios({
     isCurrent: menu.isCurrent,
     menuDistribution: JSON.stringify(menu.menuDistribution),
     idUser: menu.idUser
+  },
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
 
-const getMenus = mailUser => axios({
+const getMenus = () => axios({
   method: 'get',
-  url: `http://localhost:3001/menus/getMenus/${mailUser}`
+  url: 'http://localhost:3001/menus/getMenus/',
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
 })
 
 export default {

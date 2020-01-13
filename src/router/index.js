@@ -61,7 +61,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.Auth && !store.getters['auth/isLoggedIn']) {
-    next({ path: '/' })
+    next({ name: 'login', replace: true })
   } else {
     if (store.getters['auth/isLoggedIn']) {
       store.commit('auth/SET_USER')
