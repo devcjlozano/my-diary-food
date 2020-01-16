@@ -14,7 +14,10 @@
           <v-btn
             to='/home'
             text> Menú actual </v-btn>
-          <v-btn text> Todos mis menús </v-btn>
+          <v-btn
+            to='/allmenus'
+             text> Todos mis menús
+          </v-btn>
           <v-btn text> Menús compartidos </v-btn>
         </v-toolbar-items>
         <div class="toolbar-content__user">

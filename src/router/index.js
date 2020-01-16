@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import SignUp from '../views/Signup.vue'
+import AllMenus from '../views/AllMenus.vue'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -34,13 +35,10 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/about',
+    path: '/allmenus',
+    name: 'allmenus',
     meta: { Auth: false },
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: AllMenus
   },
   {
     path: '/menucreator',
@@ -50,6 +48,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/MenuCreator.vue')
+  },
+  {
+    path: '/about',
+    meta: { Auth: false },
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
