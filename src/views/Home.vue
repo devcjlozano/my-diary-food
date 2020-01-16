@@ -15,7 +15,7 @@
       </div>
     </transition>
     <div
-      v-if="listMenus.length === 0 && menusIsLoad">
+      v-if="Object.keys(currentMenu).length === 0 && menusIsLoad">
       <h3> No tienes ningún menu</h3>
       <router-link to='/menucreator'> Crear menu </router-link>
     </div>
@@ -34,7 +34,6 @@ export default {
   },
   data () {
     return {
-      currentMenu: {},
       menusIsLoad: false,
       componentKey: 0
     }
@@ -44,11 +43,19 @@ export default {
       user: 'user'
     }),
     ...mapGetters('menu', {
-      listMenus: 'listMenus'
+      listMenus: 'listMenus',
+      currentMenu: 'currentMenu'
     })
   },
   mounted () {
-    this.$store.dispatch('menu/getMenus', this.user.email)
+    this.$store.dispatch('menu/getCurrentMenu')
+      .then(() => {
+        this.menusIsLoad = true
+      }).catch(() => {
+        this.$store.dispatch('auth/logout')
+        this.$router.push({ name: 'login' })
+      })
+    /* this.$store.dispatch('menu/getMenus', this.user.email)
       .then(() => {
         if (this.listMenus.length > 0) {
           const indexCurrentMenu = this.listMenus.findIndex(menu => menu.isCurrent)
@@ -58,7 +65,7 @@ export default {
       }).catch(() => {
         this.$store.dispatch('auth/logout')
         this.$router.push({ name: 'login' })
-      })
+      }) */
   },
   methods: {
     nextMenu () {

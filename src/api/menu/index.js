@@ -23,8 +23,16 @@ const getMenus = () => axios({
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
+const getCurrentMenu = () => axios({
+  method: 'get',
+  url: 'http://localhost:3001/menus/getCurrentMenu/',
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
 
 export default {
   saveMenu,
-  getMenus
+  getMenus,
+  getCurrentMenu
 }

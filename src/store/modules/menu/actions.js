@@ -16,6 +16,14 @@ const actions = {
     } catch (err) {
       throw (err.response)
     }
+  },
+  async getCurrentMenu ({ commit }, mailUser) {
+    try {
+      const { data } = await api.getCurrentMenu(mailUser)
+      commit('RECEIVE_CURRENT_MENU', data.currentMenu)
+    } catch (err) {
+      throw (err.response)
+    }
   }
 }
 

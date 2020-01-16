@@ -5,6 +5,9 @@ const mutations = {
   },
   RECEIVE_MENUS (state, menus) {
     state.listMenus = menus
+  },
+  RECEIVE_CURRENT_MENU (state, currentMenu) {
+    state.currentMenu = currentMenu
   }
 }
 export default mutations
