@@ -9,7 +9,6 @@
       mode="out-in">
       <div
         v-if="Object.keys(currentMenu).length !== 0"
-        :key="componentKey"
         class="home__table-menu">
         <TableShowMenu :menu="currentMenu"/>
       </div>
@@ -55,17 +54,6 @@ export default {
         this.$store.dispatch('auth/logout')
         this.$router.push({ name: 'login' })
       })
-    /* this.$store.dispatch('menu/getMenus', this.user.email)
-      .then(() => {
-        if (this.listMenus.length > 0) {
-          const indexCurrentMenu = this.listMenus.findIndex(menu => menu.isCurrent)
-          this.currentMenu = indexCurrentMenu === -1 ? this.listMenus[0] : this.listMenus[indexCurrentMenu]
-        }
-        this.menusIsLoad = true
-      }).catch(() => {
-        this.$store.dispatch('auth/logout')
-        this.$router.push({ name: 'login' })
-      }) */
   },
   methods: {
     nextMenu () {
@@ -102,6 +90,5 @@ export default {
    .home {
      padding: 0 40px;
   }
-
  }
 </style>>
