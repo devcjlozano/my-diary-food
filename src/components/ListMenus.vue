@@ -8,17 +8,15 @@
         name="fade"
         mode="out-in">
       <TableShowMenu
-        :menu="listMenus[indexMenu]"
+        :menu="listMenus[page - 1]"
         :key="componentKey"/>
       </transition>
-      <v-btn
-        @click="nextMenu">
-          Siguiente menú
-      </v-btn>
-      <v-btn
-        @click="backMenu">
-          Anterior menú
-      </v-btn>
+      <div class="list-menus__paginator">
+        <v-pagination
+          v-model="page"
+          :length="listMenus.length"
+          />
+      </div>
     </div>
   </div>
 </template>
@@ -33,7 +31,7 @@ export default {
   },
   data () {
     return {
-      indexMenu: 0,
+      page: 1,
       componentKey: 0
     }
   },
@@ -42,13 +40,13 @@ export default {
       listMenus: 'listMenus'
     })
   },
+  watch: {
+    page () {
+      this.forceRenderComponentTable()
+    }
+  },
   methods: {
-    nextMenu () {
-      this.componentKey += 1
-      this.indexMenu = 1
-    },
-    backMenu () {
-      this.indexMenu = 0
+    forceRenderComponentTable () {
       this.componentKey += 1
     }
   }
@@ -57,6 +55,12 @@ export default {
 <style scoped>
  .list-menus {
    overflow: auto
+ }
+ .list-menus__paginator {
+   margin: auto;
+   display: flex;
+   justify-content: center;
+   max-width: 700px;
  }
  .fade-enter-active,
  .fade-leave-active {
