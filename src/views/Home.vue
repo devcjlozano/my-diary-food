@@ -1,28 +1,43 @@
 <template>
   <div class="home">
-    <ListadoMenus />
+    <div class="home__title">
+      <h1> Menú actual </h1>
+    </div>
+    <transition
+      appear
+      name="fade"
+      mode="out-in">
+      <div
+        v-if="Object.keys(currentMenu).length !== 0"
+        :key="componentKey"
+        class="home__table-menu">
+        <TableShowMenu :menu="currentMenu"/>
+      </div>
+    </transition>
     <div
-      v-if="listMenus.length > 0"
-      class="home__table-menu">
-      <TableShowMenu :menu="listMenus[0]"/>
+      v-if="listMenus.length === 0 && menusIsLoad">
+      <h3> No tienes ningún menu</h3>
+      <router-link to='/menucreator'> Crear menu </router-link>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ListadoMenus from '@/components/ListadoMenus.vue'
 import TableShowMenu from '@/components/TableShowMenu'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   components: {
-    ListadoMenus,
     TableShowMenu
   },
   data () {
-    return {}
+    return {
+      currentMenu: {},
+      menusIsLoad: false,
+      componentKey: 0
+    }
   },
   computed: {
     ...mapGetters('auth', {
@@ -35,11 +50,25 @@ export default {
   mounted () {
     this.$store.dispatch('menu/getMenus', this.user.email)
       .then(() => {
-        console.log('Menus cargados correctamente')
+        if (this.listMenus.length > 0) {
+          const indexCurrentMenu = this.listMenus.findIndex(menu => menu.isCurrent)
+          this.currentMenu = indexCurrentMenu === -1 ? this.listMenus[0] : this.listMenus[indexCurrentMenu]
+        }
+        this.menusIsLoad = true
       }).catch(() => {
         this.$store.dispatch('auth/logout')
         this.$router.push({ name: 'login' })
       })
+  },
+  methods: {
+    nextMenu () {
+      this.currentMenu = this.listMenus[1]
+      this.componentKey += 1
+    },
+    backMenu () {
+      this.currentMenu = this.listMenus[0]
+      this.componentKey += 1
+    }
   }
 }
 </script>
@@ -48,8 +77,19 @@ export default {
    padding: 0 20px;
    text-align: center;
  }
+ .home__title {
+   margin-top: 20px
+ }
  .home__table-menu {
    overflow: auto
+ }
+ .fade-enter-active,
+ .fade-leave-active {
+  transition: opacity .3s ease
+ }
+ .fade-enter,
+ .fade-leave-to {
+   opacity: 0
  }
  @media (min-width: 700px) {
    .home {
