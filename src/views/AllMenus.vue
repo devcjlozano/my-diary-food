@@ -3,21 +3,32 @@
     <div class="all-menus__title">
       <h1> Listado de todos tus menús </h1>
     </div>
-    <ListMenus/>
+    <div class="all-menus__list">
+      <ListMenus />
+    </div>
+    <div class="all-menus__table-menu">
+    </div>
+    <div class="all-menus__visor-list-menus">
+      <VisorMenus/>
+    </div>
   </div>
 </template>
 <script>
 import ListMenus from '@/components/ListMenus'
+import VisorMenus from '@/components/VisorMenus'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'AllMenus',
   components: {
+    VisorMenus,
     ListMenus
   },
   data () {
     return {
-      menusIsLoad: false
+      menusIsLoad: false,
+      showTableMenu: false,
+      showVisorMenus: true
     }
   },
   computed: {
