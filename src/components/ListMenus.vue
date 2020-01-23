@@ -1,37 +1,53 @@
 <template>
-  <div>
-    <v-card
-      class="mx-auto"
-      max-width="344"
-      outlined>
-      <v-list-item three-line>
-        <v-list-item-content>
-          <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-          <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-avatar
-          tile
-          size="80">
-        <v-icon >mdi-silverware-spoon</v-icon></v-list-item-avatar>
-      </v-list-item>
-      <v-card-actions>
-        <v-btn text>Button</v-btn>
-      </v-card-actions>
-    </v-card>
+  <div class="list-menus">
+    <div class="list-menus__containers-cards">
+      <CardMenu
+        v-for="menu in listMenus"
+        :key="menu.id"
+        :menu="menu"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import CardMenu from '@/components/cardMenu'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'ListMenus',
-  props: {
-    listMenus: {
-      type: Array,
-      default: () => []
-    }
+  components: {
+    CardMenu
   },
   data () {
     return {}
+  },
+  computed: {
+    ...mapGetters('menu', {
+      listMenus: 'listMenus'
+    })
   }
 }
 </script>
+<style scoped>
+ .list-menus {
+   display: flex;
+   justify-content: center;
+ }
+ .list-menus__containers-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    max-width: 1600px;
+ }
+ @media (min-width: 600px) {
+   .list-menus__containers-cards {
+     grid-template-columns: 1fr 1fr;
+   }
+ }
+ @media (min-width: 900px) {
+   .list-menus__containers-cards {
+     grid-template-columns: 1fr 1fr 1fr;
+   }
+ }
+</style>

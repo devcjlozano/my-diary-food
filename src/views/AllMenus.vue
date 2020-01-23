@@ -4,7 +4,7 @@
       <h1> Listado de todos tus menús </h1>
     </div>
     <div class="all-menus__list">
-      <ListMenus />
+      <ListMenus/>
     </div>
     <div class="all-menus__table-menu">
     </div>
