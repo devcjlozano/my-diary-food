@@ -1,8 +1,8 @@
 <template>
   <div class="table-show-menu">
-    <div class="table-show-menu__name-menu">
-      Nombre:
-      <span class="table-show-menu__name-menu--textname">
+    <div class="table-show-menu__info">
+      <span> {{`Nombre:\u00A0`}} </span>
+      <span class="table-show-menu__info--textname">
         {{ menu.name }}
       </span>
     </div>
@@ -57,12 +57,15 @@ export default {
 }
 </script>
 <style scoped>
- .table-show-menu__name-menu {
+ .table-show-menu__info {
+   display: flex;
+   margin: auto;
+   max-width: 1600px;
    text-align: left;
    font-size: 0.9em;
    margin-bottom: 15px;
  }
- .table-show-menu__name-menu--textname {
+ .table-show-menu__info--textname {
    font-weight: bold;
    font-style: italic;
  }
