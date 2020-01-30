@@ -1,17 +1,27 @@
 <template>
   <div class="list-menus">
-    <div class="list-menus__containers-cards">
-      <CardMenu
+    <div class="list-menus__filters">
+      <div>
+        <v-text-field
+          maxlength="60"
+          outlined
+          placeholder="Nombre">
+        </v-text-field>
+      </div>
+    </div>
+    <div class="list-menus__container-cards">
+      <div
+        class="list-menu__container__cards__card"
         v-for="menu in listMenus"
-        :key="menu.id"
-        :menu="menu"
-      />
+        :key="menu.id">
+          <CardMenu :menu="menu"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import CardMenu from '@/components/cardMenu'
+import CardMenu from '@/components/CardMenu'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -32,22 +42,18 @@ export default {
 <style scoped>
  .list-menus {
    display: flex;
-   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   flex-wrap: wrap;
  }
- .list-menus__containers-cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 20px;
-    max-width: 1600px;
+ .list-menus__filters {
+   display: flex;
  }
- @media (min-width: 600px) {
-   .list-menus__containers-cards {
-     grid-template-columns: 1fr 1fr;
-   }
+ .list-menus__container-cards {
+    width: 100%;
+    max-width: 1000px;
  }
- @media (min-width: 900px) {
-   .list-menus__containers-cards {
-     grid-template-columns: 1fr 1fr 1fr;
-   }
+ .list-menu__container__cards__card {
+   margin-bottom: 10px;
  }
 </style>
