@@ -61,6 +61,6 @@ export default {
     max-width: 1000px;
  }
  .list-menu__container__cards__card {
-   margin-bottom: 10px;
+   margin-bottom: 20px;
  }
 </style>
