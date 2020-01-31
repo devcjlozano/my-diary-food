@@ -14,7 +14,9 @@
         class="list-menu__container__cards__card"
         v-for="menu in listMenus"
         :key="menu.id">
-          <CardMenu :menu="menu"/>
+          <CardMenu
+            @select-menu="selectMenu"
+            :menu="menu"/>
       </div>
     </div>
   </div>
@@ -31,6 +33,11 @@ export default {
   },
   data () {
     return {}
+  },
+  methods: {
+    selectMenu (menuSelected) {
+      this.$emit('select-menu', menuSelected)
+    }
   },
   computed: {
     ...mapGetters('menu', {

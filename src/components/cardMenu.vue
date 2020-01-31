@@ -11,7 +11,9 @@
       <div class="card-menu__body__info">
         <div class="card-menu__body__info__name">
           <span> {{ menu.name }} </span>
-          <span v-if="menu.isCurrent"> (Este es tu menú actual) </span>
+          <span
+            class="card_menu__body__info__name__text-actual"
+            v-if="menu.isCurrent"> (Este es tu menú actual) </span>
         </div>
         <div class="card-menu__body__info__date">
           <span class="label"> Cuando lo creaste: </span>
@@ -28,7 +30,12 @@
       </div>
     </div>
     <div class="card-menu__body__actions">
-       <v-btn dark color="primary">Ver menú</v-btn>
+       <v-btn
+         dark
+         @click="selectMenu"
+         color="primary">
+           Ver menú
+      </v-btn>
     </div>
   </div>
 </template>
@@ -46,6 +53,11 @@ export default {
     return {
       moment: moment
     }
+  },
+  methods: {
+    selectMenu () {
+      this.$emit('select-menu', this.menu)
+    }
   }
 }
 </script>
@@ -59,6 +71,11 @@ export default {
   .card-menu__body {
     display: flex;
   }
+  .card_menu__body__info__name__text-actual {
+    font-size: 0.8em;
+    font-style: italic;
+    font-weight: 300;
+  }
   .card-menu__body__avatar {
     margin-right: 20px;
   }
@@ -71,6 +88,9 @@ export default {
   }
   .card__icon {
     font-size: 2.8em
+  }
+  .label {
+    font-weight: 300;
   }
   .text-value {
     font-weight: bold;
