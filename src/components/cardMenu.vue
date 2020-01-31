@@ -1,15 +1,29 @@
 <template>
   <div class="card-menu">
     <div class="card-menu__body">
-      <div class="card-menu__body__icon">
-        <v-icon class="card__icon" >mdi-silverware-spoon</v-icon>
+      <div class="card-menu__body__avatar">
+        <v-avatar
+          size="124"
+          tile>
+            <v-img src="../assets/chefHat.png" contain></v-img>
+        </v-avatar>
       </div>
       <div class="card-menu__body__info">
         <div class="card-menu__body__info__name">
-          <span> {{ menu.name }}</span>
+          <span> {{ menu.name }} </span>
+          <span v-if="menu.isCurrent"> (Este es tu menú actual) </span>
         </div>
         <div class="card-menu__body__info__date">
-          <span> Cuando lo creaste {{ moment(menu.createdDate).format('DD/MM/YYYY') }}</span>
+          <span class="label"> Cuando lo creaste: </span>
+          <span class="text-value">{{ moment(menu.createdDate).format('DD/MM/YYYY') }}</span>
+        </div>
+        <div class="card-menu__body__info__favorite">
+          <span class="label"> Es uno de tus favoritos: </span>
+          <span class="text-value">{{ menu.isFav ? 'Si' : 'No' }}</span>
+        </div>
+        <div class="card-menu__body__info__favorite">
+          <span class="label"> Lo has compartido con los demás: </span>
+          <span class="text-value"> {{ menu.isShared ? 'Si' : 'No' }}</span>
         </div>
       </div>
     </div>
@@ -36,39 +50,29 @@ export default {
 }
 </script>
 <style scoped>
-.card-menu {
-  text-align: left;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  padding: 20px 10px;
-  width: 100%
-}
-.card-menu__body {
-  display: flex;
-}
-.card-menu__body__icon {
-  margin-right: 10px;
-}
-.card-menu__body__info__name {
-  font-size: 1.3em;
-  font-weight: 400;
-}
-.card-menu__body__actions {
-  text-align: right;
-}
- .v-list-item__title,
- .v-list-item__subtitle {
-   text-align: left;
-   white-space: normal;
- }
- .v-list-item__title,
- .v-list-item__subtitle {
-   text-align: left;
- }
- .v-card__actions {
-   display: flex;
-   justify-content: flex-end;
- }
- .card__icon {
-   font-size: 2.8em
- }
+  .card-menu {
+    text-align: left;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    padding: 20px 10px;
+    width: 100%
+  }
+  .card-menu__body {
+    display: flex;
+  }
+  .card-menu__body__avatar {
+    margin-right: 20px;
+  }
+  .card-menu__body__info__name {
+    font-size: 1.3em;
+    font-weight: 400;
+  }
+  .card-menu__body__actions {
+    text-align: right;
+  }
+  .card__icon {
+    font-size: 2.8em
+  }
+  .text-value {
+    font-weight: bold;
+  }
 </style>
