@@ -68,7 +68,7 @@ export default {
     listMenusFiltered () {
       const startIndexListMenus = this.numActualPage * 5 - this.numCardByPage
       const endIndexListMenus = startIndexListMenus + 5 >= this.listMenus.length
-        ? this.listMenus.length : startIndexListMenus + this.numCardByPage - 1
+        ? this.listMenus.length : startIndexListMenus + this.numCardByPage
       return this.listMenus.slice(startIndexListMenus, endIndexListMenus)
     }
   },
