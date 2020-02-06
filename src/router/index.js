@@ -50,6 +50,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/MenuCreator.vue')
   },
   {
+    path: '/editorMenu/:menuId',
+    meta: { Auth: true },
+    props: true,
+    name: 'editormenu',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/EditorMenu.vue')
+  },
+  {
     path: '/about',
     meta: { Auth: false },
     name: 'about',
@@ -57,6 +67,16 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/*',
+    meta: { Auth: true },
+    props: true,
+    name: 'errorpage',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/ErrorPage.vue')
   }
 ]
 
