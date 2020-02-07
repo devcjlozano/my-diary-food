@@ -24,8 +24,8 @@ export default {
   },
   props: {
     menuReceived: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    if (this.menuReceived === '') {
+    if (this.menuReceived === undefined) {
       api.getMenu(this.menuIdParam)
         .then(data => {
           this.menuToEdit = data.data.menu
@@ -43,7 +43,9 @@ export default {
           this.menuDistributionToLoaded = true
         })
     } else {
-      this.menuToEdit = this.menuReceived
+      this.menuToEdit = { ...this.menuReceived }
+      this.menuToEdit.menuDistribution = JSON.parse(this.menuToEdit.menuDistribution)
+      this.menuDistributionToLoaded = true
     }
   },
   computed: {

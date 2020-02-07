@@ -1,10 +1,21 @@
 <template>
   <div class="table-show-menu">
     <div class="table-show-menu__info">
-      <span> {{`Nombre:\u00A0`}} </span>
-      <span class="table-show-menu__info--textname">
-        {{ menu.name }}
-      </span>
+      <div class="table-show-menu__info__left">
+        <span> {{`Nombre:\u00A0`}} </span>
+        <span class="table-show-menu__info__left--textname">
+          {{ menu.name }}
+        </span>
+      </div>
+      <div class="table-show-menu__info__rigth">
+        <v-btn
+         small
+         dark
+         @click="goToMenuEdit"
+         color="primary">
+           Editar Menú
+        </v-btn>
+      </div>
     </div>
     <table cellspacing="0">
       <thead>
@@ -52,6 +63,9 @@ export default {
     esSnack (nameFoodDistribution) {
       if (nameFoodDistribution === 'Snack' || nameFoodDistribution === 'Merienda') { return true }
       return false
+    },
+    goToMenuEdit () {
+      this.$emit('go-to-menu-edit', this.menu)
     }
   }
 }
@@ -59,13 +73,18 @@ export default {
 <style scoped>
  .table-show-menu__info {
    display: flex;
+   justify-content: space-between;
    margin: auto;
    max-width: 1600px;
    text-align: left;
    font-size: 0.9em;
    margin-bottom: 15px;
  }
- .table-show-menu__info--textname {
+ .table-show-menu__info__rigth {
+  display: flex;
+  align-items: flex-end;
+ }
+ .table-show-menu__info__left--textname {
    font-weight: bold;
    font-style: italic;
  }

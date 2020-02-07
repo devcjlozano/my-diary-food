@@ -2,6 +2,9 @@
   <div class="home">
     <div class="home__title">
       <h1> Menú actual </h1>
+      <p> Este es el menú que tienes marcado como actual,
+           podrás editarlo si haces click en el botón que hay
+           encima de la tabla a la derecha</p>
     </div>
     <transition
       appear
@@ -10,7 +13,9 @@
       <div
         v-if="Object.keys(currentMenu).length !== 0"
         class="home__table-menu">
-        <TableShowMenu :menu="currentMenu"/>
+        <TableShowMenu
+         @go-to-menu-edit="goToMenuEdit"
+         :menu="currentMenu"/>
       </div>
     </transition>
     <div
@@ -63,6 +68,15 @@ export default {
     backMenu () {
       this.currentMenu = this.listMenus[0]
       this.componentKey += 1
+    },
+    goToMenuEdit (menu) {
+      this.$router.push({
+        name: 'editormenu',
+        params: {
+          menuId: menu._id,
+          menuReceived: menu
+        }
+      })
     }
   }
 }
@@ -73,7 +87,8 @@ export default {
    text-align: center;
  }
  .home__title {
-   margin-top: 20px
+   margin-top: 20px;
+   margin-bottom: 40px;
  }
  .home__table-menu {
    overflow: auto

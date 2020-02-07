@@ -19,7 +19,8 @@
         Volver al listado de mis menus
       </v-btn>
       <TableShowMenu
-        :menu="menuSelected"/>
+        :menu="menuSelected"
+        @go-to-menu-edit="goToMenuEdit"/>
     </div>
     <div class="all-menus__visor-list-menus">
       <VisorMenus v-if="showVisorMenus"/>
@@ -76,6 +77,15 @@ export default {
     backList () {
       this.showTableMenu = false
       this.goToSection('all-menus__title')
+    },
+    goToMenuEdit (menu) {
+      this.$router.push({
+        name: 'editormenu',
+        params: {
+          menuId: menu._id,
+          menuReceived: menu
+        }
+      })
     }
   }
 }
