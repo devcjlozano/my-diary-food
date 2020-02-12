@@ -1,11 +1,11 @@
 <template>
-  <div class="editor_menu">
-    <div class="editor_menu__title">
+  <div class="editor-menu">
+    <div class="editor-menu__title">
       <h1> Editar Menu </h1>
     </div>
     <div
       v-if="Object.keys(menuToEdit).length > 0 && menuDistributionToLoaded"
-      class="editor_menu__table">
+      class="editor-menu__table">
       <TableEditorMenu
         :menu="menuToEdit"
         @save-menu="saveMenu"/>
@@ -59,11 +59,16 @@ export default {
 }
 </script>
 <style scoped>
- .editor_menu {
+ .editor-menu {
    padding: 0 20px;
    text-align: center;
  }
- .editor_menu__title {
+ .editor-menu__title {
    margin: 30px 0 0
+ }
+ @media (min-width: 700px) {
+   .editor-menu {
+     padding: 0 90px;
+    }
  }
 </style>
