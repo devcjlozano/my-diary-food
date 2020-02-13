@@ -8,6 +8,7 @@
       class="editor-menu__table">
       <TableEditorMenu
         :menu="menuToEdit"
+        :is-edit="true"
         @save-menu="saveMenu"/>
     </div>
   </div>

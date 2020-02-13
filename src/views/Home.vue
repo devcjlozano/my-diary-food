@@ -19,9 +19,11 @@
       </div>
     </transition>
     <div
+      class="home__menu-empty"
       v-if="Object.keys(currentMenu).length === 0 && menusIsLoad">
-      <h3> No tienes ningún menu</h3>
-      <router-link to='/menucreator'> Crear menu </router-link>
+      <InfoPanel
+       :main-text="textInfoPanel"
+       :show-link-router="true"/>
     </div>
   </div>
 </template>
@@ -29,17 +31,20 @@
 <script>
 // @ is an alias to /src
 import TableShowMenu from '@/components/TableShowMenu'
+import InfoPanel from '@/components/InfoPanel'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   components: {
-    TableShowMenu
+    TableShowMenu,
+    InfoPanel
   },
   data () {
     return {
       menusIsLoad: false,
-      componentKey: 0
+      componentKey: 0,
+      textInfoPanel: ''
     }
   },
   computed: {
@@ -54,6 +59,8 @@ export default {
   mounted () {
     this.$store.dispatch('menu/getCurrentMenu')
       .then(() => {
+        this.textInfoPanel = `<p>Parece que no tienes ningún menú creado</p>
+        <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
         this.menusIsLoad = true
       }).catch(() => {
         this.$store.dispatch('auth/logout')
@@ -92,6 +99,11 @@ export default {
  }
  .home__table-menu {
    overflow: auto
+ }
+ .home__menu-empty {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
  }
  .fade-enter-active,
  .fade-leave-active {

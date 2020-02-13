@@ -104,7 +104,7 @@
         @click="saveMenu"
         class="custom-transform-class text-none btn-own"
         color="primary">
-          Guardar menú
+        <span v-text="isEdit ? 'Guardar cambios': 'Guardar menú'"/>
       </v-btn>
     </div>
   </div>
@@ -119,6 +119,10 @@ export default {
     menu: {
       type: Object,
       default: () => {}
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
