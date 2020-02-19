@@ -24,6 +24,9 @@ const actions = {
     } catch (err) {
       throw (err.response)
     }
+  },
+  emptyInfoMenus ({ commit }) {
+    commit('EMPTY_INFO_MENUS')
   }
 }
 

@@ -62,6 +62,7 @@ export default {
     },
     logout () {
       this.$store.dispatch('auth/logout')
+      this.$store.dispatch('menu/emptyInfoMenus')
       this.$router.push({ name: 'login' })
     }
   }
