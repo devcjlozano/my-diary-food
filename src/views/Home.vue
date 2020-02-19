@@ -22,14 +22,18 @@
       class="home__menu-empty"
       v-if="Object.keys(currentMenu).length === 0 && menusIsLoad">
       <InfoPanel
-       :main-text="textInfoPanel"
-       :show-link-router="true"/>
+       :main-text="textInfoPanel">
+          <router-link
+             class="info-panel__link"
+             to='/menucreator'> Crear menu </router-link>
+      </InfoPanel>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+
 import TableShowMenu from '@/components/TableShowMenu'
 import InfoPanel from '@/components/InfoPanel'
 import { mapGetters } from 'vuex'
@@ -104,6 +108,9 @@ export default {
    display: flex;
    flex-direction: column;
    align-items: center;
+ }
+ .info-panel__link {
+   color: white
  }
  .fade-enter-active,
  .fade-leave-active {

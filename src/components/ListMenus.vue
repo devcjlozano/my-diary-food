@@ -39,8 +39,11 @@
        v-else
        class="list-menus__info-panel">
       <InfoPanel
-       :main-text="textInfoPanel"
-       :show-link-router="true"/>
+       :main-text="textInfoPanel">
+         <router-link
+            class="info-panel__link"
+            to='/menucreator'> Crear menu </router-link>
+      </InfoPanel>
     </div>
   </div>
 </template>
@@ -114,6 +117,9 @@ export default {
  .list-menus__info-panel {
    display: flex;
    justify-content: center;
+ }
+ .info-panel__link {
+   color: white;
  }
  .fade-enter-active,
  .fade-leave-active {

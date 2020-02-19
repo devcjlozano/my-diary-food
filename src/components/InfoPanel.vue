@@ -1,10 +1,7 @@
 <template>
   <div class="info-panel">
     <p v-html="mainText"/>
-    <router-link
-      v-if="showLinkRouter"
-      class="info-panel__link"
-      to='/menucreator'> Crear menu </router-link>
+    <slot/>
  </div>
 </template>
 <script>
@@ -23,15 +20,12 @@ export default {
 }
 </script>
 <style scoped>
-.info-panel,
-.info-panel__link {
-  color: white;
-}
 .info-panel {
     width: 100%;
     margin-top: 40px;
     max-width: 800px;
     font-size: 1.1em;
+    color: white;
     background-color: #00aeaa;
     padding: 20px 30px 40px;
     border-radius: 10px;
