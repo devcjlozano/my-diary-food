@@ -2,6 +2,13 @@
   <div class="editor-menu">
     <div class="editor-menu__title">
       <h1> Editar Menu </h1>
+      <div class="editor-menu__description">
+        <span>
+          Puedes realizar cualquier cambio que quieras de tu menú
+          y guardarlos con el botón de la parte inferior derecha.
+          ¡Así de fácil!
+        </span>
+      </div>
     </div>
     <div
       v-if="Object.keys(menuToEdit).length > 0 && menuDistributionToLoaded"
@@ -65,11 +72,22 @@ export default {
    text-align: center;
  }
  .editor-menu__title {
-   margin: 30px 0 0
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 80px 0 0
+ }
+ .editor-menu__description {
+   max-width: 800px;
  }
  @media (min-width: 700px) {
    .editor-menu {
      padding: 0 90px;
+    }
+ }
+ @media (min-width: 900px) {
+   .editor-menu__title {
+     margin: 45px 0 0
     }
  }
 </style>

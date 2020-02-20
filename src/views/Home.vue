@@ -2,9 +2,13 @@
   <div class="home">
     <div class="home__title">
       <h1> Menú actual </h1>
-      <p> Este es el menú que tienes marcado como actual,
+      <div class="home_title__description">
+        <span>
+          Este es el menú que tienes marcado como actual,
            podrás editarlo si haces click en el botón que hay
-           encima de la tabla a la derecha</p>
+           encima de la tabla a la derecha
+        </span>
+      </div>
     </div>
     <transition
       appear
@@ -98,8 +102,14 @@ export default {
    text-align: center;
  }
  .home__title {
-   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 80px;
    margin-bottom: 40px;
+ }
+ .home_title__description {
+   max-width: 800px;
  }
  .home__table-menu {
    overflow: auto
@@ -123,6 +133,11 @@ export default {
  @media (min-width: 700px) {
    .home {
      padding: 0 40px;
+  }
+ }
+ @media (min-width: 900px) {
+   .home__title {
+     margin-top: 40px;
   }
  }
 </style>>

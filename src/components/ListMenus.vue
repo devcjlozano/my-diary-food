@@ -19,6 +19,15 @@
         <div
           :key="componentKey"
           class="list-menus__main__container-cards">
+          <div class="list-menus__main__button-viewer">
+            <v-btn
+              color="primary"
+              dark
+              outlined
+              @click="showMenusViewer">
+                Visor de menús
+            </v-btn>
+          </div>
           <div
             class="list-menu__main__container__cards__card"
             v-for="menu in listMenusFiltered"
@@ -74,6 +83,9 @@ export default {
     },
     forceRenderComponentCards () {
       this.componentKey += 1
+    },
+    showMenusViewer () {
+      this.$emit('show-menus-viewer')
     }
   },
   computed: {
@@ -113,6 +125,11 @@ export default {
  }
  .list-menu__main__container__cards__card {
    margin-bottom: 20px;
+ }
+ .list-menus__main__button-viewer {
+   display: flex;
+   justify-content: flex-end;
+   margin-bottom: 10px;
  }
  .list-menus__info-panel {
    display: flex;
