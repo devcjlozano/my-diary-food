@@ -8,6 +8,10 @@ const mutations = {
   },
   RECEIVE_CURRENT_MENU (state, currentMenu) {
     state.currentMenu = currentMenu
+  },
+  EMPTY_INFO_MENUS (state) {
+    state.listMenus = []
+    state.currentMenu = {}
   }
 }
 export default mutations

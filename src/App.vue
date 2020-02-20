@@ -7,6 +7,11 @@
       :user="user"
       v-if="isLoggedIn" />
     <v-content>
+      <div
+       v-if="routeName !== 'login'"
+       class="app__icon-utils">
+       <v-img src="./assets/utensilios.png" contain> </v-img>
+      </div>
       <router-view/>
     </v-content>
     <footer class="footer">
@@ -53,7 +58,10 @@ export default {
     ...mapGetters('auth', {
       isLoggedIn: 'isLoggedIn',
       user: 'user'
-    })
+    }),
+    routeName () {
+      return this.$route.name
+    }
   }
 }
 </script>
@@ -62,7 +70,13 @@ export default {
 .v-content {
   background-color: white;
 }
- .footer {
+.app__icon-utils {
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 74px;
+}
+.footer {
   display: flex;
   justify-content: center;
   margin-top: 100px;
@@ -75,5 +89,20 @@ export default {
 }
 .footer__container__texto--info {
   color: #4e4e4e;
+}
+@media(min-width: 500px) {
+  .app__icon-utils {
+    width: 130px;
+  }
+}
+@media(min-width: 1200px) {
+  .app__icon-utils {
+    width: 190px;
+  }
+}
+@media(min-width: 1310px) {
+  .app__icon-utils {
+    width: 237px;
+  }
 }
 </style>

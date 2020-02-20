@@ -1,13 +1,21 @@
 <template>
-  <div class="editor_menu">
-    <div class="editor_menu__title">
+  <div class="editor-menu">
+    <div class="editor-menu__title">
       <h1> Editar Menu </h1>
+      <div class="editor-menu__description">
+        <span>
+          Puedes realizar cualquier cambio que quieras de tu menú
+          y guardarlos con el botón de la parte inferior derecha.
+          ¡Así de fácil!
+        </span>
+      </div>
     </div>
     <div
       v-if="Object.keys(menuToEdit).length > 0 && menuDistributionToLoaded"
-      class="editor_menu__table">
+      class="editor-menu__table">
       <TableEditorMenu
         :menu="menuToEdit"
+        :is-edit="true"
         @save-menu="saveMenu"/>
     </div>
   </div>
@@ -24,8 +32,8 @@ export default {
   },
   props: {
     menuReceived: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -35,7 +43,7 @@ export default {
     }
   },
   mounted () {
-    if (this.menuReceived === '') {
+    if (this.menuReceived === undefined) {
       api.getMenu(this.menuIdParam)
         .then(data => {
           this.menuToEdit = data.data.menu
@@ -43,7 +51,9 @@ export default {
           this.menuDistributionToLoaded = true
         })
     } else {
-      this.menuToEdit = this.menuReceived
+      this.menuToEdit = { ...this.menuReceived }
+      this.menuToEdit.menuDistribution = JSON.parse(this.menuToEdit.menuDistribution)
+      this.menuDistributionToLoaded = true
     }
   },
   computed: {
@@ -57,11 +67,27 @@ export default {
 }
 </script>
 <style scoped>
- .editor_menu {
+ .editor-menu {
    padding: 0 20px;
    text-align: center;
  }
- .editor_menu__title {
-   margin: 30px 0 0
+ .editor-menu__title {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 80px 0 0
+ }
+ .editor-menu__description {
+   max-width: 800px;
+ }
+ @media (min-width: 700px) {
+   .editor-menu {
+     padding: 0 90px;
+    }
+ }
+ @media (min-width: 900px) {
+   .editor-menu__title {
+     margin: 45px 0 0
+    }
  }
 </style>

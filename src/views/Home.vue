@@ -2,6 +2,13 @@
   <div class="home">
     <div class="home__title">
       <h1> Menú actual </h1>
+      <div class="home_title__description">
+        <span>
+          Este es el menú que tienes marcado como actual,
+           podrás editarlo si haces click en el botón que hay
+           encima de la tabla a la derecha
+        </span>
+      </div>
     </div>
     <transition
       appear
@@ -10,31 +17,42 @@
       <div
         v-if="Object.keys(currentMenu).length !== 0"
         class="home__table-menu">
-        <TableShowMenu :menu="currentMenu"/>
+        <TableShowMenu
+         @go-to-menu-edit="goToMenuEdit"
+         :menu="currentMenu"/>
       </div>
     </transition>
     <div
+      class="home__menu-empty"
       v-if="Object.keys(currentMenu).length === 0 && menusIsLoad">
-      <h3> No tienes ningún menu</h3>
-      <router-link to='/menucreator'> Crear menu </router-link>
+      <InfoPanel
+       :main-text="textInfoPanel">
+          <router-link
+             class="info-panel__link"
+             to='/menucreator'> Crear menu </router-link>
+      </InfoPanel>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+
 import TableShowMenu from '@/components/TableShowMenu'
+import InfoPanel from '@/components/InfoPanel'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   components: {
-    TableShowMenu
+    TableShowMenu,
+    InfoPanel
   },
   data () {
     return {
       menusIsLoad: false,
-      componentKey: 0
+      componentKey: 0,
+      textInfoPanel: ''
     }
   },
   computed: {
@@ -49,6 +67,8 @@ export default {
   mounted () {
     this.$store.dispatch('menu/getCurrentMenu')
       .then(() => {
+        this.textInfoPanel = `<p>Parece que no tienes ningún menú creado</p>
+        <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
         this.menusIsLoad = true
       }).catch(() => {
         this.$store.dispatch('auth/logout')
@@ -63,6 +83,15 @@ export default {
     backMenu () {
       this.currentMenu = this.listMenus[0]
       this.componentKey += 1
+    },
+    goToMenuEdit (menu) {
+      this.$router.push({
+        name: 'editormenu',
+        params: {
+          menuId: menu._id,
+          menuReceived: menu
+        }
+      })
     }
   }
 }
@@ -73,10 +102,25 @@ export default {
    text-align: center;
  }
  .home__title {
-   margin-top: 20px
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 80px;
+   margin-bottom: 40px;
+ }
+ .home_title__description {
+   max-width: 800px;
  }
  .home__table-menu {
    overflow: auto
+ }
+ .home__menu-empty {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ .info-panel__link {
+   color: white
  }
  .fade-enter-active,
  .fade-leave-active {
@@ -89,6 +133,11 @@ export default {
  @media (min-width: 700px) {
    .home {
      padding: 0 40px;
+  }
+ }
+ @media (min-width: 900px) {
+   .home__title {
+     margin-top: 40px;
   }
  }
 </style>>
