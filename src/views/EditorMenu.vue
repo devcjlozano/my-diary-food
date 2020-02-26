@@ -11,12 +11,23 @@
       </div>
     </div>
     <div
-      v-if="Object.keys(menuToEdit).length > 0 && menuDistributionToLoaded"
+      v-if="Object.keys(menuToEdit).length > 0 && menuDistributionToLoaded && !saveSuccess"
       class="editor-menu__table">
       <TableEditorMenu
         :menu="menuToEdit"
         :is-edit="true"
         @save-menu="saveMenu"/>
+    </div>
+    <div
+      v-if="saveSuccess"
+      class="editor-menu__success">
+      <h1> Lo has guardado correctamente</h1>
+      <v-btn
+         color="primary"
+         dark
+         @click="backEdit">
+         Volver a editar
+      </v-btn>
     </div>
   </div>
 </template>
@@ -39,6 +50,7 @@ export default {
   data () {
     return {
       menuToEdit: {},
+      saveSuccess: false,
       menuDistributionToLoaded: false
     }
   },
@@ -62,7 +74,18 @@ export default {
     }
   },
   methods: {
-    saveMenu () {}
+    saveMenu () {
+      this.$store.dispatch('menu/updateMenu', this.menuToEdit)
+        .then(() => {
+          this.saveSuccess = true
+        }).catch(e => {
+          this.$store.dispatch('auth/logout')
+          this.$router.push({ name: 'login' })
+        })
+    },
+    backEdit () {
+      this.saveSuccess = false
+    }
   }
 }
 </script>
