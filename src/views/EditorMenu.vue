@@ -21,13 +21,27 @@
     <div
       v-if="saveSuccess"
       class="editor-menu__success">
-      <h1> Lo has guardado correctamente</h1>
-      <v-btn
-         color="primary"
-         dark
-         @click="backEdit">
-         Volver a editar
-      </v-btn>
+      <InfoPanel
+        :mainText="textSuccess">
+        <slot>
+          <div class="editor-menu__success__buttons">
+            <v-btn
+              color="secundary"
+              text
+              @click="goToMenus">
+                Ir a todos tus menús
+            </v-btn> o
+            <div class="editor-menu__success__button-back-edit">
+              <v-btn
+                color="secundary"
+                dark
+                @click="backEdit">
+                  Volver a editar
+              </v-btn>
+            </div>
+          </div>
+        </slot>
+      </InfoPanel>
     </div>
   </div>
 </template>
@@ -35,11 +49,13 @@
 <script>
 import api from '@/api/menu'
 import TableEditorMenu from '@/components/TableEditorMenu'
+import InfoPanel from '@/components/InfoPanel'
 
 export default {
   name: 'EditorMenu',
   components: {
-    TableEditorMenu
+    TableEditorMenu,
+    InfoPanel
   },
   props: {
     menuReceived: {
@@ -51,7 +67,9 @@ export default {
     return {
       menuToEdit: {},
       saveSuccess: false,
-      menuDistributionToLoaded: false
+      menuDistributionToLoaded: false,
+      textSuccess: `<h3>Has editado el menú correctamente</h3> 
+       <p> ¿Qué quieres hacer ahora ?</p>`
     }
   },
   mounted () {
@@ -85,6 +103,9 @@ export default {
     },
     backEdit () {
       this.saveSuccess = false
+    },
+    goToMenus () {
+      this.$router.push({ name: 'allmenus' })
     }
   }
 }
@@ -102,6 +123,18 @@ export default {
  }
  .editor-menu__description {
    max-width: 800px;
+ }
+ .editor-menu__success {
+   display: flex;
+   justify-content: center;
+ }
+ .editor-menu__success__buttons {
+   display: flex;
+   justify-content: center;
+   align-items: baseline;
+ }
+ .editor-menu__success__button-back-edit {
+   margin-left: 18px;
  }
  @media (min-width: 700px) {
    .editor-menu {

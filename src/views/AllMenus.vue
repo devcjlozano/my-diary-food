@@ -34,7 +34,9 @@
         @go-to-menu-edit="goToMenuEdit"/>
     </div>
     <div class="all-menus__visor-list-menus">
-      <VisorMenus v-if="showVisorMenus"/>
+      <VisorMenus
+        v-if="showVisorMenus"
+        @go-to-menu-edit="goToMenuEdit"/>
     </div>
   </div>
 </template>
