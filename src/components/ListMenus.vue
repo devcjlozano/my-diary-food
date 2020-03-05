@@ -4,13 +4,38 @@
       class="list-menus__main"
       v-if="listMenus.length > 0">
       <div class="list-menus__main__filters">
-        <div>
+        <div class="list-menus__main__filters__name">
           <v-text-field
             maxlength="60"
             outlined
-            placeholder="Nombre">
+            placeholder="Escribe para buscar por nombre">
           </v-text-field>
         </div>
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          min-width="290px">
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              class="list-menus__main__filters__date"
+              v-model="dateRangeText"
+              outlined
+              placeholder="Seleccionar fechas"
+              v-on="on"
+              readonly/>
+          </template>
+          <v-date-picker
+            v-model="dates"
+            range/>
+        </v-menu>
+        <v-btn
+          dark
+          color="secundary">
+            Buscar
+        </v-btn>
       </div>
       <transition
         appear
@@ -73,6 +98,8 @@ export default {
       numActualPage: 1,
       numCardByPage: 5,
       componentKey: 0,
+      menu: '',
+      dates: [],
       textInfoPanel: `<p>Parece que no tienes ningún menú creado</p>
         <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
     }
@@ -100,6 +127,9 @@ export default {
       const endIndexListMenus = startIndexListMenus + 5 >= this.listMenus.length
         ? this.listMenus.length : startIndexListMenus + this.numCardByPage
       return this.listMenus.slice(startIndexListMenus, endIndexListMenus)
+    },
+    dateRangeText () {
+      return this.dates.join(' / ')
     }
   },
   watch: {
@@ -118,6 +148,21 @@ export default {
  }
  .list-menus__main__filters {
    display: flex;
+   flex-wrap: wrap;
+   align-items: baseline;
+   margin: 40px 0 40px;
+   background-color: #efefef;
+   padding: 15px;
+ }
+ .list-menus__main__filters__name,
+ .list-menus__main__filters__date {
+   margin-right: 15px;
+ }
+ .list-menus__main__filters__name {
+   min-width: 300px;
+ }
+ .list-menus__main__filters__date {
+   min-width: 200px;
  }
  .list-menus__main__container-cards {
     width: 100%;
@@ -145,5 +190,12 @@ export default {
  .fade-enter,
  .fade-leave-to {
    opacity: 0
+ }
+ div /deep/ .v-text-field__details {
+   display: none;
+ }
+ div /deep/ .v-text-field--outlined > .v-input__control > .v-input__slot{
+   margin: 0;
+   background-color: white;
  }
 </style>
