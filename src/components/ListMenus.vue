@@ -3,39 +3,8 @@
     <div
       class="list-menus__main"
       v-if="listMenus.length > 0">
-      <div class="list-menus__main__filters">
-        <div class="list-menus__main__filters__name">
-          <v-text-field
-            maxlength="60"
-            outlined
-            placeholder="Escribe para buscar por nombre">
-          </v-text-field>
-        </div>
-        <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          min-width="290px">
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              class="list-menus__main__filters__date"
-              v-model="dateRangeText"
-              outlined
-              placeholder="Seleccionar fechas"
-              v-on="on"
-              readonly/>
-          </template>
-          <v-date-picker
-            v-model="dates"
-            range/>
-        </v-menu>
-        <v-btn
-          dark
-          color="secundary">
-            Buscar
-        </v-btn>
+      <div>
+        <MenuSearcher/>
       </div>
       <transition
         appear
@@ -85,20 +54,21 @@
 <script>
 import CardMenu from '@/components/CardMenu'
 import InfoPanel from '@/components/InfoPanel'
+import MenuSearcher from '@/components/MenuSearcher'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'ListMenus',
   components: {
     CardMenu,
-    InfoPanel
+    InfoPanel,
+    MenuSearcher
   },
   data () {
     return {
       numActualPage: 1,
       numCardByPage: 5,
       componentKey: 0,
-      menu: '',
       dates: [],
       textInfoPanel: `<p>Parece que no tienes ningún menú creado</p>
         <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
@@ -127,9 +97,6 @@ export default {
       const endIndexListMenus = startIndexListMenus + 5 >= this.listMenus.length
         ? this.listMenus.length : startIndexListMenus + this.numCardByPage
       return this.listMenus.slice(startIndexListMenus, endIndexListMenus)
-    },
-    dateRangeText () {
-      return this.dates.join(' / ')
     }
   },
   watch: {
@@ -145,24 +112,6 @@ export default {
    flex-direction: column;
    align-items: center;
    flex-wrap: wrap;
- }
- .list-menus__main__filters {
-   display: flex;
-   flex-wrap: wrap;
-   align-items: baseline;
-   margin: 40px 0 40px;
-   background-color: #efefef;
-   padding: 15px;
- }
- .list-menus__main__filters__name,
- .list-menus__main__filters__date {
-   margin-right: 15px;
- }
- .list-menus__main__filters__name {
-   min-width: 300px;
- }
- .list-menus__main__filters__date {
-   min-width: 200px;
  }
  .list-menus__main__container-cards {
     width: 100%;
