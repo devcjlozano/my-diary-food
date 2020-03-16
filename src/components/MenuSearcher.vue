@@ -25,6 +25,7 @@
           readonly/>
       </template>
       <v-date-picker
+        locale='es'
         v-model="dates"
         range/>
     </v-menu>
@@ -37,6 +38,8 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
+
 export default {
   name: 'MenuSearcher',
   data () {
@@ -48,7 +51,10 @@ export default {
   },
   computed: {
     dateRangeText () {
-      return this.dates.join(' / ')
+      if (this.dates[0] !== undefined && this.dates[1] !== undefined) {
+        return `${moment(this.dates[0]).format('DD-MM-YYYY')} / ${moment(this.dates[1]).format('DD-MM-YYYY')}`
+      }
+      return this.dates.join('/')
     }
   }
 }
