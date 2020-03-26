@@ -25,6 +25,22 @@ const actions = {
       throw (err.response)
     }
   },
+  async updateMenu ({ commit }, menu) {
+    try {
+      const { data } = await api.updateMenu(menu)
+      commit('UPDATE_MENU', data.menu)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
+  async searchMenu ({ commit }, payload) {
+    try {
+      const { data } = await api.searchMenu(payload)
+      commit('RECEIVE_MENUS', data.menus)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
   emptyInfoMenus ({ commit }) {
     commit('EMPTY_INFO_MENUS')
   }

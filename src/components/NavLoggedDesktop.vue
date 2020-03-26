@@ -20,15 +20,19 @@
           </v-btn>
           <v-btn text> Menús compartidos </v-btn>
         </v-toolbar-items>
-        <div class="toolbar-content__user">
+        <div>
           <span class="toolbar-content__user--name">{{ user.name }} </span>
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
-              <v-btn
-                v-on="on"
-                fab small dark>
-                <v-icon>mdi-account</v-icon>
-              </v-btn>
+              <v-avatar
+                 class="toolbar-content__user__avatar"
+                 v-on="on"
+                 size="36"
+                 color="secundary">
+                <v-icon
+                  dark>mdi-account</v-icon>
+              </v-avatar>
+
             </template>
             <v-list>
               <v-list-item @click="() => {} ">
@@ -79,6 +83,9 @@ export default {
 }
 .toolbar-content__user--name {
   margin-right: 5px;
+}
+.toolbar-content__user__avatar {
+  cursor: pointer;
 }
 @media (min-width: 605px) {
   .toolbar-content__titulo {

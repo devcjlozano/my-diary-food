@@ -9,7 +9,8 @@
         mode="out-in">
       <TableShowMenu
         :menu="listMenus[page - 1]"
-        :key="componentKey"/>
+        :key="componentKey"
+        @go-to-menu-edit="goToMenuEdit"/>
       </transition>
       <div class="visor-menus__paginator">
         <v-pagination
@@ -48,6 +49,9 @@ export default {
   methods: {
     forceRenderComponentTable () {
       this.componentKey += 1
+    },
+    goToMenuEdit (menu) {
+      this.$emit('go-to-menu-edit', menu)
     }
   }
 }

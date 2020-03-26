@@ -15,8 +15,10 @@
       v-if="!showTableMenu && !showVisorMenus"
       class="all-menus__list">
        <ListMenus
+         :loading-menus="loadingMenus"
          @select-menu="selectMenu"
-         @show-menus-viewer="showMenusViewer"/>
+         @show-menus-viewer="showMenusViewer"
+         @search-menu="searchMenu"/>
     </div>
     <div v-if="showTableMenu || showVisorMenus">
       <v-btn
@@ -34,7 +36,9 @@
         @go-to-menu-edit="goToMenuEdit"/>
     </div>
     <div class="all-menus__visor-list-menus">
-      <VisorMenus v-if="showVisorMenus"/>
+      <VisorMenus
+        v-if="showVisorMenus"
+        @go-to-menu-edit="goToMenuEdit"/>
     </div>
   </div>
 </template>
@@ -43,6 +47,7 @@ import ListMenus from '@/components/ListMenus'
 import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'AllMenus',
@@ -54,7 +59,7 @@ export default {
   data () {
     return {
       menuSelected: {},
-      menusIsLoad: false,
+      loadingMenus: true,
       showTableMenu: false,
       showVisorMenus: false
     }
@@ -67,7 +72,7 @@ export default {
   mounted () {
     this.$store.dispatch('menu/getMenus', this.user.email)
       .then(() => {
-        this.menusIsLoad = true
+        this.loadingMenus = false
       }).catch(() => {
         this.$store.dispatch('auth/logout')
         this.$router.push({ name: 'login' })
@@ -103,6 +108,19 @@ export default {
           menuReceived: menu
         }
       })
+    },
+    searchMenu (textToSearch, dates) {
+      this.$store.dispatch('menu/searchMenu', {
+        textToSearch,
+        startDate: moment(dates[0]).toISOString(),
+        endDate: moment(dates[1]).toISOString()
+      })
+        .then(() => {
+          this.loadingMenus = false
+        }).catch(() => {
+          this.$store.dispatch('auth/logout')
+          this.$router.push({ name: 'login' })
+        })
     }
   }
 }

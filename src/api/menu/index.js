@@ -37,10 +37,30 @@ const getCurrentMenu = () => axios({
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
+const updateMenu = menu => axios({
+  method: 'put',
+  url: `http://localhost:3001/menus/updateMenu/${menu._id}`,
+  data: {
+    menuDistribution: JSON.stringify(menu.menuDistribution)
+  },
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
+const searchMenu = payload => axios({
+  method: 'get',
+  url: payload.textToSearch === '' ? `http://localhost:3001/menus/searchMenu/${payload.startDate}/${payload.endDate}`
+    : `http://localhost:3001/menus/searchMenu/${payload.textToSearch}/${payload.startDate}/${payload.endDate}`,
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
 
 export default {
   saveMenu,
   getMenus,
   getMenu,
-  getCurrentMenu
+  getCurrentMenu,
+  searchMenu,
+  updateMenu
 }

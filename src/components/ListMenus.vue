@@ -2,21 +2,17 @@
   <div class="list-menus">
     <div
       class="list-menus__main"
-      v-if="listMenus.length > 0">
-      <div class="list-menus__main__filters">
-        <div>
-          <v-text-field
-            maxlength="60"
-            outlined
-            placeholder="Nombre">
-          </v-text-field>
-        </div>
+      v-if="listMenus.length > 0 || searchActive">
+      <div>
+        <MenuSearcher
+          @search-menu="searchMenu"/>
       </div>
       <transition
         appear
         name="fade"
         mode="out-in">
         <div
+          v-if="listMenus.length > 0"
           :key="componentKey"
           class="list-menus__main__container-cards">
           <div class="list-menus__main__button-viewer">
@@ -37,6 +33,9 @@
               :menu="menu"/>
           </div>
         </div>
+        <div v-else>
+          No se encontraron resultados
+        </div>
       </transition>
       <div class="list-menus__main__paginator">
         <v-pagination
@@ -45,7 +44,7 @@
       </div>
     </div>
     <div
-       v-else
+       v-if="listMenus.length === 0 && !loadingMenus && !searchActive "
        class="list-menus__info-panel">
       <InfoPanel
        :main-text="textInfoPanel">
@@ -60,19 +59,29 @@
 <script>
 import CardMenu from '@/components/CardMenu'
 import InfoPanel from '@/components/InfoPanel'
+import MenuSearcher from '@/components/MenuSearcher'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'ListMenus',
   components: {
     CardMenu,
-    InfoPanel
+    InfoPanel,
+    MenuSearcher
+  },
+  props: {
+    loadingMenus: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
       numActualPage: 1,
       numCardByPage: 5,
       componentKey: 0,
+      searchActive: false,
       textInfoPanel: `<p>Parece que no tienes ningún menú creado</p>
         <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
     }
@@ -86,6 +95,17 @@ export default {
     },
     showMenusViewer () {
       this.$emit('show-menus-viewer')
+    },
+    searchMenu (textToSeach, dates) {
+      let auxDates = dates
+      if (auxDates.length < 2) {
+        auxDates = []
+        const startDate = '1970-01-01'
+        const endDate = moment(Date.now()).format('YYYY-MM-DD')
+        auxDates.push(startDate, endDate)
+      }
+      this.searchActive = true
+      this.$emit('search-menu', textToSeach, auxDates)
     }
   },
   computed: {
@@ -116,9 +136,6 @@ export default {
    align-items: center;
    flex-wrap: wrap;
  }
- .list-menus__main__filters {
-   display: flex;
- }
  .list-menus__main__container-cards {
     width: 100%;
     max-width: 1000px;
@@ -145,5 +162,12 @@ export default {
  .fade-enter,
  .fade-leave-to {
    opacity: 0
+ }
+ div /deep/ .v-text-field__details {
+   display: none;
+ }
+ div /deep/ .v-text-field--outlined > .v-input__control > .v-input__slot{
+   margin: 0;
+   background-color: white;
  }
 </style>
