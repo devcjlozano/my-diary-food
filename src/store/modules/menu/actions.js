@@ -33,6 +33,14 @@ const actions = {
       throw (err.response)
     }
   },
+  async searchMenu ({ commit }, payload) {
+    try {
+      const { data } = await api.searchMenu(payload)
+      commit('RECEIVE_MENUS', data.menus)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
   emptyInfoMenus ({ commit }) {
     commit('EMPTY_INFO_MENUS')
   }

@@ -32,6 +32,20 @@
              to='/menucreator'> Crear menu </router-link>
       </InfoPanel>
     </div>
+    <div v-if="!menusIsLoad">
+      <v-sheet
+        color="lighten-4'"
+        class="px-3 pt-3 pb-12">
+        <v-skeleton-loader
+          boilerplate
+          class="skeleton__heading"
+          type="heading"/>
+        <v-skeleton-loader
+          boilerplate
+          class="mx-auto"
+          type="table-tbody"/>
+      </v-sheet>
+    </div>
   </div>
 </template>
 
@@ -129,6 +143,10 @@ export default {
  .fade-enter,
  .fade-leave-to {
    opacity: 0
+ }
+ .skeleton__heading {
+   display: flex;
+   justify-content: center;
  }
  @media (min-width: 700px) {
    .home {

@@ -2,7 +2,7 @@
   <div class="menu-searcher">
     <div class="menu-searcher__name">
       <v-text-field
-        v-model="nameMenu"
+        v-model="textToSeach"
         maxlength="60"
         outlined
         placeholder="Escribe para buscar por nombre">
@@ -32,7 +32,8 @@
     <v-btn
       class="menu-searcher__button"
       dark
-      color="secundary">
+      color="secundary"
+      @click="searchMenu">
         Buscar
     </v-btn>
   </div>
@@ -45,7 +46,7 @@ export default {
   data () {
     return {
       menu: '',
-      nameMenu: '',
+      textToSeach: '',
       dates: []
     }
   },
@@ -55,6 +56,11 @@ export default {
         return `${moment(this.dates[0]).format('DD-MM-YYYY')} / ${moment(this.dates[1]).format('DD-MM-YYYY')}`
       }
       return this.dates.join('/')
+    }
+  },
+  methods: {
+    searchMenu () {
+      this.$emit('search-menu', this.textToSeach, this.dates)
     }
   }
 }

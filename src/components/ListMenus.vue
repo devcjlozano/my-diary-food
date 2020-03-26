@@ -2,15 +2,17 @@
   <div class="list-menus">
     <div
       class="list-menus__main"
-      v-if="listMenus.length > 0">
+      v-if="listMenus.length > 0 || searchActive">
       <div>
-        <MenuSearcher/>
+        <MenuSearcher
+          @search-menu="searchMenu"/>
       </div>
       <transition
         appear
         name="fade"
         mode="out-in">
         <div
+          v-if="listMenus.length > 0"
           :key="componentKey"
           class="list-menus__main__container-cards">
           <div class="list-menus__main__button-viewer">
@@ -31,6 +33,9 @@
               :menu="menu"/>
           </div>
         </div>
+        <div v-else>
+          No se encontraron resultados
+        </div>
       </transition>
       <div class="list-menus__main__paginator">
         <v-pagination
@@ -39,7 +44,7 @@
       </div>
     </div>
     <div
-       v-else
+       v-if="listMenus.length === 0 && !loadingMenus && !searchActive "
        class="list-menus__info-panel">
       <InfoPanel
        :main-text="textInfoPanel">
@@ -55,6 +60,7 @@
 import CardMenu from '@/components/CardMenu'
 import InfoPanel from '@/components/InfoPanel'
 import MenuSearcher from '@/components/MenuSearcher'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -64,12 +70,18 @@ export default {
     InfoPanel,
     MenuSearcher
   },
+  props: {
+    loadingMenus: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     return {
       numActualPage: 1,
       numCardByPage: 5,
       componentKey: 0,
-      dates: [],
+      searchActive: false,
       textInfoPanel: `<p>Parece que no tienes ningún menú creado</p>
         <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
     }
@@ -83,6 +95,17 @@ export default {
     },
     showMenusViewer () {
       this.$emit('show-menus-viewer')
+    },
+    searchMenu (textToSeach, dates) {
+      let auxDates = dates
+      if (auxDates.length < 2) {
+        auxDates = []
+        const startDate = '1970-01-01'
+        const endDate = moment(Date.now()).format('YYYY-MM-DD')
+        auxDates.push(startDate, endDate)
+      }
+      this.searchActive = true
+      this.$emit('search-menu', textToSeach, auxDates)
     }
   },
   computed: {
