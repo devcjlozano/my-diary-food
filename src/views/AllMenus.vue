@@ -40,12 +40,15 @@
         v-if="showVisorMenus"
         @go-to-menu-edit="goToMenuEdit"/>
     </div>
+    <LoadDialog
+      :load-dialog="loadingSearch"/>
   </div>
 </template>
 <script>
 import ListMenus from '@/components/ListMenus'
 import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
+import LoadDialog from '@/components/LoadDialog'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
@@ -54,12 +57,14 @@ export default {
   components: {
     VisorMenus,
     ListMenus,
-    TableShowMenu
+    TableShowMenu,
+    LoadDialog
   },
   data () {
     return {
       menuSelected: {},
       loadingMenus: true,
+      loadingSearch: false,
       showTableMenu: false,
       showVisorMenus: false
     }
@@ -110,13 +115,14 @@ export default {
       })
     },
     searchMenu (textToSearch, dates) {
+      this.loadingSearch = true
       this.$store.dispatch('menu/searchMenu', {
         textToSearch,
         startDate: moment(dates[0]).toISOString(),
         endDate: moment(dates[1]).toISOString()
       })
         .then(() => {
-          this.loadingMenus = false
+          this.loadingSearch = false
         }).catch(() => {
           this.$store.dispatch('auth/logout')
           this.$router.push({ name: 'login' })
