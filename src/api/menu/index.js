@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const saveMenu = menu => axios({
   method: 'post',
-  url: 'http://localhost:3001/menus/saveMenu',
+  url: `${process.env.VUE_APP_URL}/menus/saveMenu`,
   data: {
     name: menu.name,
     isFav: menu.isFav,
@@ -18,7 +18,7 @@ const saveMenu = menu => axios({
 
 const getMenus = () => axios({
   method: 'get',
-  url: 'http://localhost:3001/menus/getMenus/',
+  url: `${process.env.VUE_APP_URL}/menus/getMenus/`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
@@ -32,14 +32,14 @@ const getMenu = menuId => axios({
 })
 const getCurrentMenu = () => axios({
   method: 'get',
-  url: 'http://localhost:3001/menus/getCurrentMenu/',
+  url: `${process.env.VUE_APP_URL}/menus/getCurrentMenu/`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
 const updateMenu = menu => axios({
   method: 'put',
-  url: `http://localhost:3001/menus/updateMenu/${menu._id}`,
+  url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
     menuDistribution: JSON.stringify(menu.menuDistribution)
   },
@@ -49,8 +49,8 @@ const updateMenu = menu => axios({
 })
 const searchMenu = payload => axios({
   method: 'get',
-  url: payload.textToSearch === '' ? `http://localhost:3001/menus/searchMenu/${payload.startDate}/${payload.endDate}`
-    : `http://localhost:3001/menus/searchMenu/${payload.textToSearch}/${payload.startDate}/${payload.endDate}`,
+  url: payload.textToSearch === '' ? `${process.env.VUE_APP_URL}/menus/searchMenu/${payload.startDate}/${payload.endDate}`
+    : `${process.env.VUE_APP_URL}/menus/searchMenu/${payload.textToSearch}/${payload.startDate}/${payload.endDate}`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }

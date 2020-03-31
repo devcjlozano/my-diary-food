@@ -21,15 +21,9 @@
     </div>
     <div class="menu_creator__menu-success" v-else>
       <MenuCreatedSuccess
-        @go-to-menu-creator="goToMenuCreator"/>
+        @go-to-menu-creator="goToMenuCreator"
+        @go-to-list-menus="goToListMenus"/>
     </div>
-    <v-btn
-        v-if="!menuIsCreated"
-        @click="showMenuSuccess"
-        class="custom-transform-class text-none btn-own"
-        color="primary">
-          Mostrar success
-      </v-btn>
   </div>
 </template>
 
@@ -242,6 +236,9 @@ export default {
     },
     goToMenuCreator () {
       this.menuIsCreated = false
+    },
+    goToListMenus () {
+      this.$router.push({ name: 'allmenus' })
     }
   }
 }

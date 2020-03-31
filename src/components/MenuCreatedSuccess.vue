@@ -17,7 +17,7 @@
         <v-btn
           dark
           color="#110133"
-          >
+          @click="goToListMenus">
             Ir a sección Mis menús
         </v-btn>
       </div>
@@ -29,8 +29,11 @@
 export default {
   name: 'MenuCreatedSuccess',
   methods: {
-    goToMenuCreator (section) {
+    goToMenuCreator () {
       this.$emit('go-to-menu-creator')
+    },
+    goToListMenus () {
+      this.$emit('go-to-list-menus')
     }
   }
 }

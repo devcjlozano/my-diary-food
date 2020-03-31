@@ -33,7 +33,9 @@
               :menu="menu"/>
           </div>
         </div>
-        <div v-else>
+        <div
+          class="list-menu__main__container__cards__not-results"
+          v-else>
           No se encontraron resultados
         </div>
       </transition>
@@ -142,6 +144,9 @@ export default {
  }
  .list-menu__main__container__cards__card {
    margin-bottom: 20px;
+ }
+ .list-menu__main__container__cards__not-results {
+  margin-bottom: 10px;
  }
  .list-menus__main__button-viewer {
    display: flex;

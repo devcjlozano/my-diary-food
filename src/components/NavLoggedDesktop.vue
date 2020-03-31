@@ -18,6 +18,10 @@
             to='/allmenus'
              text> Todos mis menús
           </v-btn>
+          <v-btn
+            to='/menucreator'
+            text> Crear Menú
+          </v-btn>
           <v-btn text> Menús compartidos </v-btn>
         </v-toolbar-items>
         <div>
