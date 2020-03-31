@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const signUp = payload => axios({
   method: 'post',
-  url: 'http://localhost:3001/user/signUp',
+  url: `${process.env.VUE_APP_URL}/user/signUp`,
   data: {
     name: payload.name,
     email: payload.email,
@@ -13,7 +13,7 @@ const signUp = payload => axios({
 
 const signIn = (email, password) => axios({
   method: 'post',
-  url: 'http://localhost:3001/user/signIn',
+  url: `${process.env.VUE_APP_URL}/user/signIn`,
   data: {
     email: email,
     password: password
