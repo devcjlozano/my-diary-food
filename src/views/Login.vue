@@ -37,6 +37,7 @@
       <div class="login__form__button">
         <v-btn
           @click="signIn"
+          :disabled="disabledButtonEnter"
           height="56px"
           class="custom-transform-class text-none btn-own"
           color="primary">
@@ -71,11 +72,13 @@ export default {
     return {
       email: '',
       password: '',
-      errorLogin: false
+      errorLogin: false,
+      disabledButtonEnter: false
     }
   },
   methods: {
     signIn () {
+      this.disabledButtonEnter = true
       this.$store.dispatch('auth/signIn', {
         email: this.email,
         password: this.password
@@ -83,6 +86,7 @@ export default {
         this.errorLogin = false
         this.$router.push({ name: 'home' })
       }).catch(() => {
+        this.disabledButtonEnter = false
         this.errorLogin = true
       })
     },
