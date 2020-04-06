@@ -1,16 +1,18 @@
 <template>
   <div class="menu_creator">
     <div class="menu_creator__title">
-      <h1>
-        Nuevo Menú semanal
-      </h1>
-      <v-icon>
-        mdi-chef-hat
-      </v-icon>
-    </div>
-    <div class="menu_creator__subtitle">
-      <p> Podrás crear menus semanales rápidamente, rellena tus comidas para cada momento
+      <div class="menu_creator__title__main">
+        <h1>
+          Nuevo Menú semanal
+        </h1>
+        <v-icon>
+          mdi-chef-hat
+        </v-icon>
+      </div>
+      <div class="menu_creator__title__description">
+        <p> Podrás crear menus semanales rápidamente, rellena tus comidas para cada momento
         del día y en la parte inferior dale a guardar, <strong> !así de fácil! </strong> </p>
+      </div>
     </div>
     <div
       v-if="!menuIsCreated"
@@ -250,10 +252,16 @@ export default {
  }
  .menu_creator__title {
    display: flex;
-   justify-content: center;
-   align-items: baseline;
-   text-align: center;
-   margin: 30px 0 0
+   flex-direction: column;
+   align-items: center;
+   margin-top: 80px;
+   margin-bottom: 40px;
+ }
+ .menu_creator__title__main {
+   display: flex;
+ }
+ .menu_creator__title__description {
+   max-width: 800px;
  }
  .menu_creator__menu-success {
    display: flex;
@@ -267,6 +275,11 @@ export default {
  @media (min-width: 700px) {
    .menu_creator {
      padding: 0 90px;
+   }
+ }
+ @media (min-width: 900px) {
+   .menu_creator__title {
+     margin-top: 40px;
  }
 }
 </style>
