@@ -49,7 +49,7 @@
                 <v-list-item-title> Mi perfil </v-list-item-title>
               </v-list-item>
               <v-list-item @click="logout">
-                <v-list-item-title> Logout </v-list-item-title>
+                <v-list-item-title> Cerrar sesión </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
