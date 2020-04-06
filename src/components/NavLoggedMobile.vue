@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     mostrarMenuDeslizante () {
-      this.$emit('mostrar-menu-deslizante')
+      this.$emit('show-navigation-drawer')
     },
     logout () {
       this.$store.dispatch('auth/logout')
