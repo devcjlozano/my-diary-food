@@ -7,8 +7,12 @@
       height="75px"
       color="primary">
       <div class="toolbar-content">
-        <div class="toolbar-content__titulo">
-            <span> My diary Food </span>
+        <div class="toolbar-content__titulo headline text-uppercase">
+          <router-link
+            to="/"
+            class="enlace-router">
+            <span> MyDiaryFood</span>
+          </router-link>
         </div>
         <v-toolbar-items>
           <v-btn
@@ -22,7 +26,9 @@
             to='/menucreator'
             text> Crear Menú
           </v-btn>
-          <v-btn text> Menús compartidos </v-btn>
+          <v-btn
+            to='shareMenus'
+            text> Menús compartidos </v-btn>
         </v-toolbar-items>
         <div>
           <span class="toolbar-content__user--name">{{ user.name }} </span>
@@ -84,12 +90,18 @@ export default {
 }
 .toolbar-content__titulo {
   margin-bottom: 10px;
+  font-size: 0.8em;
 }
 .toolbar-content__user--name {
   margin-right: 5px;
 }
 .toolbar-content__user__avatar {
   cursor: pointer;
+}
+.enlace-router {
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.8em;
 }
 @media (min-width: 605px) {
   .toolbar-content__titulo {

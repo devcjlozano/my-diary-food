@@ -1,11 +1,15 @@
 <template>
   <v-app class="app" :style="{background: $vuetify.theme.themes['light'].background}">
     <NavLoggedDesktop
-      :user="user"
-      v-if="isLoggedIn" />
+      v-if="isLoggedIn"
+      :user="user"/>
     <NavLoggedMobile
+      v-if="isLoggedIn"
       :user="user"
-      v-if="isLoggedIn" />
+      @show-navigation-drawer="showNavigationDrawer"/>
+    <NavigationDrawer
+      :navigation-drawer-visible="navigationDrawerVisible"
+      @drawer-status="changeDrawerStatus"/>
     <v-content>
       <div
        v-if="routeName !== 'login'"
@@ -43,16 +47,18 @@
 <script>
 import NavLoggedDesktop from '@/components/NavLoggedDesktop'
 import NavLoggedMobile from '@/components/NavLoggedMobile'
+import NavigationDrawer from '@/components/NavigationDrawer'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     NavLoggedDesktop,
-    NavLoggedMobile
+    NavLoggedMobile,
+    NavigationDrawer
   },
   data: () => ({
-    //
+    navigationDrawerVisible: false
   }),
   computed: {
     ...mapGetters('auth', {
@@ -61,6 +67,14 @@ export default {
     }),
     routeName () {
       return this.$route.name
+    }
+  },
+  methods: {
+    showNavigationDrawer () {
+      this.navigationDrawerVisible = true
+    },
+    changeDrawerStatus (value) {
+      this.navigationDrawerVisible = value
     }
   }
 }
