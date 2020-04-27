@@ -10,13 +10,14 @@
       <TableShowMenu
         :menu="listMenus[page - 1]"
         :key="componentKey"
-        @go-to-menu-edit="goToMenuEdit"/>
+        @check-menu-favorite="checkMenuFavorite"
+        @go-to-menu-edit="goToMenuEdit"
+        @share-menu="shareMenu"/>
       </transition>
       <div class="visor-menus__paginator">
         <v-pagination
           v-model="page"
-          :length="listMenus.length"
-          />
+          :length="listMenus.length"/>
       </div>
     </div>
   </div>
@@ -52,6 +53,12 @@ export default {
     },
     goToMenuEdit (menu) {
       this.$emit('go-to-menu-edit', menu)
+    },
+    checkMenuFavorite (menu) {
+      this.$emit('check-menu-favorite', menu)
+    },
+    shareMenu (menu) {
+      this.$emit('share-menu')
     }
   }
 }

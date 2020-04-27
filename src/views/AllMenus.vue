@@ -11,6 +11,25 @@
         </span>
       </div>
     </div>
+    <div>
+      <DialogAccept
+        :show-dialog-accept="showDialogAccept"
+        @accept="acceptDialog"
+        @cancel="cancelDialog">
+        <template slot="title">
+          Compartir menú
+        </template>
+        <template slot="description">
+          <p v-if="!menuSelected.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
+            a todos los usuarios de verlo y que lo puedan copiar en su
+            "diario de dietas". ¿Quiéres compartirlo? </p>
+          <p v-else>
+             Dejarás de compartir este menú, solo tu podrás verlo.
+             ¿Quieres dejar de compartirlo?
+          </p>
+        </template>
+      </DialogAccept>
+    </div>
     <div
       v-if="!showTableMenu && !showVisorMenus"
       class="all-menus__list">
@@ -33,12 +52,15 @@
       class="all-menus__table-menu">
       <TableShowMenu
         :menu="menuSelected"
-        @go-to-menu-edit="goToMenuEdit"/>
+        @share-menu="shareMenu"
+        @go-to-menu-edit="goToMenuEdit"
+        @check-menu-favorite="checkMenuFavorite"/>
     </div>
     <div class="all-menus__visor-list-menus">
       <VisorMenus
         v-if="showVisorMenus"
-        @go-to-menu-edit="goToMenuEdit"/>
+        @go-to-menu-edit="goToMenuEdit"
+        @share-menu="shareMenu"/>
     </div>
     <LoadDialog
       :load-dialog="loadingSearch"/>
@@ -49,6 +71,7 @@ import ListMenus from '@/components/ListMenus'
 import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
 import LoadDialog from '@/components/LoadDialog'
+import DialogAccept from '@/components/DialogAccept'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
@@ -58,7 +81,8 @@ export default {
     VisorMenus,
     ListMenus,
     TableShowMenu,
-    LoadDialog
+    LoadDialog,
+    DialogAccept
   },
   data () {
     return {
@@ -66,7 +90,8 @@ export default {
       loadingMenus: true,
       loadingSearch: false,
       showTableMenu: false,
-      showVisorMenus: false
+      showVisorMenus: false,
+      showDialogAccept: false
     }
   },
   computed: {
@@ -127,6 +152,23 @@ export default {
           this.$store.dispatch('auth/logout')
           this.$router.push({ name: 'login' })
         })
+    },
+    checkMenuFavorite (menu) {
+      this.$store.dispatch('menu/checkMenuFavorite', menu)
+    },
+    shareMenu (menu) {
+      this.showDialogAccept = true
+      this.menuSelected = menu
+    },
+    acceptDialog () {
+      this.$store.dispatch('menu/shareMenu', this.menuSelected)
+        .then(() => {
+          this.showDialogAccept = false
+          this.menuSelected.shared = !this.menuSelected.shared
+        })
+    },
+    cancelDialog () {
+      this.showDialogAccept = false
     }
   }
 }

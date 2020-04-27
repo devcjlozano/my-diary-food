@@ -25,7 +25,7 @@
         </div>
         <div class="card-menu__body__info__favorite">
           <span class="label"> Lo has compartido con los demás: </span>
-          <span class="text-value"> {{ menu.isShared ? 'Si' : 'No' }}</span>
+          <span class="text-value"> {{ menu.shared ? 'Si' : 'No' }}</span>
         </div>
       </div>
     </div>

@@ -2,19 +2,77 @@
   <div class="table-show-menu">
     <div class="table-show-menu__info">
       <div class="table-show-menu__info__left">
-        <span> {{`Nombre:\u00A0`}} </span>
-        <span class="table-show-menu__info__left--textname">
-          {{ menu.name }}
-        </span>
+        <div>
+          <span> {{`Nombre:\u00A0`}} </span>
+          <span class="table-show-menu__info__left--value">
+           {{ menu.name }}
+            <span
+               class="table-show-menu__info__left--value--current"
+               v-if="menu.isCurrent && this.$route.name !== 'home'">
+                 (este es tu menú actual)
+            </span>
+          </span>
+        </div>
+        <div>
+          <span> {{`Cuando lo creaste:\u00A0`}} </span>
+          <span class="table-show-menu__info__left--value">
+           {{ moment(menu.createdDate).format('DD/MM/YYYY') }}
+          </span>
+        </div>
+        <div>
+          <span> {{`Lo has compartido con lo demás:\u00A0`}} </span>
+          <span class="table-show-menu__info__left--value">
+            {{menu.shared ? 'Si' : 'No'}}
+          </span>
+        </div>
       </div>
       <div class="table-show-menu__info__rigth">
-        <v-btn
-         small
-         dark
-         @click="goToMenuEdit"
-         color="primary">
-           Editar Menú
-        </v-btn>
+        <div>
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+               <v-icon
+                @click="goToMenuEdit"
+                 v-on="on"
+                 color="#00918E"
+                 class="table-show-menu__info__rigth__icon">
+                 mdi-pencil
+               </v-icon>
+            </template>
+            <span>Editar Menú</span>
+         </v-tooltip>
+         <v-tooltip top>
+           <template v-slot:activator="{ on }">
+             <v-icon
+               class="table-show-menu__info__rigth__icon"
+               @click="checkMenuFavorite"
+               v-on="on"
+               v-if="menu.isFav"
+               color="red">
+                 mdi-heart
+             </v-icon>
+             <v-icon
+              class="table-show-menu__info__rigth__icon"
+              @click="checkMenuFavorite"
+              v-on="on"
+              v-else>
+                mdi-heart-outline
+              </v-icon>
+           </template>
+          <span v-text="menu.isFav ? 'Quitar de favoritos' : 'Marcar como favorito'"/>
+         </v-tooltip>
+         <v-tooltip top>
+            <template v-slot:activator="{ on }">
+               <v-icon
+                 v-on="on"
+                 color="#110133"
+                 class="table-show-menu__info__rigth__icon"
+                 @click="shareMenu">
+                   mdi-share-variant
+               </v-icon>
+            </template>
+            <span v-text="menu.shared ? 'Dejar de compartir el menú' : 'Compartir este menú' "/>
+         </v-tooltip>
+        </div>
       </div>
     </div>
     <table cellspacing="0">
@@ -51,12 +109,19 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'TableShowMenu',
   props: {
     menu: {
       type: Object,
       default: () => {}
+    }
+  },
+  data () {
+    return {
+      moment: moment
     }
   },
   methods: {
@@ -66,6 +131,13 @@ export default {
     },
     goToMenuEdit () {
       this.$emit('go-to-menu-edit', this.menu)
+    },
+    checkMenuFavorite () {
+      this.menu.isFav = !this.menu.isFav
+      this.$emit('check-menu-favorite', this.menu)
+    },
+    shareMenu () {
+      this.$emit('share-menu', this.menu)
     }
   }
 }
@@ -80,13 +152,23 @@ export default {
    font-size: 0.9em;
    margin-bottom: 15px;
  }
+ .table-show-menu__info__left {
+   display: flex;
+   flex-direction: column;
+ }
  .table-show-menu__info__rigth {
   display: flex;
   align-items: flex-end;
  }
- .table-show-menu__info__left--textname {
+ .table-show-menu__info__left--value {
    font-weight: bold;
    font-style: italic;
+ }
+ .table-show-menu__info__left--value--current {
+   font-weight: normal;
+ }
+ .table-show-menu__info__rigth__icon {
+   margin-right: 8px;
  }
  table {
    width: 100%;
