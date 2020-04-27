@@ -63,11 +63,11 @@
          <v-tooltip top>
             <template v-slot:activator="{ on }">
                <v-icon
-                @click="shareMenu"
                  v-on="on"
                  color="#110133"
-                 class="table-show-menu__info__rigth__icon">
-                mdi-share-variant
+                 class="table-show-menu__info__rigth__icon"
+                 @click="shareMenu">
+                   mdi-share-variant
                </v-icon>
             </template>
             <span v-text="menu.shared ? 'Dejar de compartir el menú' : 'Compartir este menú' "/>
@@ -134,10 +134,10 @@ export default {
     },
     checkMenuFavorite () {
       this.menu.isFav = !this.menu.isFav
-      this.$emit('check-menu-favorite')
+      this.$emit('check-menu-favorite', this.menu)
     },
     shareMenu () {
-      this.$emit('share-menu')
+      this.$emit('share-menu', this.menu)
     }
   }
 }

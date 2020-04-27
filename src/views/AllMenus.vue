@@ -20,9 +20,13 @@
           Compartir menú
         </template>
         <template slot="description">
-          <p> Vas a compartir este menú, si aceptas darás la oportunidad
+          <p v-if="!menuSelected.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
             a todos los usuarios de verlo y que lo puedan copiar en su
             "diario de dietas". ¿Quiéres compartirlo? </p>
+          <p v-else>
+             Dejarás de compartir este menú, solo tu podrás verlo.
+             ¿Quieres dejar de compartirlo?
+          </p>
         </template>
       </DialogAccept>
     </div>
@@ -55,7 +59,8 @@
     <div class="all-menus__visor-list-menus">
       <VisorMenus
         v-if="showVisorMenus"
-        @go-to-menu-edit="goToMenuEdit"/>
+        @go-to-menu-edit="goToMenuEdit"
+        @share-menu="shareMenu"/>
     </div>
     <LoadDialog
       :load-dialog="loadingSearch"/>
@@ -148,11 +153,12 @@ export default {
           this.$router.push({ name: 'login' })
         })
     },
-    checkMenuFavorite () {
-      this.$store.dispatch('menu/checkMenuFavorite', this.menuSelected)
+    checkMenuFavorite (menu) {
+      this.$store.dispatch('menu/checkMenuFavorite', menu)
     },
-    shareMenu () {
+    shareMenu (menu) {
       this.showDialogAccept = true
+      this.menuSelected = menu
     },
     acceptDialog () {
       this.$store.dispatch('menu/shareMenu', this.menuSelected)

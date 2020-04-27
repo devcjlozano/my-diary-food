@@ -10,6 +10,25 @@
         </span>
       </div>
     </div>
+    <div>
+      <DialogAccept
+        :show-dialog-accept="showDialogAccept"
+        @accept="acceptDialog"
+        @cancel="cancelDialog">
+        <template slot="title">
+          Compartir menú
+        </template>
+        <template slot="description">
+          <p v-if="!currentMenu.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
+            a todos los usuarios de verlo y que lo puedan copiar en su
+            "diario de dietas". ¿Quiéres compartirlo? </p>
+          <p v-else>
+             Dejarás de compartir este menú, solo tu podrás verlo.
+             ¿Quieres dejar de compartirlo?
+          </p>
+        </template>
+      </DialogAccept>
+    </div>
     <transition
       appear
       name="fade"
@@ -18,9 +37,10 @@
         v-if="Object.keys(currentMenu).length !== 0"
         class="home__table-menu">
         <TableShowMenu
-        :menu="currentMenu"
-         @go-to-menu-edit="goToMenuEdit"
-         @check-menu-favorite="checkMenuFavorite" />
+          :menu="currentMenu"
+          @go-to-menu-edit="goToMenuEdit"
+          @check-menu-favorite="checkMenuFavorite"
+          @share-menu="shareMenu"/>
       </div>
     </transition>
     <div
@@ -55,19 +75,22 @@
 
 import TableShowMenu from '@/components/TableShowMenu'
 import InfoPanel from '@/components/InfoPanel'
+import DialogAccept from '@/components/DialogAccept'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'home',
   components: {
     TableShowMenu,
-    InfoPanel
+    InfoPanel,
+    DialogAccept
   },
   data () {
     return {
       menusIsLoad: false,
       componentKey: 0,
-      textInfoPanel: ''
+      textInfoPanel: '',
+      showDialogAccept: false
     }
   },
   computed: {
@@ -101,6 +124,19 @@ export default {
     },
     checkMenuFavorite () {
       this.$store.dispatch('menu/checkMenuFavorite', this.currentMenu)
+    },
+    shareMenu () {
+      this.showDialogAccept = true
+    },
+    acceptDialog () {
+      this.$store.dispatch('menu/shareMenu', this.currentMenu)
+        .then(() => {
+          this.showDialogAccept = false
+          this.currentMenu.shared = !this.currentMenu.shared
+        })
+    },
+    cancelDialog () {
+      this.showDialogAccept = false
     }
   }
 }

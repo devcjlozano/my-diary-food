@@ -41,6 +41,9 @@ export default {
     dialog: {
       get () {
         return this.showDialogAccept
+      },
+      set () {
+        this.$emit('cancel')
       }
     }
   },

@@ -11,7 +11,8 @@
         :menu="listMenus[page - 1]"
         :key="componentKey"
         @check-menu-favorite="checkMenuFavorite"
-        @go-to-menu-edit="goToMenuEdit"/>
+        @go-to-menu-edit="goToMenuEdit"
+        @share-menu="shareMenu"/>
       </transition>
       <div class="visor-menus__paginator">
         <v-pagination
@@ -53,8 +54,11 @@ export default {
     goToMenuEdit (menu) {
       this.$emit('go-to-menu-edit', menu)
     },
-    checkMenuFavorite () {
-      this.$emit('check-menu-favorite')
+    checkMenuFavorite (menu) {
+      this.$emit('check-menu-favorite', menu)
+    },
+    shareMenu (menu) {
+      this.$emit('share-menu')
     }
   }
 }

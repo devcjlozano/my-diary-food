@@ -64,7 +64,7 @@ const shareMenu = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
-    isFav: menu.shared
+    shared: !menu.shared
   },
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
