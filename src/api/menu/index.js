@@ -25,7 +25,7 @@ const getMenus = () => axios({
 })
 const getMenu = menuId => axios({
   method: 'get',
-  url: `${process.env.VUE_APP_URL}/${menuId}`,
+  url: `${process.env.VUE_APP_URL}/menus/getMenu/${menuId}`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
