@@ -44,7 +44,7 @@
            <template v-slot:activator="{ on }">
              <v-icon
                class="table-show-menu__info__rigth__icon"
-               @click="checkToFavorite"
+               @click="checkMenuFavorite"
                v-on="on"
                v-if="menu.isFav"
                color="red">
@@ -52,7 +52,7 @@
              </v-icon>
              <v-icon
               class="table-show-menu__info__rigth__icon"
-              @click="checkToFavorite"
+              @click="checkMenuFavorite"
               v-on="on"
               v-else>
                 mdi-heart-outline
@@ -63,7 +63,7 @@
          <v-tooltip top>
             <template v-slot:activator="{ on }">
                <v-icon
-                @click="goToMenuEdit"
+                @click="shareMenu"
                  v-on="on"
                  color="#110133"
                  class="table-show-menu__info__rigth__icon">
@@ -73,13 +73,6 @@
             <span v-text="menu.shared ? 'Dejar de compartir el menú' : 'Compartir este menú' "/>
          </v-tooltip>
         </div>
-        <!--<v-btn
-         small
-         dark
-         @click="goToMenuEdit"
-         color="primary">
-           Editar Menú
-        </v-btn> -->
       </div>
     </div>
     <table cellspacing="0">
@@ -139,8 +132,12 @@ export default {
     goToMenuEdit () {
       this.$emit('go-to-menu-edit', this.menu)
     },
-    checkToFavorite () {
+    checkMenuFavorite () {
       this.menu.isFav = !this.menu.isFav
+      this.$emit('check-menu-favorite')
+    },
+    shareMenu () {
+      this.$emit('share-menu')
     }
   }
 }

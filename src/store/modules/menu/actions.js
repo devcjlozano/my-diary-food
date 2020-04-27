@@ -33,6 +33,22 @@ const actions = {
       throw (err.response)
     }
   },
+  async checkMenuFavorite ({ commit }, menu) {
+    try {
+      const { data } = await api.checkMenuFavorite(menu)
+      commit('UPDATE_MENU', data.menu)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
+  async shareMenu ({ commit }, menu) {
+    try {
+      const { data } = await api.shareMenu(menu)
+      commit('UPDATE_MENU', data.menu)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
   async searchMenu ({ commit }, payload) {
     try {
       const { data } = await api.searchMenu(payload)

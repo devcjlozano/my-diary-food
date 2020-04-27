@@ -18,8 +18,9 @@
         v-if="Object.keys(currentMenu).length !== 0"
         class="home__table-menu">
         <TableShowMenu
+        :menu="currentMenu"
          @go-to-menu-edit="goToMenuEdit"
-         :menu="currentMenu"/>
+         @check-menu-favorite="checkMenuFavorite" />
       </div>
     </transition>
     <div
@@ -27,9 +28,9 @@
       v-if="Object.keys(currentMenu).length === 0 && menusIsLoad">
       <InfoPanel
        :main-text="textInfoPanel">
-          <router-link
-             class="info-panel__link"
-             to='/menucreator'> Crear menu </router-link>
+         <router-link
+            class="info-panel__link"
+            to='/menucreator'> Crear menu </router-link>
       </InfoPanel>
     </div>
     <div v-if="!menusIsLoad">
@@ -74,7 +75,6 @@ export default {
       user: 'user'
     }),
     ...mapGetters('menu', {
-      listMenus: 'listMenus',
       currentMenu: 'currentMenu'
     })
   },
@@ -90,14 +90,6 @@ export default {
       })
   },
   methods: {
-    nextMenu () {
-      this.currentMenu = this.listMenus[1]
-      this.componentKey += 1
-    },
-    backMenu () {
-      this.currentMenu = this.listMenus[0]
-      this.componentKey += 1
-    },
     goToMenuEdit (menu) {
       this.$router.push({
         name: 'editormenu',
@@ -106,6 +98,9 @@ export default {
           menuReceived: menu
         }
       })
+    },
+    checkMenuFavorite () {
+      this.$store.dispatch('menu/checkMenuFavorite', this.currentMenu)
     }
   }
 }

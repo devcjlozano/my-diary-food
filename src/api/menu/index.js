@@ -48,6 +48,29 @@ const updateMenu = menu => axios({
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
+
+const checkMenuFavorite = menu => axios({
+  method: 'put',
+  url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
+  data: {
+    isFav: menu.isFav
+  },
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
+
+const shareMenu = menu => axios({
+  method: 'put',
+  url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
+  data: {
+    isFav: menu.shared
+  },
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
+
 const searchMenu = payload => axios({
   method: 'get',
   url: payload.textToSearch === '' ? `${process.env.VUE_APP_URL}/menus/searchMenu/${payload.startDate}/${payload.endDate}`
@@ -63,5 +86,7 @@ export default {
   getMenu,
   getCurrentMenu,
   searchMenu,
-  updateMenu
+  updateMenu,
+  checkMenuFavorite,
+  shareMenu
 }

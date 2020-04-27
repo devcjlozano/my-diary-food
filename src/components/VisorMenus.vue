@@ -10,13 +10,13 @@
       <TableShowMenu
         :menu="listMenus[page - 1]"
         :key="componentKey"
+        @check-menu-favorite="checkMenuFavorite"
         @go-to-menu-edit="goToMenuEdit"/>
       </transition>
       <div class="visor-menus__paginator">
         <v-pagination
           v-model="page"
-          :length="listMenus.length"
-          />
+          :length="listMenus.length"/>
       </div>
     </div>
   </div>
@@ -52,6 +52,9 @@ export default {
     },
     goToMenuEdit (menu) {
       this.$emit('go-to-menu-edit', menu)
+    },
+    checkMenuFavorite () {
+      this.$emit('check-menu-favorite')
     }
   }
 }
