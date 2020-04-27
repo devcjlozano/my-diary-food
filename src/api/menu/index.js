@@ -41,7 +41,8 @@ const updateMenu = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
-    menuDistribution: JSON.stringify(menu.menuDistribution)
+    menuDistribution: JSON.stringify(menu.menuDistribution),
+    name: menu.name
   },
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
