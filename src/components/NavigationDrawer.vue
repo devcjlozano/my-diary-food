@@ -44,7 +44,7 @@
        </v-list-item-content>
      </v-list-item>
      <v-list-item
-       :to="{ name: 'shareMenus'}"
+       :to="{ name: 'sharedMenus'}"
         link>
        <v-list-item-content>
          <v-list-item-title>
