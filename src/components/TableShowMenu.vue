@@ -72,9 +72,22 @@
             </template>
             <span v-text="menu.shared ? 'Dejar de compartir el menú' : 'Compartir este menú' "/>
          </v-tooltip>
+         <v-tooltip top>
+           <template v-slot:activator="{ on }">
+             <v-icon
+                v-on="on"
+                color="#110133"
+                class="table-show-menu__info__rigth__icon"
+                @click="shareMenu">
+                   mdi-delete
+               </v-icon>
+            </template>
+            <span v-text="'Eliminar este menú' "/>
+         </v-tooltip>
         </div>
       </div>
     </div>
+    <div style="overflow-x:auto;">
     <table cellspacing="0">
       <thead>
         <tr>
@@ -105,6 +118,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </template>
 

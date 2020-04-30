@@ -31,6 +31,14 @@
     </div>
     <div class="card-menu__body__actions">
        <v-btn
+         class="card-menu__body__actions__deleted"
+         dark
+         @click="selectMenu"
+         :outlined="true"
+         color="#ED5E68">
+           Eliminar menú
+      </v-btn>
+       <v-btn
          dark
          @click="selectMenu"
          color="primary">
@@ -85,6 +93,9 @@ export default {
   }
   .card-menu__body__actions {
     text-align: right;
+  }
+  .card-menu__body__actions__deleted {
+    margin-right: 20px;
   }
   .card__icon {
     font-size: 2.8em
