@@ -17,16 +17,24 @@
         @accept="acceptDialog"
         @cancel="cancelDialog">
         <template slot="title">
-          Compartir menú
+          <span v-text="isDeleteMenu ? 'Eliminar menú' : 'Compartir Menú'"/>
         </template>
         <template slot="description">
-          <p v-if="!menuSelected.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
-            a todos los usuarios de verlo y que lo puedan copiar en su
-            "diario de dietas". ¿Quiéres compartirlo? </p>
-          <p v-else>
-             Dejarás de compartir este menú, solo tu podrás verlo.
-             ¿Quieres dejar de compartirlo?
-          </p>
+          <div v-if="isDeleteMenu">
+            <p>
+              Vas a eliminar este menú definitivamente.
+              ¿Quiéres continuar?
+            </p>
+          </div>
+          <div v-else>
+            <p v-if="!menuSelected.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
+              a todos los usuarios de verlo y que lo puedan copiar en su
+              "diario de dietas". ¿Quiéres compartirlo? </p>
+            <p v-else>
+              Dejarás de compartir este menú, solo tu podrás verlo.
+              ¿Quieres dejar de compartirlo?
+            </p>
+          </div>
         </template>
       </DialogAccept>
     </div>
@@ -37,7 +45,8 @@
          :loading-menus="loadingMenus"
          @select-menu="selectMenu"
          @show-menus-viewer="showMenusViewer"
-         @search-menu="searchMenu"/>
+         @search-menu="searchMenu"
+         @delete-menu="deleteMenuSelected"/>
     </div>
     <div v-if="showTableMenu || showVisorMenus">
       <v-btn
@@ -54,7 +63,8 @@
         :menu="menuSelected"
         @share-menu="shareMenu"
         @go-to-menu-edit="goToMenuEdit"
-        @check-menu-favorite="checkMenuFavorite"/>
+        @check-menu-favorite="checkMenuFavorite"
+        @delete-menu="deleteMenuSelected"/>
     </div>
     <div class="all-menus__visor-list-menus">
       <VisorMenus
@@ -72,6 +82,7 @@ import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
 import LoadDialog from '@/components/LoadDialog'
 import DialogAccept from '@/components/DialogAccept'
+import { deleteMenu } from '@/api/menu'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
@@ -91,7 +102,9 @@ export default {
       loadingSearch: false,
       showTableMenu: false,
       showVisorMenus: false,
-      showDialogAccept: false
+      showDialogAccept: false,
+      isDeleteMenu: false,
+      menuIdToDelete: 0
     }
   },
   computed: {
@@ -157,15 +170,35 @@ export default {
       this.$store.dispatch('menu/checkMenuFavorite', menu)
     },
     shareMenu (menu) {
+      this.isDeleteMenu = false
       this.showDialogAccept = true
       this.menuSelected = menu
     },
+    deleteMenuSelected (menuId) {
+      this.isDeleteMenu = true
+      this.showDialogAccept = true
+      this.menuIdToDelete = menuId
+    },
     acceptDialog () {
-      this.$store.dispatch('menu/shareMenu', this.menuSelected)
-        .then(() => {
-          this.showDialogAccept = false
-          this.menuSelected.shared = !this.menuSelected.shared
-        })
+      if (this.isDeleteMenu) {
+        if (this.showTableMenu) {
+          this.showTableMenu = false
+        }
+        deleteMenu(this.menuIdToDelete)
+          .then(() => {
+            this.$store.dispatch('menu/deleteMenu', this.menuIdToDelete)
+          })
+          .catch(() => {
+            this.$store.dispatch('auth/logout')
+            this.$route.push({ name: 'login' })
+          })
+      } else {
+        this.$store.dispatch('menu/shareMenu', this.menuSelected)
+          .then(() => {
+            this.menuSelected.shared = !this.menuSelected.shared
+          })
+      }
+      this.showDialogAccept = false
     },
     cancelDialog () {
       this.showDialogAccept = false

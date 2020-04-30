@@ -30,6 +30,24 @@
       </div>
     </div>
     <div class="card-menu__body__actions">
+      <v-tooltip
+        :disabled="!menu.isCurrent"
+        top>
+        <template v-slot:activator="{ on }">
+          <div
+            v-on="on">
+            <v-btn
+              class="card-menu__body__actions__deleted"
+              color="#ED5E68"
+              :outlined="true"
+              :disabled="menu.isCurrent"
+              @click="deleteMenu">
+                Eliminar menú
+            </v-btn>
+          </div>
+        </template>
+        <span>No puedes eliminar tu menú actual</span>
+      </v-tooltip>
        <v-btn
          dark
          @click="selectMenu"
@@ -57,6 +75,9 @@ export default {
   methods: {
     selectMenu () {
       this.$emit('select-menu', this.menu)
+    },
+    deleteMenu () {
+      this.$emit('delete-menu', this.menu._id)
     }
   }
 }
@@ -84,7 +105,11 @@ export default {
     font-weight: 400;
   }
   .card-menu__body__actions {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .card-menu__body__actions__deleted {
+    margin-right: 20px;
   }
   .card__icon {
     font-size: 2.8em

@@ -7,6 +7,10 @@ const mutations = {
     const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menu.__id)
     state.listMenus[indexMenu] = menu
   },
+  DELETE_MENU (state, menuId) {
+    const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menuId)
+    state.listMenus.splice(indexMenu, 1)
+  },
   RECEIVE_MENUS (state, menus) {
     state.listMenus = menus
   },

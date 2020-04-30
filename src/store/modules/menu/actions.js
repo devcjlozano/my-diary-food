@@ -33,6 +33,9 @@ const actions = {
       throw (err.response)
     }
   },
+  async deleteMenu ({ commit }, menuId) {
+    commit('DELETE_MENU', menuId)
+  },
   async checkMenuFavorite ({ commit }, menu) {
     try {
       const { data } = await api.checkMenuFavorite(menu)

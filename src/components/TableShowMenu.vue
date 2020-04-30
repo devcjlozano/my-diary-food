@@ -72,9 +72,24 @@
             </template>
             <span v-text="menu.shared ? 'Dejar de compartir el menú' : 'Compartir este menú' "/>
          </v-tooltip>
+         <v-tooltip top>
+           <template v-slot:activator="{ on }">
+             <v-icon
+                v-on="on"
+                :disabled="menu.iscurrent"
+                :color="menu.isCurrent ? '#11013357' : '#110133'"
+                class="table-show-menu__info__rigth__icon"
+                @click="deleteMenu">
+                   mdi-delete
+               </v-icon>
+            </template>
+            <span
+              v-text="menu.isCurrent ? 'No puedes eliminar el menú que tienes marcado como actual' : 'Eliminar este menú' "/>
+         </v-tooltip>
         </div>
       </div>
     </div>
+    <div style="overflow-x:auto;">
     <table cellspacing="0">
       <thead>
         <tr>
@@ -105,6 +120,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </template>
 
@@ -138,6 +154,9 @@ export default {
     },
     shareMenu () {
       this.$emit('share-menu', this.menu)
+    },
+    deleteMenu () {
+      this.$emit('delete-menu', this.menu._id)
     }
   }
 }

@@ -37,7 +37,7 @@ const routes = [
   {
     path: '/allmenus',
     name: 'allmenus',
-    meta: { Auth: false },
+    meta: { Auth: true },
     component: AllMenus
   },
   {
@@ -60,13 +60,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/EditorMenu.vue')
   },
   {
-    path: '/sharemenus',
+    path: '/sharedmenus',
     meta: { Auth: true },
-    name: 'shareMenus',
+    name: 'sharedMenus',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/ShareMenus.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/SharedMenus.vue')
   },
   {
     path: '/about',

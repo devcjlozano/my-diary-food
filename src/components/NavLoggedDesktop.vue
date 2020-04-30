@@ -27,7 +27,7 @@
             text> Crear Menú
           </v-btn>
           <v-btn
-            to='shareMenus'
+            to='sharedMenus'
             text> Menús compartidos </v-btn>
         </v-toolbar-items>
         <div>

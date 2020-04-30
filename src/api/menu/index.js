@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const saveMenu = menu => axios({
+export const saveMenu = menu => axios({
   method: 'post',
   url: `${process.env.VUE_APP_URL}/menus/saveMenu`,
   data: {
@@ -16,28 +16,28 @@ const saveMenu = menu => axios({
   }
 })
 
-const getMenus = () => axios({
+export const getMenus = () => axios({
   method: 'get',
   url: `${process.env.VUE_APP_URL}/menus/getMenus/`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
-const getMenu = menuId => axios({
+export const getMenu = menuId => axios({
   method: 'get',
   url: `${process.env.VUE_APP_URL}/menus/getMenu/${menuId}`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
-const getCurrentMenu = () => axios({
+export const getCurrentMenu = () => axios({
   method: 'get',
   url: `${process.env.VUE_APP_URL}/menus/getCurrentMenu/`,
   headers: {
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
-const updateMenu = menu => axios({
+export const updateMenu = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
@@ -48,8 +48,15 @@ const updateMenu = menu => axios({
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
+export const deleteMenu = idMenu => axios({
+  method: 'delete',
+  url: `${process.env.VUE_APP_URL}/menus/deleteMenu/${idMenu}`,
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
 
-const checkMenuFavorite = menu => axios({
+export const checkMenuFavorite = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
@@ -60,7 +67,7 @@ const checkMenuFavorite = menu => axios({
   }
 })
 
-const shareMenu = menu => axios({
+export const shareMenu = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
   data: {
@@ -71,7 +78,7 @@ const shareMenu = menu => axios({
   }
 })
 
-const searchMenu = payload => axios({
+export const searchMenu = payload => axios({
   method: 'get',
   url: payload.textToSearch === '' ? `${process.env.VUE_APP_URL}/menus/searchMenu/${payload.startDate}/${payload.endDate}`
     : `${process.env.VUE_APP_URL}/menus/searchMenu/${payload.textToSearch}/${payload.startDate}/${payload.endDate}`,
@@ -88,5 +95,6 @@ export default {
   searchMenu,
   updateMenu,
   checkMenuFavorite,
-  shareMenu
+  shareMenu,
+  deleteMenu
 }
