@@ -58,7 +58,7 @@ export default {
       this.$emit('check-menu-favorite', menu)
     },
     shareMenu (menu) {
-      this.$emit('share-menu')
+      this.$emit('share-menu', menu)
     }
   }
 }
