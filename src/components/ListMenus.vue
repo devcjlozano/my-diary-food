@@ -30,6 +30,7 @@
             :key="menu.id">
             <CardMenu
               @select-menu="selectMenu"
+              @delete-menu="deleteMenuSelected"
               :menu="menu"/>
           </div>
         </div>
@@ -108,6 +109,9 @@ export default {
       }
       this.searchActive = true
       this.$emit('search-menu', textToSeach, auxDates)
+    },
+    deleteMenuSelected (menuId) {
+      this.$emit('delete-menu', menuId)
     }
   },
   computed: {

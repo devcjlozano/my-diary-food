@@ -37,7 +37,7 @@ const routes = [
   {
     path: '/allmenus',
     name: 'allmenus',
-    meta: { Auth: false },
+    meta: { Auth: true },
     component: AllMenus
   },
   {

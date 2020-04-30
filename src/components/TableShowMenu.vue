@@ -76,13 +76,15 @@
            <template v-slot:activator="{ on }">
              <v-icon
                 v-on="on"
-                color="#110133"
+                :disabled="menu.iscurrent"
+                :color="menu.isCurrent ? '#11013357' : '#110133'"
                 class="table-show-menu__info__rigth__icon"
-                @click="shareMenu">
+                @click="deleteMenu">
                    mdi-delete
                </v-icon>
             </template>
-            <span v-text="'Eliminar este menú' "/>
+            <span
+              v-text="menu.isCurrent ? 'No puedes eliminar el menú que tienes marcado como actual' : 'Eliminar este menú' "/>
          </v-tooltip>
         </div>
       </div>
@@ -152,6 +154,9 @@ export default {
     },
     shareMenu () {
       this.$emit('share-menu', this.menu)
+    },
+    deleteMenu () {
+      this.$emit('delete-menu', this.menu._id)
     }
   }
 }
