@@ -16,14 +16,35 @@
             v-if="menu.isCurrent"> (Este es tu menú actual) </span>
         </div>
         <div class="card-menu__body__info__date">
-          <span class="label"> Cuando lo creaste: </span>
+          <span
+            v-text="isMenuShared ? 'Cuando fue creado: ' : 'Cuando lo creaste: '"
+            class="label"/>
           <span class="text-value">{{ moment(menu.createdDate).format('DD/MM/YYYY') }}</span>
         </div>
-        <div class="card-menu__body__info__favorite">
+        <div
+          v-if="isMenuShared"
+          class="card-menu__body__info__name-share">
+          <span
+            v-text="'Ha sido compartido por: '"
+            class="label"/>
+          <span class="text-value">
+             {{menu.user.name}}
+          </span>
+          <div v-if="menu.user.email === user.email">
+            <span class="text-value--menu-own">
+              (Esté menu ha sido compartido por tí)
+            </span>
+          </div>
+        </div>
+        <div
+          v-if="!isMenuShared"
+          class="card-menu__body__info__favorite">
           <span class="label"> Es uno de tus favoritos: </span>
           <span class="text-value">{{ menu.isFav ? 'Si' : 'No' }}</span>
         </div>
-        <div class="card-menu__body__info__favorite">
+        <div
+          v-if="!isMenuShared"
+          class="card-menu__body__info__favorite">
           <span class="label"> Lo has compartido con los demás: </span>
           <span class="text-value"> {{ menu.shared ? 'Si' : 'No' }}</span>
         </div>
@@ -31,6 +52,7 @@
     </div>
     <div class="card-menu__body__actions">
       <v-tooltip
+        v-if="!isMenuShared"
         :disabled="!menu.isCurrent"
         top>
         <template v-slot:activator="{ on }">
@@ -59,18 +81,29 @@
 </template>
 <script>
 import moment from 'moment'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'cardMenu',
   props: {
     menu: {
       type: Object,
       default: () => {}
+    },
+    isMenuShared: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       moment: moment
     }
+  },
+  computed: {
+    ...mapGetters('auth', {
+      user: 'user'
+    })
   },
   methods: {
     selectMenu () {
@@ -82,6 +115,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
   .card-menu {
     text-align: left;
@@ -96,6 +130,9 @@ export default {
     font-size: 0.8em;
     font-style: italic;
     font-weight: 300;
+  }
+  .card-menu__body__info__name-share {
+    margin-top: 20px;
   }
   .card-menu__body__avatar {
     margin-right: 20px;
@@ -119,5 +156,8 @@ export default {
   }
   .text-value {
     font-weight: bold;
+  }
+  .text-value--menu-own {
+    font-size: 0.9em;
   }
 </style>

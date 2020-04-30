@@ -8,25 +8,37 @@
            {{ menu.name }}
             <span
                class="table-show-menu__info__left--value--current"
-               v-if="menu.isCurrent && this.$route.name !== 'home'">
+               v-if="menu.isCurrent && this.$route.name !== 'home' && !isMenuShared">
                  (este es tu menú actual)
             </span>
           </span>
+          <span
+              v-if="isMenuShared && menu.user.email === user.email">
+               (Este menú ha sido compartido por tí)
+            </span>
         </div>
         <div>
-          <span> {{`Cuando lo creaste:\u00A0`}} </span>
+          <span v-text="!isMenuShared ? 'Cuando lo creaste: ' : 'Cuando fue creado: '"/>
           <span class="table-show-menu__info__left--value">
            {{ moment(menu.createdDate).format('DD/MM/YYYY') }}
           </span>
         </div>
-        <div>
+        <div v-if="isMenuShared">
+          <span v-text="'Ha sido compartido por: '"/>
+          <span
+            v-text="menu.user.name"
+            class="table-show-menu__info__left--value"/>
+        </div>
+        <div v-if="!isMenuShared">
           <span> {{`Lo has compartido con lo demás:\u00A0`}} </span>
           <span class="table-show-menu__info__left--value">
             {{menu.shared ? 'Si' : 'No'}}
           </span>
         </div>
       </div>
-      <div class="table-show-menu__info__rigth">
+      <div
+        v-if="!isMenuShared"
+        class="table-show-menu__info__rigth">
         <div>
           <v-tooltip top>
             <template v-slot:activator="{ on }">
@@ -126,6 +138,7 @@
 
 <script>
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'TableShowMenu',
@@ -133,12 +146,21 @@ export default {
     menu: {
       type: Object,
       default: () => {}
+    },
+    isMenuShared: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       moment: moment
     }
+  },
+  computed: {
+    ...mapGetters('auth', {
+      user: 'user'
+    })
   },
   methods: {
     esSnack (nameFoodDistribution) {

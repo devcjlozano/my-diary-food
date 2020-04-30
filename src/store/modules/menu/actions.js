@@ -17,6 +17,14 @@ const actions = {
       throw (err.response)
     }
   },
+  async getSharedMenus ({ commit }) {
+    try {
+      const { data } = await api.getSharedMenus()
+      commit('RECEIVE_SHARED_MENUS', data.menus)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
   async getCurrentMenu ({ commit }, mailUser) {
     try {
       const { data } = await api.getCurrentMenu(mailUser)

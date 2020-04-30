@@ -14,6 +14,9 @@ const mutations = {
   RECEIVE_MENUS (state, menus) {
     state.listMenus = menus
   },
+  RECEIVE_SHARED_MENUS (state, menus) {
+    state.listSharedMenus = menus
+  },
   RECEIVE_CURRENT_MENU (state, currentMenu) {
     state.currentMenu = currentMenu
   },
