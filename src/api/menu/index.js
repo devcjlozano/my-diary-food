@@ -23,6 +23,13 @@ export const getMenus = () => axios({
     'Authorization': 'Bearer ' + localStorage.getItem('_token')
   }
 })
+export const getSharedMenus = () => axios({
+  method: 'get',
+  url: `${process.env.VUE_APP_URL}/menus/getSharedMenus/`,
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
 export const getMenu = menuId => axios({
   method: 'get',
   url: `${process.env.VUE_APP_URL}/menus/getMenu/${menuId}`,
@@ -96,5 +103,6 @@ export default {
   updateMenu,
   checkMenuFavorite,
   shareMenu,
-  deleteMenu
+  deleteMenu,
+  getSharedMenus
 }
