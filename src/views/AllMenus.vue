@@ -12,6 +12,12 @@
       </div>
     </div>
     <div>
+      <SnackBar
+        :snack-bar-visible="snackBarVisible"
+        message= "Has eliminado el menú correctamente"
+        @close-snack-bar="() => snackBarVisible = false"/>
+    </div>
+    <div>
       <DialogAccept
         :show-dialog-accept="showDialogAccept"
         @accept="acceptDialog"
@@ -82,6 +88,7 @@ import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
 import LoadDialog from '@/components/LoadDialog'
 import DialogAccept from '@/components/DialogAccept'
+import SnackBar from '@/components/SnackBar'
 import { deleteMenu } from '@/api/menu'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
@@ -93,7 +100,8 @@ export default {
     ListMenus,
     TableShowMenu,
     LoadDialog,
-    DialogAccept
+    DialogAccept,
+    SnackBar
   },
   data () {
     return {
@@ -104,6 +112,7 @@ export default {
       showVisorMenus: false,
       showDialogAccept: false,
       isDeleteMenu: false,
+      snackBarVisible: false,
       menuIdToDelete: 0
     }
   },
@@ -187,6 +196,7 @@ export default {
         deleteMenu(this.menuIdToDelete)
           .then(() => {
             this.$store.dispatch('menu/deleteMenu', this.menuIdToDelete)
+            this.snackBarVisible = true
           })
           .catch(() => {
             this.$store.dispatch('auth/logout')
