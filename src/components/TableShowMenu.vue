@@ -53,6 +53,19 @@
             <span>Editar Menú</span>
          </v-tooltip>
          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+               <v-icon
+                @click="goToMenuEdit"
+                 v-on="on"
+                 :disabled="menu.iscurrent"
+                 :color="menu.isCurrent ? '#11013357' : '#3F51B5'"
+                 class="table-show-menu__info__rigth__icon pin">
+                 mdi-pin
+               </v-icon>
+            </template>
+            <span v-text="menu.isCurrent ? 'Este ya es tu menú actual' : 'Marcar este menú como actual'"></span>
+         </v-tooltip>
+         <v-tooltip top>
            <template v-slot:activator="{ on }">
              <v-icon
                class="table-show-menu__info__rigth__icon"
@@ -200,6 +213,7 @@ export default {
  .table-show-menu__info__rigth {
   display: flex;
   align-items: flex-end;
+  margin-top: 20px;
  }
  .table-show-menu__info__left--value {
    font-weight: bold;
@@ -210,6 +224,9 @@ export default {
  }
  .table-show-menu__info__rigth__icon {
    margin-right: 8px;
+ }
+ .table-show-menu__info__rigth__icon.pin {
+   transform: rotate(20deg);
  }
  table {
    width: 100%;

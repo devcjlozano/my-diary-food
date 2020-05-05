@@ -54,7 +54,9 @@
          @search-menu="searchMenu"
          @delete-menu="deleteMenuSelected"/>
     </div>
-    <div v-if="showTableMenu || showVisorMenus">
+    <div
+      class="all-menus__back-list"
+      v-if="showTableMenu || showVisorMenus">
       <v-btn
         @click="backList"
         color="primary"
@@ -230,6 +232,9 @@ export default {
  }
  .all-menus__description {
    max-width: 800px;
+ }
+ .all-menus__back-list {
+   margin-bottom: 20px
  }
  @media (min-width: 700px) {
    .all-menus {
