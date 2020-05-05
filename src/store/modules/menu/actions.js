@@ -41,6 +41,14 @@ const actions = {
       throw (err.response)
     }
   },
+  async checkCurrentMenu ({ commit }, menuId) {
+    try {
+      const { data } = await api.checkCurrentMenu(menuId)
+      commit('CHECK_CURRENT_MENU', data.menu)
+    } catch (err) {
+      throw (err.response)
+    }
+  },
   async deleteMenu ({ commit }, menuId) {
     commit('DELETE_MENU', menuId)
   },

@@ -14,7 +14,7 @@
     <div>
       <SnackBar
         :snack-bar-visible="snackBarVisible"
-        message= "Has eliminado el menú correctamente"
+        :message="getMessageSnack"
         @close-snack-bar="() => snackBarVisible = false"/>
     </div>
     <div>
@@ -23,7 +23,15 @@
         @accept="acceptDialog"
         @cancel="cancelDialog">
         <template slot="title">
-          <span v-text="isDeleteMenu ? 'Eliminar menú' : 'Compartir Menú'"/>
+          <span v-if="isDeleteMenu">
+             Eliminar menu
+          </span>
+          <span v-if="isCheckCurrentMenu">
+             Marcar menú como actual
+          </span>
+          <span v-if="!isCheckCurrentMenu && !isDeleteMenu">
+             Compartir menú
+          </span>
         </template>
         <template slot="description">
           <div v-if="isDeleteMenu">
@@ -32,7 +40,13 @@
               ¿Quiéres continuar?
             </p>
           </div>
-          <div v-else>
+          <div v-if="isCheckCurrentMenu">
+            <p>
+              Vas a marcar este menú como tu nuevo menú actual.
+              ¿Quiéres continuar?
+            </p>
+          </div>
+          <div v-if="!isCheckCurrentMenu && !isDeleteMenu">
             <p v-if="!menuSelected.shared"> Vas a compartir este menú, si aceptas darás la oportunidad
               a todos los usuarios de verlo y que lo puedan copiar en su
               "diario de dietas". ¿Quiéres compartirlo? </p>
@@ -52,6 +66,7 @@
          @select-menu="selectMenu"
          @show-menus-viewer="showMenusViewer"
          @search-menu="searchMenu"
+         @check-current-menu="checkCurrentMenu"
          @delete-menu="deleteMenuSelected"/>
     </div>
     <div
@@ -72,13 +87,17 @@
         @share-menu="shareMenu"
         @go-to-menu-edit="goToMenuEdit"
         @check-menu-favorite="checkMenuFavorite"
+        @check-current-menu="checkCurrentMenu"
         @delete-menu="deleteMenuSelected"/>
     </div>
     <div class="all-menus__visor-list-menus">
       <VisorMenus
         v-if="showVisorMenus"
         @go-to-menu-edit="goToMenuEdit"
-        @share-menu="shareMenu"/>
+        @share-menu="shareMenu"
+        @check-menu-favorite="checkMenuFavorite"
+        @check-current-menu="checkCurrentMenu"
+        @delete-menu="deleteMenuSelected"/>
     </div>
     <LoadDialog
       :load-dialog="loadingSearch"/>
@@ -114,14 +133,24 @@ export default {
       showVisorMenus: false,
       showDialogAccept: false,
       isDeleteMenu: false,
+      isCheckCurrentMenu: false,
       snackBarVisible: false,
-      menuIdToDelete: 0
+      menuIdToUpdate: 0
     }
   },
   computed: {
     ...mapGetters('auth', {
       user: 'user'
-    })
+    }),
+    getMessageSnack () {
+      if (this.isDeleteMenu) {
+        return 'has eliminado correctamente el menú'
+      }
+      if (this.isCheckCurrentMenu) {
+        return 'has marcado este menú como actual correctamente'
+      }
+      return 'has compartido este menú con los demás usuarios correctamente'
+    }
   },
   mounted () {
     this.$store.dispatch('menu/getMenus', this.user.email)
@@ -180,34 +209,48 @@ export default {
     checkMenuFavorite (menu) {
       this.$store.dispatch('menu/checkMenuFavorite', menu)
     },
+    checkCurrentMenu (menuId) {
+      this.isDeleteMenu = false
+      this.isCheckCurrentMenu = true
+      this.showDialogAccept = true
+      this.menuIdToUpdate = menuId
+    },
     shareMenu (menu) {
       this.isDeleteMenu = false
+      this.isCheckCurrentMenu = false
       this.showDialogAccept = true
       this.menuSelected = menu
     },
     deleteMenuSelected (menuId) {
       this.isDeleteMenu = true
+      this.isCheckCurrentMenu = false
       this.showDialogAccept = true
-      this.menuIdToDelete = menuId
+      this.menuIdToUpdate = menuId
     },
     acceptDialog () {
       if (this.isDeleteMenu) {
-        if (this.showTableMenu) {
-          this.showTableMenu = false
-        }
-        deleteMenu(this.menuIdToDelete)
+        this.showTableMenu = false
+        this.showVisorMenus = false
+        deleteMenu(this.menuIdToUpdate)
           .then(() => {
-            this.$store.dispatch('menu/deleteMenu', this.menuIdToDelete)
+            this.$store.dispatch('menu/deleteMenu', this.menuIdToUpdate)
             this.snackBarVisible = true
           })
           .catch(() => {
             this.$store.dispatch('auth/logout')
             this.$route.push({ name: 'login' })
           })
+      } else if (this.isCheckCurrentMenu) {
+        this.$store.dispatch('menu/checkCurrentMenu', this.menuIdToUpdate)
+          .then(() => {
+            this.menuSelected.isCurrent = !this.menuSelected.isCurrent
+            this.snackBarVisible = true
+          })
       } else {
         this.$store.dispatch('menu/shareMenu', this.menuSelected)
           .then(() => {
             this.menuSelected.shared = !this.menuSelected.shared
+            this.snackBarVisible = true
           })
       }
       this.showDialogAccept = false

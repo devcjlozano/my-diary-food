@@ -55,7 +55,7 @@
          <v-tooltip top>
             <template v-slot:activator="{ on }">
                <v-icon
-                @click="goToMenuEdit"
+                @click="checkCurrentMenu"
                  v-on="on"
                  :disabled="menu.iscurrent"
                  :color="menu.isCurrent ? '#11013357' : '#3F51B5'"
@@ -186,6 +186,9 @@ export default {
     checkMenuFavorite () {
       this.menu.isFav = !this.menu.isFav
       this.$emit('check-menu-favorite', this.menu)
+    },
+    checkCurrentMenu () {
+      this.$emit('check-current-menu', this.menu._id)
     },
     shareMenu () {
       this.$emit('share-menu', this.menu)

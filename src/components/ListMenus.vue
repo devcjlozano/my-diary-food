@@ -36,6 +36,7 @@
             <CardMenu
               @select-menu="selectMenu"
               @delete-menu="deleteMenuSelected"
+              @check-current-menu="checkCurrentMenu"
               :menu="menu"/>
           </div>
         </div>
@@ -117,6 +118,9 @@ export default {
     },
     deleteMenuSelected (menuId) {
       this.$emit('delete-menu', menuId)
+    },
+    checkCurrentMenu (menuId) {
+      this.$emit('check-current-menu', menuId)
     }
   },
   computed: {

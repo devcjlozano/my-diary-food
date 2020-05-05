@@ -11,8 +11,10 @@
         :menu="listMenus[page - 1]"
         :key="componentKey"
         @check-menu-favorite="checkMenuFavorite"
+        @check-current-menu="checkCurrentMenu"
         @go-to-menu-edit="goToMenuEdit"
-        @share-menu="shareMenu"/>
+        @share-menu="shareMenu"
+        @delete-menu="deleteMenuSelected"/>
       </transition>
       <div class="visor-menus__paginator">
         <v-pagination
@@ -59,6 +61,12 @@ export default {
     },
     shareMenu (menu) {
       this.$emit('share-menu', menu)
+    },
+    checkCurrentMenu (menuId) {
+      this.$emit('check-current-menu', menuId)
+    },
+    deleteMenuSelected (menuId) {
+      this.$emit('delete-menu', menuId)
     }
   }
 }

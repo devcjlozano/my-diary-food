@@ -74,6 +74,17 @@ export const checkMenuFavorite = menu => axios({
   }
 })
 
+export const checkCurrentMenu = menuId => axios({
+  method: 'put',
+  url: `${process.env.VUE_APP_URL}/menus/updateCurrentMenu/${menuId}`,
+  data: {
+    isCurrent: true
+  },
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('_token')
+  }
+})
+
 export const shareMenu = menu => axios({
   method: 'put',
   url: `${process.env.VUE_APP_URL}/menus/updateMenu/${menu._id}`,
@@ -104,5 +115,6 @@ export default {
   checkMenuFavorite,
   shareMenu,
   deleteMenu,
+  checkCurrentMenu,
   getSharedMenus
 }

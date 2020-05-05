@@ -15,10 +15,11 @@
          <template v-slot:activator="{ on }">
            <div v-on="on">
             <v-btn
-              :disabled="menu.isCurrent"
               color="#3F51B5"
               large
-              icon>
+              icon
+              :disabled="menu.isCurrent"
+              @click="checkCurrentMenu">
               <v-icon> mdi-pin </v-icon>
             </v-btn>
           </div>
@@ -129,6 +130,9 @@ export default {
     },
     deleteMenu () {
       this.$emit('delete-menu', this.menu._id)
+    },
+    checkCurrentMenu () {
+      this.$emit('check-current-menu', this.menu._id)
     }
   }
 }
