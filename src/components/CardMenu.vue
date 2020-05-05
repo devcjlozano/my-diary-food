@@ -8,6 +8,25 @@
             <v-img src="../assets/chefHat.png" contain></v-img>
         </v-avatar>
       </div>
+     <div
+       v-if="!isMenuShared"
+       class="card-menu__body__icon-pin">
+       <v-tooltip left>
+         <template v-slot:activator="{ on }">
+           <div v-on="on">
+            <v-btn
+              color="#3F51B5"
+              large
+              icon
+              :disabled="menu.isCurrent"
+              @click="checkCurrentMenu">
+              <v-icon> mdi-pin </v-icon>
+            </v-btn>
+          </div>
+         </template>
+         <span v-text="menu.isCurrent ? 'Este ya es tu menú actual' : 'Marcar este menu como actual' "/>
+       </v-tooltip>
+      </div>
       <div class="card-menu__body__info">
         <div class="card-menu__body__info__name">
           <span> {{ menu.name }} </span>
@@ -111,6 +130,9 @@ export default {
     },
     deleteMenu () {
       this.$emit('delete-menu', this.menu._id)
+    },
+    checkCurrentMenu () {
+      this.$emit('check-current-menu', this.menu._id)
     }
   }
 }
@@ -118,13 +140,20 @@ export default {
 
 <style scoped>
   .card-menu {
+    position: relative;
     text-align: left;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
     padding: 20px 10px;
-    width: 100%
+    width: 100%;
   }
   .card-menu__body {
     display: flex;
+  }
+  .card-menu__body__icon-pin {
+    position: absolute;
+    transform: rotate(20deg);
+    right: 0;
+    top: 8px;
   }
   .card_menu__body__info__name__text-actual {
     font-size: 0.8em;

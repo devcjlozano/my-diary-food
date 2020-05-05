@@ -1,11 +1,19 @@
 
+import Vue from 'vue'
+
 const mutations = {
   SAVE_MENU (state, menu) {
     state.listMenus.push(menu)
   },
   UPDATE_MENU (state, menu) {
-    const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menu.__id)
-    state.listMenus[indexMenu] = menu
+    const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menu._id)
+    Vue.set(state.listMenus, indexMenu, menu)
+  },
+  CHECK_CURRENT_MENU (state, menu) {
+    const indexLastCurrentMenu = state.listMenus.findIndex(menuItem => menuItem.isCurrent)
+    state.listMenus[indexLastCurrentMenu].isCurrent = false
+    const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menu._id)
+    Vue.set(state.listMenus, indexMenu, menu)
   },
   DELETE_MENU (state, menuId) {
     const indexMenu = state.listMenus.findIndex(menuItem => menuItem._id === menuId)

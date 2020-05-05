@@ -16,6 +16,11 @@
           :key="componentKey"
           class="list-menus__main__container-cards">
           <div class="list-menus__main__button-viewer">
+
+            <span class="list-menus__main__button-viewer__info">
+              * Podrás marcar un menú como actual, haciendo click
+              en la chincheta de la parte superior de cada tarjeta
+            </span>
             <v-btn
               color="primary"
               dark
@@ -31,6 +36,7 @@
             <CardMenu
               @select-menu="selectMenu"
               @delete-menu="deleteMenuSelected"
+              @check-current-menu="checkCurrentMenu"
               :menu="menu"/>
           </div>
         </div>
@@ -112,6 +118,9 @@ export default {
     },
     deleteMenuSelected (menuId) {
       this.$emit('delete-menu', menuId)
+    },
+    checkCurrentMenu (menuId) {
+      this.$emit('check-current-menu', menuId)
     }
   },
   computed: {
@@ -154,8 +163,14 @@ export default {
  }
  .list-menus__main__button-viewer {
    display: flex;
-   justify-content: flex-end;
+   justify-content: space-between;
+   align-items: center;
    margin-bottom: 10px;
+ }
+ .list-menus__main__button-viewer__info {
+   text-align: left;
+   font-size: 0.8em;
+   margin-right: 30px;
  }
  .list-menus__info-panel {
    display: flex;
