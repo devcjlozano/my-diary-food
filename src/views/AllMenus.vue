@@ -83,6 +83,15 @@
       v-if="showTableMenu && !showVisorMenus"
       class="all-menus__table-menu">
       <TableShowMenu
+        class="hidden-xs-only"
+        :menu="menuSelected"
+        @share-menu="shareMenu"
+        @go-to-menu-edit="goToMenuEdit"
+        @check-menu-favorite="checkMenuFavorite"
+        @check-current-menu="checkCurrentMenu"
+        @delete-menu="deleteMenuSelected"/>
+      <TableShowMenuMobile
+        class="hidden-sm-and-up"
         :menu="menuSelected"
         @share-menu="shareMenu"
         @go-to-menu-edit="goToMenuEdit"
@@ -107,6 +116,7 @@
 import ListMenus from '@/components/ListMenus'
 import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
+import TableShowMenuMobile from '@/components/TableShowMenuMobile'
 import LoadDialog from '@/components/LoadDialog'
 import DialogAccept from '@/components/DialogAccept'
 import SnackBar from '@/components/SnackBar'
@@ -122,6 +132,7 @@ export default {
     TableShowMenu,
     LoadDialog,
     DialogAccept,
+    TableShowMenuMobile,
     SnackBar
   },
   data () {
@@ -150,6 +161,9 @@ export default {
         return 'has marcado este menú como actual correctamente'
       }
       return 'has compartido este menú con los demás usuarios correctamente'
+    },
+    detectMobile () {
+      return window.screen.availWidth <= 500
     }
   },
   mounted () {

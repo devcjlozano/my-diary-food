@@ -173,6 +173,7 @@ export default {
   .card-menu__body__actions {
     display: flex;
     justify-content: flex-end;
+    margin-top: 5px;
   }
   .card-menu__body__actions__deleted {
     margin-right: 20px;

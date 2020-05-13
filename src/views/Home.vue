@@ -37,6 +37,13 @@
         v-if="Object.keys(currentMenu).length !== 0"
         class="home__table-menu">
         <TableShowMenu
+          class="hidden-xs-only"
+          :menu="currentMenu"
+          @go-to-menu-edit="goToMenuEdit"
+          @check-menu-favorite="checkMenuFavorite"
+          @share-menu="shareMenu"/>
+        <TableShowMenuMobile
+          class="hidden-sm-and-up"
           :menu="currentMenu"
           @go-to-menu-edit="goToMenuEdit"
           @check-menu-favorite="checkMenuFavorite"
@@ -74,6 +81,7 @@
 // @ is an alias to /src
 
 import TableShowMenu from '@/components/TableShowMenu'
+import TableShowMenuMobile from '@/components/TableShowMenuMobile'
 import InfoPanel from '@/components/InfoPanel'
 import DialogAccept from '@/components/DialogAccept'
 import { mapGetters } from 'vuex'
@@ -83,7 +91,8 @@ export default {
   components: {
     TableShowMenu,
     InfoPanel,
-    DialogAccept
+    DialogAccept,
+    TableShowMenuMobile
   },
   data () {
     return {
