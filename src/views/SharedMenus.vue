@@ -27,6 +27,11 @@
     </div>
     <div v-if="showTableMenu">
       <TableShowMenu
+        class="hidden-xs-only"
+        :is-menu-shared="true"
+        :menu="menuSelected"/>
+      <TableShowMenuMobile
+        class="hidden-sm-and-up"
         :is-menu-shared="true"
         :menu="menuSelected"/>
     </div>
@@ -36,12 +41,14 @@
 <script>
 import ListSharedMenus from '@/components/ListSharedMenus'
 import TableShowMenu from '@/components/TableShowMenu'
+import TableShowMenuMobile from '@/components/TableShowMenuMobile'
 
 export default {
   name: 'SharedMenus',
   components: {
     ListSharedMenus,
-    TableShowMenu
+    TableShowMenu,
+    TableShowMenuMobile
   },
   mounted () {
     this.$store.dispatch('menu/getSharedMenus')
