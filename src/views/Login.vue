@@ -118,7 +118,7 @@ export default {
         this.disabledButtonGoogle = true
         this.signInMyDiaryWithGoogle(idtoken)
       }, err => {
-        console.log(JSON.stringify(err, undefined, 2))
+        throw (err)
       })
     },
     keypress (e) {
