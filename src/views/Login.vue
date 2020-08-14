@@ -133,13 +133,25 @@ export default {
           password: this.password
         })
         this.errorLogin = false
-        this.$router.push({ name: 'home' })
+        this.goToHome()
       } catch (err) {
         this.disabledButtonEnter = false
         this.errorLogin = true
       }
     },
-    async signInMyDiaryWithGoogle (idtoken) {}
+    async signInMyDiaryWithGoogle (idtoken) {
+      try {
+        await this.$store.dispatch('auth/signInWithGoogle', idtoken)
+        this.errorLogin = false
+        this.goToHome()
+      } catch (err) {
+        this.disabledButtonGoogle = false
+        this.errorLogin = true
+      }
+    },
+    goToHome () {
+      this.$router.push({ name: 'home' })
+    }
   }
 }
 </script>
