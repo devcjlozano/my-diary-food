@@ -71,6 +71,9 @@ export default {
   },
   methods: {
     logout () {
+      // eslint-disable-next-line no-undef
+      const auth2 = gapi.auth2.getAuthInstance()
+      auth2.disconnect()
       this.$store.dispatch('auth/logout')
       this.$store.dispatch('menu/emptyInfoMenus')
       this.$router.push({ name: 'login' })

@@ -53,10 +53,29 @@
           Crear cuenta nueva
         </v-btn>
       </div>
+      <div class="login__form__google">
+        <!--<div id="google-signin-button"></div>-->
+       <div id="btn-google">
+         <v-btn
+           class="custom-transform-class text-none"
+           outlined>
+           <v-icon left color="#4285F4">
+             mdi-google
+           </v-icon>
+           <span class="btn-google__text">Entrar con Google</span>
+         </v-btn>
+       </div>
+      </div>
+      <div>
+        <v-btn
+          @click="signOut">
+          Salir de google
+        </v-btn>
+      </div>
     </div>
     <div class="login__info">
       <h1 class="login__info__card--title"> My diary food</h1>
-      <h3 class="login__info__card--subtitle"> Un subtitulo</h3>
+      <h3 class="login__info__card--subtitle"> Tu app para controlar tus menús semanales</h3>
       <div class="login__info__card">
          <p> Controla tus menús semanales </p>
          <p> Podrás marcar tus menús favoritos </p>
@@ -73,28 +92,68 @@ export default {
       email: '',
       password: '',
       errorLogin: false,
-      disabledButtonEnter: false
+      disabledButtonEnter: false,
+      disabledButtonGoogle: false,
+      googleUser: {},
+      auth2: {}
     }
+  },
+  mounted () {
+    // eslint-disable-next-line no-undef
+    this.startGoogleSign()
   },
   methods: {
     signIn () {
       this.disabledButtonEnter = true
-      this.$store.dispatch('auth/signIn', {
-        email: this.email,
-        password: this.password
-      }).then(() => {
-        this.errorLogin = false
-        this.$router.push({ name: 'home' })
-      }).catch(() => {
-        this.disabledButtonEnter = false
-        this.errorLogin = true
+      this.signInMyDiary()
+    },
+    startGoogleSign () {
+      // eslint-disable-next-line no-undef
+      gapi.load('auth2', () => {
+        // eslint-disable-next-line no-undef
+        this.auth2 = gapi.auth2.init({
+          client_id: '1020914206371-1l0naarjoi3ibn8ur2rt3h4ao9kfr281.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin'
+        })
+        this.attachSignin(document.getElementById('btn-google'))
+      })
+    },
+    attachSignin (element) {
+      this.auth2.attachClickHandler(element, {}, googleUser => {
+        const idtoken = googleUser.getAuthResponse().id_token
+        this.disabledButtonGoogle = true
+        this.signInMyDiaryWithGoogle(idtoken)
+      }, err => {
+        console.log(JSON.stringify(err, undefined, 2))
+      })
+    },
+    signOut () {
+      // eslint-disable-next-line no-undef
+      const auth2 = gapi.auth2.getAuthInstance()
+      auth2.disconnect()
+      auth2.signOut().then(function () {
+        console.log('User signed out.')
       })
     },
     keypress (e) {
       if (e.keyCode === 13) {
         this.signIn()
       }
-    }
+    },
+    async signInMyDiary () {
+      try {
+        await this.$store.dispatch('auth/signIn', {
+          email: this.email,
+          password: this.password
+        })
+        this.errorLogin = false
+        this.$router.push({ name: 'home' })
+      } catch (err) {
+        this.disabledButtonEnter = false
+        this.errorLogin = true
+      }
+    },
+    async signInMyDiaryWithGoogle (idtoken) {}
   }
 }
 </script>
@@ -141,10 +200,14 @@ export default {
    border-radius: 10px;
    color: white;
    background-color: #00918e;
- }
- .login__form__new-account {
+  }
+ .login__form__new-account,
+ .login__form__google {
    display: flex;
    justify-content: center;
+ }
+ .login__form__google {
+   margin-top: 15px;
  }
 @media (min-width: 700px) {
   .login {
