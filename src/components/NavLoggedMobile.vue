@@ -47,6 +47,7 @@
     </v-toolbar>
 </template>
 <script>
+import EventBus from '../eventbus/event-bus'
 
 export default {
   name: 'NavLoggedMobile',
@@ -61,9 +62,7 @@ export default {
       this.$emit('show-navigation-drawer')
     },
     logout () {
-      this.$store.dispatch('auth/logout')
-      this.$store.dispatch('menu/emptyInfoMenus')
-      this.$router.push({ name: 'login' })
+      EventBus.$emit('logout')
     }
   }
 }

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import EventBus from '../eventbus/event-bus'
 import TableEditorMenu from '@/components/TableEditorMenu'
 import MenuCreatedSuccess from '@/components/MenuCreatedSuccess'
 import { mapGetters } from 'vuex'
@@ -229,8 +230,7 @@ export default {
         .then(() => {
           this.menuIsCreated = true
         }).catch(() => {
-          this.$store.dispatch('auth/logout')
-          this.$router.push({ name: 'login' })
+          EventBus.$emit('logout')
         })
     },
     showMenuSuccess () {

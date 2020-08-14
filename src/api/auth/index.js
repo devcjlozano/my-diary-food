@@ -20,7 +20,16 @@ const signIn = (email, password) => axios({
   }
 })
 
+const signInWithGoogle = token => axios({
+  method: 'post',
+  url: `${process.env.VUE_APP_URL}/user/signInWithGoogle`,
+  data: {
+    token
+  }
+})
+
 export default {
   signUp,
-  signIn
+  signIn,
+  signInWithGoogle
 }

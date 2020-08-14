@@ -113,6 +113,7 @@
   </div>
 </template>
 <script>
+import EventBus from '../eventbus/event-bus'
 import ListMenus from '@/components/ListMenus'
 import VisorMenus from '@/components/VisorMenus'
 import TableShowMenu from '@/components/TableShowMenu'
@@ -171,8 +172,7 @@ export default {
       .then(() => {
         this.loadingMenus = false
       }).catch(() => {
-        this.$store.dispatch('auth/logout')
-        this.$router.push({ name: 'login' })
+        EventBus.$emit('logout')
       })
   },
   methods: {
@@ -216,8 +216,7 @@ export default {
         .then(() => {
           this.loadingSearch = false
         }).catch(() => {
-          this.$store.dispatch('auth/logout')
-          this.$router.push({ name: 'login' })
+          EventBus.$emit('logout')
         })
     },
     checkMenuFavorite (menu) {
@@ -251,8 +250,7 @@ export default {
             this.snackBarVisible = true
           })
           .catch(() => {
-            this.$store.dispatch('auth/logout')
-            this.$route.push({ name: 'login' })
+            EventBus.$emit('logout')
           })
       } else if (this.isCheckCurrentMenu) {
         this.$store.dispatch('menu/checkCurrentMenu', this.menuIdToUpdate)

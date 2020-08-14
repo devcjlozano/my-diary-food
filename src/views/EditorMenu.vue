@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import EventBus from '../eventbus/event-bus'
 import api from '@/api/menu'
 import TableEditorMenu from '@/components/TableEditorMenu'
 import InfoPanel from '@/components/InfoPanel'
@@ -97,8 +98,7 @@ export default {
         .then(() => {
           this.saveSuccess = true
         }).catch(e => {
-          this.$store.dispatch('auth/logout')
-          this.$router.push({ name: 'login' })
+          EventBus.$emit('logout')
         })
     },
     backEdit () {

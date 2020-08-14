@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import EventBus from '../eventbus/event-bus'
 
 export default {
   name: 'NavLoggedDesktop',
@@ -71,9 +72,7 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.dispatch('auth/logout')
-      this.$store.dispatch('menu/emptyInfoMenus')
-      this.$router.push({ name: 'login' })
+      EventBus.$emit('logout')
     }
   }
 }
