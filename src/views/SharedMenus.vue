@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import EventBus from '../eventbus/event-bus'
 import ListSharedMenus from '@/components/ListSharedMenus'
 import TableShowMenu from '@/components/TableShowMenu'
 import TableShowMenuMobile from '@/components/TableShowMenuMobile'
@@ -54,8 +55,7 @@ export default {
     this.$store.dispatch('menu/getSharedMenus')
       .then(() => {})
       .catch(() => {
-        this.$store.dispatch('auth/logout')
-        this.$router.push({ name: 'login' })
+        EventBus.$emit('logout')
       })
   },
   data () {

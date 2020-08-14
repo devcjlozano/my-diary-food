@@ -79,7 +79,7 @@
 
 <script>
 // @ is an alias to /src
-
+import EventBus from '../eventbus/event-bus'
 import TableShowMenu from '@/components/TableShowMenu'
 import TableShowMenuMobile from '@/components/TableShowMenuMobile'
 import InfoPanel from '@/components/InfoPanel'
@@ -117,8 +117,7 @@ export default {
         <p> Puedes crear un menú haciendo click en el siguiente enlace</p>`
         this.menusIsLoad = true
       }).catch(() => {
-        this.$store.dispatch('auth/logout')
-        this.$router.push({ name: 'login' })
+        EventBus.$emit('logout')
       })
   },
   methods: {

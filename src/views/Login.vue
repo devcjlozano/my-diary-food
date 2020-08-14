@@ -66,12 +66,6 @@
          </v-btn>
        </div>
       </div>
-      <div>
-        <v-btn
-          @click="signOut">
-          Salir de google
-        </v-btn>
-      </div>
     </div>
     <div class="login__info">
       <h1 class="login__info__card--title"> My diary food</h1>
@@ -125,14 +119,6 @@ export default {
         this.signInMyDiaryWithGoogle(idtoken)
       }, err => {
         console.log(JSON.stringify(err, undefined, 2))
-      })
-    },
-    signOut () {
-      // eslint-disable-next-line no-undef
-      const auth2 = gapi.auth2.getAuthInstance()
-      auth2.disconnect()
-      auth2.signOut().then(function () {
-        console.log('User signed out.')
       })
     },
     keypress (e) {

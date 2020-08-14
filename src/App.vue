@@ -48,6 +48,7 @@
 import NavLoggedDesktop from '@/components/NavLoggedDesktop'
 import NavLoggedMobile from '@/components/NavLoggedMobile'
 import NavigationDrawer from '@/components/NavigationDrawer'
+import EventBus from './eventbus/event-bus'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -56,6 +57,16 @@ export default {
     NavLoggedDesktop,
     NavLoggedMobile,
     NavigationDrawer
+  },
+  mounted () {
+    EventBus.$on('logout', () => {
+      // eslint-disable-next-line no-undef
+      const auth2 = gapi.auth2.getAuthInstance()
+      auth2.disconnect()
+      this.$store.dispatch('auth/logout')
+      this.$store.dispatch('menu/emptyInfoMenus')
+      this.$router.push({ name: 'login' })
+    })
   },
   data: () => ({
     navigationDrawerVisible: false
